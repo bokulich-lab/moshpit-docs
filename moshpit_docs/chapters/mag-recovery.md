@@ -24,6 +24,8 @@ With MyST Markdown, you can define code cells with a directive like so:
 
 ```{code-cell}
 print(2 + 2)
+
+Hola me llamo paulita
 ```
 
 When your book is built, the contents of any `{code-cell}` blocks will be
