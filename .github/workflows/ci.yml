@@ -24,7 +24,7 @@ jobs:
       run: mamba install -n conda-env jupyter-book
 
     - name: Build the book
-      run: mamba run -n conda-env jupyter-book build .
+      run: mamba run -n conda-env jupyter-book build moshpit_docs
 
     - name: GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3
