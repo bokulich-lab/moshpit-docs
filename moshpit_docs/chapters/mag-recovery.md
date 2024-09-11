@@ -43,7 +43,7 @@ qiime assembly assemble-megahit \
   --p-coassemble False \                # Co-assembly is disabled
   --o-contigs contigs-0.qza             # Output contig file
 ```
-```{important}
+```{warning}
 Make sure to allocate appropriate CPU and memory resources based on your system's capacity.
 ```
 ## Step 2: Index Contigs
