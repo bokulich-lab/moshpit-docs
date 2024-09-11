@@ -43,9 +43,11 @@ qiime assembly assemble-megahit \
   --p-coassemble False \                # Co-assembly is disabled
   --o-contigs contigs-0.qza             # Output contig file
 ```
-:::{warning}
+
+:::{admonition} Warning
 Make sure to allocate appropriate CPU and memory resources based on your system's capacity.
 :::
+
 
 ## Step 2: Index Contigs
 
@@ -295,5 +297,3 @@ qiime moshpit estimate-mag-abundance \
   --i-mag-lengths lengths-0
 
 ```
-parse:
-  myst_extended_syntax: true
