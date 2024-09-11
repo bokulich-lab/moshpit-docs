@@ -36,3 +36,7 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+  
+#Allow admonitions to be rendered correctly.
+parse:
+  myst_extended_syntax: true
