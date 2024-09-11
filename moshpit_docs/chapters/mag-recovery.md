@@ -17,6 +17,7 @@ kernelspec:
 This workflow describes a step-by-step process for metagenome-assembled genome (MAG) recovery using `qiime2` and other tools. Each command includes explanations of the parameters used. 
 
 ## Step 1: Assemble Contigs with Megahit
+This step involves assembling the paired-end sequencing reads into contigs using the `megahit` assembler. `Megahit` is optimized for metagenomics data and can handle large datasets with low memory requirements. The parameters allow you to fine-tune the assembly process, adjusting sensitivity, memory usage, and other factors critical for generating high-quality contigs from metagenomics data.
 
 ```{code-cell}
 qiime assembly assemble-megahit \
@@ -42,7 +43,9 @@ qiime assembly assemble-megahit \
   --p-coassemble False \                # Co-assembly is disabled
   --o-contigs contigs-0.qza             # Output contig file
 ```
-
+```{important}
+Make sure to allocate appropriate CPU and memory resources based on your system's capacity.
+```
 ## Step 2: Index Contigs
 
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs later. Various parameters control the size and structure of the index, as well as resource usage.
