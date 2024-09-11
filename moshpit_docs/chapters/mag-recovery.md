@@ -43,9 +43,9 @@ qiime assembly assemble-megahit \
   --p-coassemble False \                # Co-assembly is disabled
   --o-contigs contigs-0.qza             # Output contig file
 ```
-```{warning}
+:::{admonition} Warning
 Make sure to allocate appropriate CPU and memory resources based on your system's capacity.
-```
+:::
 ## Step 2: Index Contigs
 
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs later. Various parameters control the size and structure of the index, as well as resource usage.
