@@ -38,41 +38,59 @@ kernelspec:
 >
 > For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
 
+```{code-cell}
+print(2 + 2)
+```
+
 ### Kaiju: Protein-Based Classification Tool
 > Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads against a reference database of protein sequences.
 >
 > For more information on Kaiju, consult [Menzel et al., 2016](https://www.nature.com/articles/ncomms11257).
 
-## An example cell
-
-With MyST Markdown, you can define code cells with a directive like so:
+```{code-cell}
+qiime fondue get-all \
+  --i-accession-ids ncbi-accession-i-ds-0.qza \
+  --p-email YOUR.EMAIL@domain.com \
+  --p-n-jobs 5 \
+  --p-retries 5 \
+  --p-log-level DEBUG \
+  --o-paired-reads paired-reads-0.qza \
+  --o-metadata XX_metadata \
+  --o-single-reads XX_single_reads \
+  --o-failed-runs XX_failed_runs
+```
 
 ```{code-cell}
-print(2 + 2)
+qiime moshpit fetch-kaiju-db \
+  --p-database-type nr_euk \
+  --o-database database-0.qza
 ```
 
-When your book is built, the contents of any `{code-cell}` blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.
-
-```{seealso}
-Jupyter Book uses [Jupytext](https://jupytext.readthedocs.io/en/latest/) to convert text-based files to notebooks, and can support [many other text-based notebook files](https://jupyterbook.org/file-types/jupytext.html).
+```{code-cell}
+qiime moshpit classify-kaiju \
+  --i-seqs paired-reads-0.qza \
+  --i-db database-0.qza \
+  --p-z 16 \
+  --p-a greedy \
+  --p-e 3 \
+  --p-m 11 \
+  --p-s 65 \
+  --p-evalue 0.01 \
+  --p-x \
+  --p-r species \
+  --p-c 0.1 \
+  --p-no-exp \
+  --p-no-u \
+  --o-taxonomy taxonomy-0.qza \
+  --o-abundances XX_abundances
 ```
 
-## Create a notebook with MyST Markdown
-
-MyST Markdown notebooks are defined by two things:
-
-1. YAML metadata that is needed to understand if / how it should convert text files to notebooks (including information about the kernel needed).
-   See the YAML at the top of this page for example.
-2. The presence of `{code-cell}` directives, which will be executed with your book.
-
-That's all that is needed to get started!
-
-## Quickly add YAML metadata for MyST Notebooks
-
-If you have a markdown file and you'd like to quickly add YAML metadata to it, so that Jupyter Book will treat it as a MyST Markdown Notebook, run the following command:
-
-```
-jupyter-book myst init path/to/markdownfile.md
-```
+```{code-cell}
+qiime taxa filter-table \
+  --i-table feature-table-frequency-0.qza \
+  --i-taxonomy taxonomy-0.qza \
+  --p-exclude unclassified,belong,cannot \
+  --p-query-delimiter , \
+  --p-mode contains \
+  --o-filtered-table filtered-table-0.qza
+  ```
