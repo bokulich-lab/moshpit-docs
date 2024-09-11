@@ -7,7 +7,7 @@ author: The Bokulich Lab
 sphinx:
   config:
    myst_enable_extensions: [
-      "amsmath", "colon_fence", "deflist", "dollarmath", "html_admonition", "html_image"
+      "amsmath", "colon_fence", "deflist", "dollarmath", "html_admonition", "html_image", "admonition"
     ]
     html_theme_options:
       logo:
@@ -39,11 +39,3 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
-
-#Allow admonitions to be rendered correctly.
-
-myst_enable_extensions:
-    - admonition
-    - deflist
-    - html_admonition
-    - html_image

@@ -44,7 +44,7 @@ qiime assembly assemble-megahit \
   --o-contigs contigs-0.qza             # Output contig file
 ```
 
-:::{warning}
+:::{note}
 Make sure to allocate appropriate CPU and memory resources based on your system's capacity.
 :::
 
