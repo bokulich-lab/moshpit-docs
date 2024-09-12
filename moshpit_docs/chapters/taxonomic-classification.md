@@ -39,7 +39,69 @@ kernelspec:
 > For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
 
 ```{code-cell}
-print(2 + 2)
+qiime fondue get-all \
+  --i-accession-ids ncbi-accession-i-ds-0.qza \
+  --p-email YOUR.EMAIL@domain.com \
+  --p-n-jobs 5 \
+  --p-retries 5 \
+  --p-log-level DEBUG \
+  --o-paired-reads paired-reads-0.qza \
+  --o-metadata XX_metadata \
+  --o-single-reads XX_single_reads \
+  --o-failed-runs XX_failed_runs
+```
+
+```{code-cell}
+qiime moshpit build-kraken-db \
+  --p-collection pluspf \
+  --p-threads 1 \
+  --p-kmer-len 35 \
+  --p-minimizer-len 31 \
+  --p-minimizer-spaces 7 \
+  --p-no-no-masking \
+  --p-max-db-size 0 \
+  --p-no-use-ftp \
+  --p-load-factor 0.7 \
+  --p-no-fast-build \
+  --o-kraken2-database kraken2-database-0.qza \
+  --o-bracken-database bracken-database-0.qza
+```
+
+```{code-cell}
+qiime moshpit classify-kraken2 \
+  --i-seqs paired-reads-0.qza \
+  --i-kraken2-db kraken2-database-0.qza \
+  --p-threads 72 \
+  --p-confidence 0.5 \
+  --p-minimum-base-quality 0 \
+  --p-no-memory-mapping \
+  --p-minimum-hit-groups 2 \
+  --p-no-quick \
+  --p-report-minimizer-data \
+  --o-reports reports-0.qza \
+  --o-hits XX_hits
+```
+
+```{code-cell}
+qiime moshpit estimate-bracken \
+  --i-kraken-reports reports-0.qza \
+  --i-bracken-db bracken-database-0.qza \
+  --p-threshold 5 \
+  --p-read-len 150 \
+  --p-level S \
+  --o-taxonomy taxonomy-0.qza \
+  --o-table table-0.qza \
+  --o-reports XX_reports
+```
+
+```{code-cell}
+qiime taxa filter-table \
+  --i-table table-0.qza \
+  --i-taxonomy taxonomy-0.qza \
+  --p-exclude Unclassified \
+  --p-query-delimiter , \
+  --p-mode contains \
+  --o-filtered-table filtered-table-0.qza
 ```
 
 ### Kaiju: Protein-Based Classification Tool
