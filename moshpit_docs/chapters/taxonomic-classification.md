@@ -111,6 +111,8 @@ qiime taxa filter-table \
 >
 > For more information on Kaiju, consult [Menzel et al., 2016](https://www.nature.com/articles/ncomms11257).
 
+Firstly we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
+
 ```{code-cell}
 qiime fondue get-all \
   --i-accession-ids ncbi-accession-i-ds-0.qza \
@@ -124,30 +126,28 @@ qiime fondue get-all \
   --o-failed-runs XX_failed_runs
 ```
 
+Then we download the reference [nr_euk](https://bioinformatics-centre.github.io/kaiju/downloads.html) database for kaiju that includes both prokaryotes and eukaryotes (more info on the [taxa](https://github.com/bioinformatics-centre/kaiju/blob/master/util/kaiju-taxonlistEuk.tsv)).
+
 ```{code-cell}
 qiime moshpit fetch-kaiju-db \
   --p-database-type nr_euk \
   --o-database database-0.qza
 ```
 
+We run kaiju enabling greedy mode using the paired reads as a query and the nr_euk artifact that we generated.
+
 ```{code-cell}
 qiime moshpit classify-kaiju \
   --i-seqs paired-reads-0.qza \
   --i-db database-0.qza \
-  --p-z 16 \
   --p-a greedy \
-  --p-e 3 \
-  --p-m 11 \
-  --p-s 65 \
   --p-evalue 0.01 \
-  --p-x \
   --p-r species \
-  --p-c 0.1 \
-  --p-no-exp \
-  --p-no-u \
   --o-taxonomy taxonomy-0.qza \
   --o-abundances XX_abundances
 ```
+
+Finally we filter the table to remove the unclassified read fraction.
 
 ```{code-cell}
 qiime taxa filter-table \
