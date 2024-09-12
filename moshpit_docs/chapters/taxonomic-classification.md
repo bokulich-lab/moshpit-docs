@@ -38,34 +38,31 @@ kernelspec:
 >
 > For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
 
+First we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
+
 ```{code-cell}
 qiime fondue get-all \
   --i-accession-ids ncbi-accession-i-ds-0.qza \
   --p-email YOUR.EMAIL@domain.com \
   --p-n-jobs 5 \
   --p-retries 5 \
-  --p-log-level DEBUG \
   --o-paired-reads paired-reads-0.qza \
   --o-metadata XX_metadata \
   --o-single-reads XX_single_reads \
   --o-failed-runs XX_failed_runs
 ```
 
+To use Kraken we need to download a reference database, in this case we select the pluspf database which contains the Standard plus Refeq protozoa & fungi sequences [(more info)](https://benlangmead.github.io/aws-indexes/k2).
+
 ```{code-cell}
 qiime moshpit build-kraken-db \
   --p-collection pluspf \
-  --p-threads 1 \
-  --p-kmer-len 35 \
-  --p-minimizer-len 31 \
-  --p-minimizer-spaces 7 \
-  --p-no-no-masking \
-  --p-max-db-size 0 \
-  --p-no-use-ftp \
-  --p-load-factor 0.7 \
-  --p-no-fast-build \
   --o-kraken2-database kraken2-database-0.qza \
-  --o-bracken-database bracken-database-0.qza
+  --o-bracken-database bracken-database-0.qza \
+  --verbose
 ```
+
+We use the classify-kraken2 command to run kraken2 using the paired reads as a query and the pluspf artifact that we generated.
 
 ```{code-cell}
 qiime moshpit classify-kraken2 \
@@ -76,11 +73,14 @@ qiime moshpit classify-kraken2 \
   --p-minimum-base-quality 0 \
   --p-no-memory-mapping \
   --p-minimum-hit-groups 2 \
-  --p-no-quick \
   --p-report-minimizer-data \
   --o-reports reports-0.qza \
-  --o-hits XX_hits
+  --verbose
 ```
+
+[Bracken](https://ccb.jhu.edu/software/bracken/) is a related tool that additionally estimates relative abundances of species or genera.
+In order to use this tool we need the bracken database that was generated before.
+
 
 ```{code-cell}
 qiime moshpit estimate-bracken \
@@ -93,6 +93,8 @@ qiime moshpit estimate-bracken \
   --o-table table-0.qza \
   --o-reports XX_reports
 ```
+
+Finally we filter the table to remove the unclassified read fraction.
 
 ```{code-cell}
 qiime taxa filter-table \
@@ -156,3 +158,29 @@ qiime taxa filter-table \
   --p-mode contains \
   --o-filtered-table filtered-table-0.qza
   ```
+
+### Kraken 2: MAG Classification
+Kraken can also be used to obtain a classification of metagenome assembled genomes (MAGs), in this example we use this tool to classify a subset of dereplicated MAGs.
+
+```{code-cell}
+qiime moshpit classify-kraken2 \
+  --i-seqs dereplicated-mags-0.qza \
+  --i-kraken2-db kraken2-database-0.qza \
+  --p-threads 72 \
+  --p-confidence 0.5 \
+  --p-minimum-base-quality 0 \
+  --p-no-memory-mapping \
+  --p-minimum-hit-groups 2 \
+  --p-no-quick \
+  --p-report-minimizer-data \
+  --o-hits hits-0.qza \
+  --o-reports reports-0.qza
+  ```
+
+```{code-cell}
+qiime moshpit kraken2-to-mag-features \
+  --i-reports reports-0.qza \
+  --i-hits hits-0.qza \
+  --p-coverage-threshold 0.1 \
+  --o-taxonomy taxonomy-0.qza
+ ```
