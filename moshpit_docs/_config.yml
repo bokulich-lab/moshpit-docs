@@ -6,9 +6,6 @@ author: The Bokulich Lab
 
 sphinx:
   config:
-   myst_enable_extensions: [
-      "amsmath", "colon_fence", "deflist", "dollarmath", "html_admonition", "html_image", "admonition"
-    ]
     html_theme_options:
       logo:
         image_light: logo_light.svg
