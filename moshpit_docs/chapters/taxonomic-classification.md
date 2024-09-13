@@ -177,6 +177,8 @@ qiime moshpit classify-kraken2 \
   --o-reports reports-0.qza
   ```
 
+Finally we create a taxonomy table for the MAGs.
+
 ```{code-cell}
 qiime moshpit kraken2-to-mag-features \
   --i-reports reports-0.qza \
