@@ -29,14 +29,21 @@ kernelspec:
 > - **DNA-to-DNA Classification (BLASTn-like):** This type compares DNA sequences from the sample directly to DNA sequences from reference databases. It is ideal for detecting organisms with available genomic sequences and is more accurate but may miss organisms that are poorly represented in genomic databases.
 > - **DNA-to-Protein Classification (BLASTx-like):** This classification translates DNA reads into potential protein sequences and compares them to known protein databases. This is useful for identifying organisms based on conserved protein functions, which can be helpful when nucleotide sequences are too divergent to yield results through DNA-to-DNA methods.
 > - **Marker-Based Classification:** Marker-based classification focuses on specific genetic markers that are conserved within certain taxonomic groups. These markers are known for their taxonomic relevance, allowing more precise identification at various taxonomic levels.
->   
->   For more information and a benchmark, consult [Ye et al., 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)30775-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867419307755%3Fshowall%3Dtrue).
+>
+
+```{seealso}
+For more information and a benchmark, consult [Ye et al., 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)30775-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867419307755%3Fshowall%3Dtrue).
+```
+
 
 ### Kraken 2: DNA-to-DNA Classification Tool
 >
 > Kraken 2 is a DNA-to-DNA classification tool that assigns taxonomic labels to reads by directly comparing k-mers (short DNA sequence fragments of a fixed length, typically 31 base pairs) from the query read to a database of known sequences. Kraken 2 classifies the read based on the majority of k-mer matches within the read, providing fast and accurate taxonomic classification.
 >
-> For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
+
+```{seealso}
+For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
+```
 
 First we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
 
@@ -52,7 +59,9 @@ qiime fondue get-all \
   --o-failed-runs XX_failed_runs
 ```
 
+```{note}
 To use Kraken we need to download a reference database, in this case we select the pluspf database which contains the Standard plus Refeq protozoa & fungi sequences [(more info)](https://benlangmead.github.io/aws-indexes/k2).
+```
 
 ```{code-cell}
 qiime moshpit build-kraken-db \
@@ -78,9 +87,10 @@ qiime moshpit classify-kraken2 \
   --verbose
 ```
 
+```{seealso}
 [Bracken](https://ccb.jhu.edu/software/bracken/) is a related tool that additionally estimates relative abundances of species or genera.
 In order to use this tool we need the bracken database that was generated before.
-
+```
 
 ```{code-cell}
 qiime moshpit estimate-bracken \
@@ -109,7 +119,10 @@ qiime taxa filter-table \
 ### Kaiju: Protein-Based Classification Tool
 > Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads against a reference database of protein sequences.
 >
-> For more information on Kaiju, consult [Menzel et al., 2016](https://www.nature.com/articles/ncomms11257).
+> 
+```{seealso}
+For more information on Kaiju, consult [Menzel et al., 2016](https://www.nature.com/articles/ncomms11257).
+```
 
 Firstly we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
 
