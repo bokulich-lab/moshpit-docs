@@ -35,7 +35,6 @@ The outcome of read classification is heavily influenced by the selection of ref
 For more information and a benchmark, consult [Ye et al., 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)30775-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867419307755%3Fshowall%3Dtrue).
 ```
 
-
 ### Kraken 2: DNA-to-DNA Classification Tool
 
  Kraken 2 is a DNA-to-DNA classification tool that assigns taxonomic labels to reads by directly comparing k-mers (short DNA sequence fragments of a fixed length, typically 31 base pairs) from the query read to a database of known sequences. Kraken 2 classifies the read based on the majority of k-mer matches within the read, providing fast and accurate taxonomic classification.
@@ -44,6 +43,18 @@ For more information and a benchmark, consult [Ye et al., 2019](https://www.cell
 ```{seealso}
 For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
 ```
+
+### Kaiju: Protein-Based Classification Tool
+ Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads against a reference database of protein sequences.
+
+ 
+```{seealso}
+For more information on Kaiju, consult [Menzel et al., 2016](https://www.nature.com/articles/ncomms11257).
+```
+
+## Read-Based Classification commands
+
+### Kraken 2: DNA-to-DNA Classification
 
 First we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
 
@@ -116,13 +127,7 @@ qiime taxa filter-table \
   --o-filtered-table filtered-table-0.qza
 ```
 
-### Kaiju: Protein-Based Classification Tool
- Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads against a reference database of protein sequences.
-
- 
-```{seealso}
-For more information on Kaiju, consult [Menzel et al., 2016](https://www.nature.com/articles/ncomms11257).
-```
+### Kaiju: Protein-Based Classification 
 
 Firstly we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
 
