@@ -17,7 +17,7 @@ kernelspec:
 ## Background
 Metagenome-assembled genomes (MAGs) are genomes reconstructed directly from DNA from complex microbial mixtures without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.
 
-This workflow describes a step-by-step process for metagenome-assembled genome (MAG) recovery using `qiime2` and other tools. Each command includes explanations of the parameters used. 
+This workflow describes a step-by-step process for metagenome-assembled genome (MAG) recovery using `QIIME2` and other tools. Each command includes explanations of the parameters used. 
 
 ```{tip}
 Genome assembly can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.
@@ -35,7 +35,7 @@ Genome assembly can be highly resource-intensive. Ensure that your system has su
 - QIIME 2: [https://qiime2.org/](https://qiime2.org/)
 
 ## Assemble contigs with MEGAHIT
-The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
+The first step in recovering MAGs is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
 
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
@@ -55,9 +55,6 @@ qiime assembly assemble-megahit \
 - Alternatively, you can also use qiime assembly assemble-spades to assemble contigs with `SPAdes`.
 - `p-coassemble` parameter can be TRUE if you wish to co-assemble reads into contigs from all samples.
 
-```{note}
-Make sure to allocate appropriate CPU and memory resources based on your system's capacity.
-```
 ## Contig QC with QUAST
 Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many metrics which can be used for that purpose but here we will focus on the two most popular metrics:
 
@@ -187,7 +184,7 @@ This step dereplicates the filtered MAGs, ensuring that only unique MAGs are ret
 qiime moshpit dereplicate-mags \
   --i-mags filtered-mags-0.qza \                    
   --i-distance-matrix compare-output-0.qza \       
-  --p-threshold 0.99 \                              # Similarity threshold for dereplication (99%)
+  --p-threshold 0.99 \   # Similarity threshold for dereplication (99%)
   --o-dereplicated-mags dereplicated-mags-0.qza \   
   --o-feature-table dereplicated-mags-ft-0.qza  \
   --verbose              
