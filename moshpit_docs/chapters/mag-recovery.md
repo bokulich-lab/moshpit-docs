@@ -17,17 +17,13 @@ kernelspec:
 ## Background
 Metagenome-assembled genomes (MAGs) are genomes reconstructed directly from environmental DNA samples without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.
 
-```{important}
-Understanding microbial diversity through MAGs is crucial for ecological studies, biotechnological applications, and advancing our knowledge of microbiomes in health and disease.
-```
-
 This workflow describes a step-by-step process for metagenome-assembled genome (MAG) recovery using `qiime2` and other tools. Each command includes explanations of the parameters used. 
 
 ```{tip}
 Genome assembly can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.
 ```
-```{see also}
-For more information on each tool, refer to their official documentation:
+
+*For more information on each tool, refer to their official documentation*:
 
 - MEGAHIT: [https://github.com/voutcn/megahit](https://github.com/voutcn/megahit)
 - SPAdes: [http://cab.spbu.ru/software/spades/](http://cab.spbu.ru/software/spades/)
@@ -37,7 +33,6 @@ For more information on each tool, refer to their official documentation:
 - Sourmash: [https://sourmash.readthedocs.io/](https://sourmash.readthedocs.io/)
 - Kraken2: [https://github.com/DerrickWood/kraken2/wiki](https://github.com/DerrickWood/kraken2/wiki)
 - QIIME 2: [https://qiime2.org/](https://qiime2.org/)
-```
 
 ## Assemble contigs with MEGAHIT
 The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
