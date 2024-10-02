@@ -15,7 +15,7 @@ kernelspec:
 # Recovery of MAGs
 
 ## Background
-Metagenome-assembled genomes (MAGs) are genomes reconstructed directly from environmental DNA samples without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.
+Metagenome-assembled genomes (MAGs) are genomes reconstructed directly from DNA from complex microbial mixtures without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.
 
 This workflow describes a step-by-step process for metagenome-assembled genome (MAG) recovery using `qiime2` and other tools. Each command includes explanations of the parameters used. 
 
