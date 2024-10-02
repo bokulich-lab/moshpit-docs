@@ -52,7 +52,7 @@ qiime assembly assemble-megahit \
   --o-contigs contigs-0.qza \
   --verbose   
 ```
-- Alternatively, you can also use qiime assembly assemble-spades to assemble contigs with `SPAdes`.
+- Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
 - `p-coassemble` parameter can be TRUE if you wish to co-assemble reads into contigs from all samples.
 
 ## Contig QC with QUAST
@@ -134,7 +134,7 @@ qiime moshpit evaluate-busco \
 ```
 
 ```{note}
- To examine our QIIME 2 Visualizations you can use QIIME 2 View (view.qiime2.org).
+ To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
 ```
 
 ## Filter MAGs
@@ -283,5 +283,5 @@ qiime taxa barplot \
 ```
 
 ```{note}
- To examine our QIIME 2 Visualizations you can use QIIME 2 View (view.qiime2.org).
+  To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
 ```
