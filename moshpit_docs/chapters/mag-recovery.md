@@ -15,15 +15,15 @@ kernelspec:
 # Recovery of MAGs
 
 ## Background
-Metagenome-assembled genomes (MAGs) are genomes reconstructed directly from DNA from complex microbial mixtures without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.
+**Metagenome-assembled genomes (MAGs)** are genomes reconstructed directly from DNA from complex microbial mixtures without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.
 
-This workflow describes a step-by-step process for metagenome-assembled genome (MAG) recovery using `QIIME2` and other tools. Each command includes explanations of the parameters used. 
+This workflow describes a step-by-step process for MAGs recovery using `QIIME2`. Each command includes explanations of the parameters used. 
 
 ```{tip}
 Genome assembly can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.
 ```
 
-*For more information on each tool, refer to their official documentation*:
+**For more information on each tool used in this workflow, refer to their official documentation:**
 
 - MEGAHIT: [https://github.com/voutcn/megahit](https://github.com/voutcn/megahit)
 - SPAdes: [http://cab.spbu.ru/software/spades/](http://cab.spbu.ru/software/spades/)
@@ -53,7 +53,7 @@ qiime assembly assemble-megahit \
   --verbose   
 ```
 - Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
-- `p-coassemble` parameter can be TRUE if you wish to co-assemble reads into contigs from all samples.
+- `--p-coassemble` parameter can be set to "TRUE" if you wish to co-assemble reads into contigs from all samples.
 
 ## Contig QC with QUAST
 Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many metrics which can be used for that purpose but here we will focus on the two most popular metrics:
