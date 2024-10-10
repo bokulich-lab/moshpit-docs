@@ -7,3 +7,4 @@ chapters:
 - file: chapters/mag-recovery
 - file: chapters/taxonomic-classification
 - file: chapters/functional-annotation
+- file: chapters/filtering
