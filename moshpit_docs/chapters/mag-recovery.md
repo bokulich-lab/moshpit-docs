@@ -34,6 +34,10 @@ Genome assembly can be highly resource-intensive. Ensure that your system has su
 - Kraken2: [https://github.com/DerrickWood/kraken2/wiki](https://github.com/DerrickWood/kraken2/wiki)
 - QIIME 2: [https://qiime2.org/](https://qiime2.org/)
 
+```{note}
+ To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
+```
+
 ## Assemble contigs with MEGAHIT
 The first step in recovering MAGs is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
 
@@ -41,6 +45,9 @@ The first step in recovering MAGs is genome assembly itself. There are many geno
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
 - The `--p-cpu-threads` specifies the number of CPU threads to use during assembly.
 
+```{warning}
+`--p-coassemble` parameter can be set to "TRUE" if you wish to co-assemble reads into contigs from all samples. **This parameter is still under development**.
+```
 ```{code-cell}
 qiime assembly assemble-megahit \
   --i-seqs paired-reads-0.qza \
@@ -53,7 +60,7 @@ qiime assembly assemble-megahit \
   --verbose   
 ```
 - Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
-- `--p-coassemble` parameter can be set to "TRUE" if you wish to co-assemble reads into contigs from all samples.
+
 
 ## Contig QC with QUAST
 Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many metrics which can be used for that purpose but here we will focus on the two most popular metrics:
@@ -123,6 +130,18 @@ From now on, we will focus on the mags-0.qza
 ## Evaluate bins with BUSCO
 This step evaluates the completeness and quality of the MAGs using the BUSCO tool, which checks for the presence of single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.
 
+First we will use `qiime moshpit fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes (bacteria and archaea), or eukaryotes.
+
+- The `--p-prok` True parameter specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).
+
+```{code-cell}
+ qiime moshpit fetch-busco-db \
+ --p-prok True \
+ --o-busco-db busco-db-0.qza \
+ --verbose
+```
+
+Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.
 ```{code-cell}
 qiime moshpit evaluate-busco \
   --i-bins mags-0.qza \                             
@@ -132,10 +151,7 @@ qiime moshpit evaluate-busco \
   --o-visualization mags-qc-visualization-0.qzv \  
   --verbose                 
 ```
-
-```{note}
- To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
-```
+- The `--p-lineage-dataset bacteria_odb10` parameter specifies the particular lineage dataset to use, in this case, the bacteria_odb10 dataset. This is a standard database for bacterial genomes.
 
 ## Filter MAGs
 This step filters the MAGs based on completeness. In this example, we filter out any MAGs with completeness below 50%. The filtering process ensures only high-quality genomes are kept for downstream analysis.
@@ -282,6 +298,3 @@ qiime taxa barplot \
  --verbose
 ```
 
-```{note}
-  To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
-```
