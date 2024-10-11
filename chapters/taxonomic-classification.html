@@ -324,9 +324,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-classification-overview">Read-Based Classification Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-dna-to-dna-classification-tool">Kraken 2: DNA-to-DNA Classification Tool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kaiju-protein-based-classification-tool">Kaiju: Protein-Based Classification Tool</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-classification-commands">Read-Based Classification commands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-dna-to-dna-classification">Kraken 2: DNA-to-DNA Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kaiju-protein-based-classification">Kaiju: Protein-Based Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-mag-classification">Kraken 2: MAG Classification</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -340,43 +348,220 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="taxonomic-classification">
 <h1>Taxonomic classification<a class="headerlink" href="#taxonomic-classification" title="Link to this heading">#</a></h1>
-<p>Jupyter Book also lets you write text-based notebooks using MyST Markdown.
-See <a class="reference external" href="https://jupyterbook.org/file-types/myst-notebooks.html">the Notebooks with MyST Markdown documentation</a> for more detailed instructions.
-This page shows off a notebook written in MyST Markdown.</p>
-<section id="an-example-cell">
-<h2>An example cell<a class="headerlink" href="#an-example-cell" title="Link to this heading">#</a></h2>
-<p>With MyST Markdown, you can define code cells with a directive like so:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
+<section id="read-based-classification-overview">
+<h2>Read-Based Classification Overview<a class="headerlink" href="#read-based-classification-overview" title="Link to this heading">#</a></h2>
+<p><strong>What is the goal of read-Based classification?</strong></p>
+<p>Read-based classification is commonly used to determine the taxonomic groups present within a given sample. This technique is useful for assessing the biodiversity or the composition of microbial communities by assigning DNA reads to known organisms. One significant advantage of read-based classification is that it allows for the classification of all reads, including those that may not be directly involved in downstream analyses (e.g. assemblies or MAGs).</p>
+<p><strong>Key Factors Influencing Read Classification:</strong></p>
+<p>The outcome of read classification is heavily influenced by the selection of reference databases. These databases vary in size, quality, and scope, which means that the more comprehensive and accurate the reference database is, the more accurate the classification of reads will be. Some databases might be specific to certain taxonomic groups, while others could provide a broader reference, potentially affecting the results depending on the sample type and research goals.</p>
+<p><strong>Types of Read-Based Classification:</strong></p>
+<ul class="simple">
+<li><p><strong>DNA-to-DNA Classification (BLASTn-like):</strong> This type compares DNA sequences from the sample directly to DNA sequences from reference databases. It is ideal for detecting organisms with available genomic sequences and is more accurate but may miss organisms that are poorly represented in genomic databases.</p></li>
+<li><p><strong>DNA-to-Protein Classification (BLASTx-like):</strong> This classification translates DNA reads into potential protein sequences and compares them to known protein databases. This is useful for identifying organisms based on conserved protein functions, which can be helpful when nucleotide sequences are too divergent to yield results through DNA-to-DNA methods.</p></li>
+<li><p><strong>Marker-Based Classification:</strong> Marker-based classification focuses on specific genetic markers that are conserved within certain taxonomic groups. These markers are known for their taxonomic relevance, allowing more precise identification at various taxonomic levels.</p></li>
+</ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>Jupyter Book uses <a class="reference external" href="https://jupytext.readthedocs.io/en/latest/">Jupytext</a> to convert text-based files to notebooks, and can support <a class="reference external" href="https://jupyterbook.org/file-types/jupytext.html">many other text-based notebook files</a>.</p>
+<p>For more information and a benchmark, consult <a class="reference external" href="https://www.cell.com/cell/fulltext/S0092-8674(19)30775-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867419307755%3Fshowall%3Dtrue">Ye et al., 2019</a>.</p>
+</div>
+<section id="kraken-2-dna-to-dna-classification-tool">
+<h3>Kraken 2: DNA-to-DNA Classification Tool<a class="headerlink" href="#kraken-2-dna-to-dna-classification-tool" title="Link to this heading">#</a></h3>
+<p>Kraken 2 is a DNA-to-DNA classification tool that assigns taxonomic labels to reads by directly comparing k-mers (short DNA sequence fragments of a fixed length, typically 31 base pairs) from the query read to a database of known sequences. Kraken 2 classifies the read based on the majority of k-mer matches within the read, providing fast and accurate taxonomic classification.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>For more information on Kraken 2, consult <a class="reference external" href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Wood et al., 2019</a>.</p>
 </div>
 </section>
-<section id="create-a-notebook-with-myst-markdown">
-<h2>Create a notebook with MyST Markdown<a class="headerlink" href="#create-a-notebook-with-myst-markdown" title="Link to this heading">#</a></h2>
-<p>MyST Markdown notebooks are defined by two things:</p>
-<ol class="arabic simple">
-<li><p>YAML metadata that is needed to understand if / how it should convert text files to notebooks (including information about the kernel needed).
-See the YAML at the top of this page for example.</p></li>
-<li><p>The presence of <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> directives, which will be executed with your book.</p></li>
-</ol>
-<p>That’s all that is needed to get started!</p>
+<section id="kaiju-protein-based-classification-tool">
+<h3>Kaiju: Protein-Based Classification Tool<a class="headerlink" href="#kaiju-protein-based-classification-tool" title="Link to this heading">#</a></h3>
+<p>Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads against a reference database of protein sequences.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>For more information on Kaiju, consult <a class="reference external" href="https://www.nature.com/articles/ncomms11257">Menzel et al., 2016</a>.</p>
+</div>
 </section>
-<section id="quickly-add-yaml-metadata-for-myst-notebooks">
-<h2>Quickly add YAML metadata for MyST Notebooks<a class="headerlink" href="#quickly-add-yaml-metadata-for-myst-notebooks" title="Link to this heading">#</a></h2>
-<p>If you have a markdown file and you’d like to quickly add YAML metadata to it, so that Jupyter Book will treat it as a MyST Markdown Notebook, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">markdownfile</span><span class="o">.</span><span class="n">md</span>
+</section>
+<section id="read-based-classification-commands">
+<h2>Read-Based Classification commands<a class="headerlink" href="#read-based-classification-commands" title="Link to this heading">#</a></h2>
+<section id="kraken-2-dna-to-dna-classification">
+<h3>Kraken 2: DNA-to-DNA Classification<a class="headerlink" href="#kraken-2-dna-to-dna-classification" title="Link to this heading">#</a></h3>
+<p>First we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">fondue</span> <span class="n">get</span><span class="o">-</span><span class="nb">all</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">accession</span><span class="o">-</span><span class="n">ids</span> <span class="n">ncbi</span><span class="o">-</span><span class="n">accession</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">email</span> <span class="n">YOUR</span><span class="o">.</span><span class="n">EMAIL</span><span class="nd">@domain</span><span class="o">.</span><span class="n">com</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">n</span><span class="o">-</span><span class="n">jobs</span> <span class="mi">5</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">retries</span> <span class="mi">5</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">paired</span><span class="o">-</span><span class="n">reads</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">metadata</span> <span class="n">XX_metadata</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">single</span><span class="o">-</span><span class="n">reads</span> <span class="n">XX_single_reads</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">failed</span><span class="o">-</span><span class="n">runs</span> <span class="n">XX_failed_runs</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To use Kraken we need to download a reference database, in this case we select the pluspf database which contains the Standard plus Refeq protozoa &amp; fungi sequences <a class="reference external" href="https://benlangmead.github.io/aws-indexes/k2">(more info)</a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">build</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">collection</span> <span class="n">pluspf</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">database</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">database</span> <span class="n">bracken</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use the classify-kraken2 command to run kraken2 using the paired reads as a query and the pluspf artifact that we generated.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.5</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">quality</span> <span class="mi">0</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">mapping</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">hit</span><span class="o">-</span><span class="n">groups</span> <span class="mi">2</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">report</span><span class="o">-</span><span class="n">minimizer</span><span class="o">-</span><span class="n">data</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://ccb.jhu.edu/software/bracken/">Bracken</a> is a related tool that additionally estimates relative abundances of species or genera.
+In order to use this tool we need the bracken database that was generated before.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">estimate</span><span class="o">-</span><span class="n">bracken</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">reports</span> <span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">db</span> <span class="n">bracken</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mi">5</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="nb">len</span> <span class="mi">150</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">level</span> <span class="n">S</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">taxonomy</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">table</span> <span class="n">table</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="n">XX_reports</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally we filter the table to remove the unclassified read fraction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="n">table</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">taxonomy</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">exclude</span> <span class="n">Unclassified</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">query</span><span class="o">-</span><span class="n">delimiter</span> <span class="p">,</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">mode</span> <span class="n">contains</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">table</span> <span class="n">filtered</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kaiju-protein-based-classification">
+<h3>Kaiju: Protein-Based Classification<a class="headerlink" href="#kaiju-protein-based-classification" title="Link to this heading">#</a></h3>
+<p>Firstly we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">fondue</span> <span class="n">get</span><span class="o">-</span><span class="nb">all</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">accession</span><span class="o">-</span><span class="n">ids</span> <span class="n">ncbi</span><span class="o">-</span><span class="n">accession</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">email</span> <span class="n">YOUR</span><span class="o">.</span><span class="n">EMAIL</span><span class="nd">@domain</span><span class="o">.</span><span class="n">com</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">n</span><span class="o">-</span><span class="n">jobs</span> <span class="mi">5</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">retries</span> <span class="mi">5</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">level</span> <span class="n">DEBUG</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">paired</span><span class="o">-</span><span class="n">reads</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">metadata</span> <span class="n">XX_metadata</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">single</span><span class="o">-</span><span class="n">reads</span> <span class="n">XX_single_reads</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">failed</span><span class="o">-</span><span class="n">runs</span> <span class="n">XX_failed_runs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we download the reference <a class="reference external" href="https://bioinformatics-centre.github.io/kaiju/downloads.html">nr_euk</a> database for kaiju that includes both prokaryotes and eukaryotes (more info on the <a class="reference external" href="https://github.com/bioinformatics-centre/kaiju/blob/master/util/kaiju-taxonlistEuk.tsv">taxa</a>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">kaiju</span><span class="o">-</span><span class="n">db</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="nb">type</span> <span class="n">nr_euk</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We run kaiju enabling greedy mode using the paired reads as a query and the nr_euk artifact that we generated.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kaiju</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">a</span> <span class="n">greedy</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">evalue</span> <span class="mf">0.01</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">r</span> <span class="n">species</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">taxonomy</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">abundances</span> <span class="n">XX_abundances</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally we filter the table to remove the unclassified read fraction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="n">feature</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="n">frequency</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">taxonomy</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">exclude</span> <span class="n">unclassified</span><span class="p">,</span><span class="n">belong</span><span class="p">,</span><span class="n">cannot</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">query</span><span class="o">-</span><span class="n">delimiter</span> <span class="p">,</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">mode</span> <span class="n">contains</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">table</span> <span class="n">filtered</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kraken-2-mag-classification">
+<h3>Kraken 2: MAG Classification<a class="headerlink" href="#kraken-2-mag-classification" title="Link to this heading">#</a></h3>
+<p>Kraken can also be used to obtain a classification of metagenome assembled genomes (MAGs), in this example we use this tool to classify a subset of dereplicated MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.5</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">quality</span> <span class="mi">0</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">mapping</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">hit</span><span class="o">-</span><span class="n">groups</span> <span class="mi">2</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">quick</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">report</span><span class="o">-</span><span class="n">minimizer</span><span class="o">-</span><span class="n">data</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">hits</span> <span class="n">hits</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally we create a taxonomy table for the MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">features</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reports</span> <span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">hits</span> <span class="n">hits</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">coverage</span><span class="o">-</span><span class="n">threshold</span> <span class="mf">0.1</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">taxonomy</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -444,9 +629,17 @@ See the YAML at the top of this page for example.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-classification-overview">Read-Based Classification Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-dna-to-dna-classification-tool">Kraken 2: DNA-to-DNA Classification Tool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kaiju-protein-based-classification-tool">Kaiju: Protein-Based Classification Tool</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-classification-commands">Read-Based Classification commands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-dna-to-dna-classification">Kraken 2: DNA-to-DNA Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kaiju-protein-based-classification">Kaiju: Protein-Based Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-mag-classification">Kraken 2: MAG Classification</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
