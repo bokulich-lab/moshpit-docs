@@ -19,8 +19,8 @@ kernelspec:
 
 This workflow describes a step-by-step process for MAGs recovery using `QIIME2`. Each command includes explanations of the parameters used. 
 
-```{tip}
-Genome assembly can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.
+```{warning}
+Genome assembly and contig binning can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.
 ```
 
 **For more information on each tool used in this workflow, refer to their official documentation:**
