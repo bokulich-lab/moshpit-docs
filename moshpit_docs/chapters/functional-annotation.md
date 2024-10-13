@@ -21,6 +21,8 @@ This process provides insights into the genes that code for enzymes, transporter
 
 This workflow outlines the step-by-step process for functional annotation of MAGs or contigs using tools like EggNOG and the Diamond aligner in `QIIME2`. Each step is explained with the relevant parameters for accurate functional insights.
 
+**FOR MICHAL: PASTE WORKFLOW IMAGE HERE?**
+
 ```{note}
 Functional annotation can be performed on fully reconstructed **MAGs** or directly on **contigs** (the contiguous sequences assembled from sequencing reads). Annotating **contigs** can provide early insights into important functional genes even before complete genomes are assembled.
 
@@ -31,9 +33,9 @@ Functional annotation can be highly resource-intensive. Ensure that your system 
 ```
 **For more information on each tool used in this workflow, refer to their official documentation:**
 
-- EggNOG: [http://eggnog-db.embl.de/](http://eggnog-db.embl.de/)
+- EggNOG-mapper: [https://github.com/eggnogdb/eggnog-mapper](https://github.com/eggnogdb/eggnog-mapper)
 - DIAMOND: [https://github.com/bbuchfink/diamond](https://github.com/bbuchfink/diamond)
-- QIIME 2: [https://qiime2.org/](https://qiime2.org/)
+- QIIME 2: [https://github.com/qiime2](https://github.com/qiime2)
 
 ```{note}
  To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
@@ -99,7 +101,7 @@ qiime moshpit extract-annotations \
 ```
 
 ## Multiply tables
-This steps simply calculates the dot product of two feature tables with matching dimensions. If table 1 has shape (M x N) and table 2 has shape (N x P), the resulting table will have shape (M x P). Note that the tables must be identical in the N dimension.
+This steps simply calculates the dot product of the `eggnog-hits-ft-dereplicated-mags-0.qza` and `caz-dereplicated-mags-0.qza` feature tables. This is useful for combining the annotation data (e.g., **CAZymes**) with other features (e.g., MAG hits) to determine how specific functional annotations are distributed across MAGs. 
 
 ```{code-cell}
 qiime moshpit multiply-tables \
@@ -110,7 +112,7 @@ qiime moshpit multiply-tables \
 ```
 
 ## Let's have a look at our CAZymes functional diversity!
-We will again start by calculating Bray-curtis beta diversity matrix.
+We will start by calculating Bray-curtis beta diversity matrix.
 
 ```{code-cell}
 qiime diversity beta \
@@ -133,4 +135,7 @@ qiime emperor plot \
   --i-pcoa braycurtis-caz-dereplicated-mags-pcoa.qza \
   --m-metadata-file metadata.qza \
   --o-visualization braycurtis-caz-dereplicated-mags-pcoa.qzv
+```
+```{tip}
+Try this visualization tip! We recommend visualizing the `braycurtis-caz-dereplicated-mags-pcoa.qzv` output in QIIME 2 View (view.qiime2.org). Once your visualization displays, click on the `Color` tab in the top right and select `scatter:seed` on the first tab to color your samples by seed. Then click on the `Animations` tab and choose `timepoint` as gradient and `seed` as trajectory. Now, press play!
 ```

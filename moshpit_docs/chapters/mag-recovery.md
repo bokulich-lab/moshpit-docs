@@ -19,6 +19,8 @@ kernelspec:
 
 This workflow describes a step-by-step process for MAGs recovery using `QIIME2`. Each command includes explanations of the parameters used. 
 
+**FOR MICHAL: PASTE WORKFLOW IMAGE HERE?**
+
 ```{warning}
 Genome assembly and contig binning can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.
 ```
@@ -26,13 +28,13 @@ Genome assembly and contig binning can be highly resource-intensive. Ensure that
 **For more information on each tool used in this workflow, refer to their official documentation:**
 
 - MEGAHIT: [https://github.com/voutcn/megahit](https://github.com/voutcn/megahit)
-- SPAdes: [http://cab.spbu.ru/software/spades/](http://cab.spbu.ru/software/spades/)
-- QUAST: [http://quast.sourceforge.net/quast](http://quast.sourceforge.net/quast)
-- MetaBAT: [https://bitbucket.org/berkeleylab/metabat/src/master/](https://bitbucket.org/berkeleylab/metabat/src/master/)
-- BUSCO: [https://busco.ezlab.org/](https://busco.ezlab.org/)
-- Sourmash: [https://sourmash.readthedocs.io/](https://sourmash.readthedocs.io/)
-- Kraken2: [https://github.com/DerrickWood/kraken2/wiki](https://github.com/DerrickWood/kraken2/wiki)
-- QIIME 2: [https://qiime2.org/](https://qiime2.org/)
+- SPAdes: [https://github.com/ablab/spades](https://github.com/ablab/spades)
+- QUAST: [https://github.com/ablab/quast](https://github.com/ablab/quast)
+- MetaBAT: [https://bitbucket.org/berkeleylab/metabat/](https://bitbucket.org/berkeleylab/metabat/)
+- BUSCO: [https://gitlab.com/ezlab/busco](https://gitlab.com/ezlab/busco)
+- Sourmash: [https://github.com/dib-lab/sourmash](https://github.com/dib-lab/sourmash)
+- Kraken2: [https://github.com/DerrickWood/kraken2](https://github.com/DerrickWood/kraken2)
+- QIIME 2: [https://github.com/qiime2](https://github.com/qiime2)
 
 ```{note}
  To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (view.qiime2.org).
@@ -260,9 +262,12 @@ qiime moshpit estimate-mag-abundance \
 ## Let's have a look at our estimated MAG abundance!
 First we will use Kraken 2 to classify provided MAGs into taxonomic groups.
 
+```{note}
+Refer to **Taxonomic classification** section to import your preferred Kraken2 database into `QIIME2` before running `qiime moshpit classify-kraken2`.
+```
+
 - The `--p-confidence` and `--p-minimum-base-quality` are deviations from kraken's defaults.
 - The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
-- The abbreviations in my `output-dir` are the database (`k2pf`), and shorthand for the values I set for confidence (`c60`) and minimum base quality (`mbq20`), respectively.
 
 ```{code-cell}
 qiime moshpit classify-kraken2 \
