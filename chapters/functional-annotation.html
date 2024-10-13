@@ -330,9 +330,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-databases">Required databases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-annotations">Extract annotations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiply-tables">Multiply tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-have-a-look-at-our-cazymes-functional-diversity">Let’s have a look at our CAZymes functional diversity!</a></li>
 </ul>
             </nav>
         </div>
@@ -346,42 +350,167 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="functional-annotation">
 <h1>Functional annotation<a class="headerlink" href="#functional-annotation" title="Link to this heading">#</a></h1>
-<p>Jupyter Book also lets you write text-based notebooks using MyST Markdown.
-See <a class="reference external" href="https://jupyterbook.org/file-types/myst-notebooks.html">the Notebooks with MyST Markdown documentation</a> for more detailed instructions.
-This page shows off a notebook written in MyST Markdown.</p>
-<section id="an-example-cell">
-<h2>An example cell<a class="headerlink" href="#an-example-cell" title="Link to this heading">#</a></h2>
-<p>With MyST Markdown, you can define code cells with a directive like so:</p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Functional annotation of <strong>metagenome-assembled genomes (MAGs)</strong> involves the identification and classification of genes within these reconstructed genomes to understand their roles and potential functions. MAGs are recovered from DNA directly extracted from complex microbial communities, bypassing the need to culture the organisms.</p>
+<p>This process provides insights into the genes that code for enzymes, transporters, and other proteins critical to the survival and function of the microbes in various ecosystems. Annotating these genomes allows for the study of their contributions to nutrient cycles, disease processes, or specialized ecological functions.</p>
+<p>This workflow outlines the step-by-step process for functional annotation of MAGs or contigs using tools like EggNOG and the Diamond aligner in <code class="docutils literal notranslate"><span class="pre">QIIME2</span></code>. Each step is explained with the relevant parameters for accurate functional insights.</p>
+<p><strong>FOR MICHAL: PASTE WORKFLOW IMAGE HERE?</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Functional annotation can be performed on fully reconstructed <strong>MAGs</strong> or directly on <strong>contigs</strong> (the contiguous sequences assembled from sequencing reads). Annotating <strong>contigs</strong> can provide early insights into important functional genes even before complete genomes are assembled.</p>
+<p>In this tutorial, we will focus on functional annotation of our previously reconstructed MAGs (see <strong>Recovery of MAGs section</strong>)</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Functional annotation can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.</p>
+</div>
+<p><strong>For more information on each tool used in this workflow, refer to their official documentation:</strong></p>
+<ul class="simple">
+<li><p>EggNOG-mapper: <a class="github reference external" href="https://github.com/eggnogdb/eggnog-mapper">eggnogdb/eggnog-mapper</a></p></li>
+<li><p>DIAMOND: <a class="github reference external" href="https://github.com/bbuchfink/diamond">bbuchfink/diamond</a></p></li>
+<li><p>QIIME 2: <a class="github reference external" href="https://github.com/qiime2">qiime2</a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (<a class="reference external" href="http://view.qiime2.org">view.qiime2.org</a>).</p>
+</div>
+</section>
+<section id="required-databases">
+<h2>Required databases<a class="headerlink" href="#required-databases" title="Link to this heading">#</a></h2>
+<p>In order to perform the functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using respective QIIME 2 actions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span><span class="o">.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>Jupyter Book uses <a class="reference external" href="https://jupytext.readthedocs.io/en/latest/">Jupytext</a> to convert text-based files to notebooks, and can support <a class="reference external" href="https://jupyterbook.org/file-types/jupytext.html">many other text-based notebook files</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annot</span><span class="o">-</span><span class="n">db</span><span class="o">.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, you can use:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">build-eggnog-diamond-db</span></code> to create a DIAMOND formatted reference database for thespecified taxon.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">build-custom-diamond-db</span></code> to create a DIAMOND formatted reference database from a FASTA input file.</p></li>
+</ul>
+</section>
+<section id="eggnog-search-using-diamond-aligner">
+<h2>EggNOG search using diamond aligner<a class="headerlink" href="#eggnog-search-using-diamond-aligner" title="Link to this heading">#</a></h2>
+<p>Here our dereplicated MAGs are searched against the EggNOG database using the Diamond aligner to identify functional annotations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">search</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequences</span> <span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span><span class="o">.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">memory</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">table</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span><span class="o">-</span><span class="n">ft</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>  \
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
 </div>
 </section>
-<section id="create-a-notebook-with-myst-markdown">
-<h2>Create a notebook with MyST Markdown<a class="headerlink" href="#create-a-notebook-with-myst-markdown" title="Link to this heading">#</a></h2>
-<p>MyST Markdown notebooks are defined by two things:</p>
-<ol class="arabic simple">
-<li><p>YAML metadata that is needed to understand if / how it should convert text files to notebooks (including information about the kernel needed).
-See the YAML at the top of this page for example.</p></li>
-<li><p>The presence of <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> directives, which will be executed with your book.</p></li>
-</ol>
-<p>That’s all that is needed to get started!</p>
-</section>
-<section id="quickly-add-yaml-metadata-for-myst-notebooks">
-<h2>Quickly add YAML metadata for MyST Notebooks<a class="headerlink" href="#quickly-add-yaml-metadata-for-myst-notebooks" title="Link to this heading">#</a></h2>
-<p>If you have a markdown file and you’d like to quickly add YAML metadata to it, so that Jupyter Book will treat it as a MyST Markdown Notebook, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">markdownfile</span><span class="o">.</span><span class="n">md</span>
+<section id="annotate-orthologs-against-eggnog-database">
+<h2>Annotate orthologs against eggNOG database<a class="headerlink" href="#annotate-orthologs-against-eggnog-database" title="Link to this heading">#</a></h2>
+<p>Orthologs in dereplicated MAGs are annotated against the EggNOG database, providing functional insights into the genes and gene products present in the MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annotate</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annot</span><span class="o">-</span><span class="n">db</span><span class="o">.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">memory</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">ortholog</span><span class="o">-</span><span class="n">annotations</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annotations</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="extract-annotations">
+<h2>Extract annotations<a class="headerlink" href="#extract-annotations" title="Link to this heading">#</a></h2>
+<p>This method extract a specific annotation from the table generated by EggNOG and calculates its frequencies across all MAGs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">extract-annotations</span></code> command allows us to extract specific types of functional annotations, such as <strong>CAZymes</strong>, <strong>KEGG pathways</strong>, <strong>COG categories</strong>, or other functional elements, and calculate their frequency across all dereplicated MAGs.</p>
+<p>In this tutorial, we focus on demonstrating the extraction of <strong>CAZymes</strong>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">extract</span><span class="o">-</span><span class="n">annotations</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">ortholog</span><span class="o">-</span><span class="n">annotations</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annotations</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">annotation</span> <span class="n">caz</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="n">evalue</span> <span class="mf">0.0001</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">annotation</span><span class="o">-</span><span class="n">frequency</span> <span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="multiply-tables">
+<h2>Multiply tables<a class="headerlink" href="#multiply-tables" title="Link to this heading">#</a></h2>
+<p>This steps simply calculates the dot product of the <code class="docutils literal notranslate"><span class="pre">eggnog-hits-ft-dereplicated-mags-0.qza</span></code> and <code class="docutils literal notranslate"><span class="pre">caz-dereplicated-mags-0.qza</span></code> feature tables. This is useful for combining the annotation data (e.g., <strong>CAZymes</strong>) with other features (e.g., MAG hits) to determine how specific functional annotations are distributed across MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">multiply</span><span class="o">-</span><span class="n">tables</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table1</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span><span class="o">-</span><span class="n">ft</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table2</span> <span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">result</span><span class="o">-</span><span class="n">table</span> <span class="n">caz</span><span class="o">-</span><span class="n">ft</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="let-s-have-a-look-at-our-cazymes-functional-diversity">
+<h2>Let’s have a look at our CAZymes functional diversity!<a class="headerlink" href="#let-s-have-a-look-at-our-cazymes-functional-diversity" title="Link to this heading">#</a></h2>
+<p>We will start by calculating Bray-curtis beta diversity matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">diversity</span> <span class="n">beta</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="n">caz</span><span class="o">-</span><span class="n">ft</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">metric</span> <span class="n">braycurtis</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="n">braycurtis</span><span class="o">-</span><span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we will generate our PCoA from Bray-curtis matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">diversity</span> <span class="n">pcoa</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="n">braycurtis</span><span class="o">-</span><span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">.</span><span class="n">qza</span>  \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">pcoa</span> <span class="n">braycurtis</span><span class="o">-</span><span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">pcoa</span><span class="o">.</span><span class="n">qza</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualization time!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">emperor</span> <span class="n">plot</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">pcoa</span> <span class="n">braycurtis</span><span class="o">-</span><span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">pcoa</span><span class="o">.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="n">metadata</span><span class="o">.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">braycurtis</span><span class="o">-</span><span class="n">caz</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">pcoa</span><span class="o">.</span><span class="n">qzv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Try this visualization tip! We recommend visualizing the <code class="docutils literal notranslate"><span class="pre">braycurtis-caz-dereplicated-mags-pcoa.qzv</span></code> output in QIIME 2 View (<a class="reference external" href="http://view.qiime2.org">view.qiime2.org</a>). Once your visualization displays, click on the <code class="docutils literal notranslate"><span class="pre">Color</span></code> tab in the top right and select <code class="docutils literal notranslate"><span class="pre">scatter:seed</span></code> on the first tab to color your samples by seed. Then click on the <code class="docutils literal notranslate"><span class="pre">Animations</span></code> tab and choose <code class="docutils literal notranslate"><span class="pre">timepoint</span></code> as gradient and <code class="docutils literal notranslate"><span class="pre">seed</span></code> as trajectory. Now, press play!</p>
 </div>
 </section>
 </section>
@@ -441,9 +570,13 @@ See the YAML at the top of this page for example.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#required-databases">Required databases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-annotations">Extract annotations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiply-tables">Multiply tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-have-a-look-at-our-cazymes-functional-diversity">Let’s have a look at our CAZymes functional diversity!</a></li>
 </ul>
   </nav></div>
 

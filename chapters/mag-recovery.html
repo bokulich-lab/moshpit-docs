@@ -331,9 +331,22 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assemble-contigs-with-megahit">Assemble contigs with MEGAHIT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-qc-with-quast">Contig QC with QUAST</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-contigs">Index contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-reads-to-contigs">Map reads to contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bin-contigs-with-metabat">Bin contigs with METABAT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-bins-with-busco">Evaluate bins with BUSCO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-mags">Filter MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-minhash-signatures-with-sourmash">Compute MinHash signatures with Sourmash</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-minhash-signatures">Compare MinHash signatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dereplicate-mags">Dereplicate MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-feature-lengths">Get feature lengths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-dereplicated-mags">Index dereplicated MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-reads-to-dereplicated-mags">Map reads to dereplicated MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-mag-abundance">Estimate MAG abundance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-have-a-look-at-our-estimated-mag-abundance">Let’s have a look at our estimated MAG abundance!</a></li>
 </ul>
             </nav>
         </div>
@@ -347,42 +360,374 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="recovery-of-mags">
 <h1>Recovery of MAGs<a class="headerlink" href="#recovery-of-mags" title="Link to this heading">#</a></h1>
-<p>Jupyter Book also lets you write text-based notebooks using MyST Markdown.
-See <a class="reference external" href="https://jupyterbook.org/file-types/myst-notebooks.html">the Notebooks with MyST Markdown documentation</a> for more detailed instructions.
-This page shows off a notebook written in MyST Markdown.</p>
-<section id="an-example-cell">
-<h2>An example cell<a class="headerlink" href="#an-example-cell" title="Link to this heading">#</a></h2>
-<p>With MyST Markdown, you can define code cells with a directive like so:</p>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p><strong>Metagenome-assembled genomes (MAGs)</strong> are genomes reconstructed directly from DNA from complex microbial mixtures without the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of uncultured microorganisms. Recovering MAGs involves assembling sequencing reads into contigs, binning contigs into draft genomes, and evaluating their quality.</p>
+<p>This workflow describes a step-by-step process for MAGs recovery using <code class="docutils literal notranslate"><span class="pre">QIIME2</span></code>. Each command includes explanations of the parameters used.</p>
+<p><strong>FOR MICHAL: PASTE WORKFLOW IMAGE HERE?</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Genome assembly and contig binning can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.</p>
+</div>
+<p><strong>For more information on each tool used in this workflow, refer to their official documentation:</strong></p>
+<ul class="simple">
+<li><p>MEGAHIT: <a class="github reference external" href="https://github.com/voutcn/megahit">voutcn/megahit</a></p></li>
+<li><p>SPAdes: <a class="github reference external" href="https://github.com/ablab/spades">ablab/spades</a></p></li>
+<li><p>QUAST: <a class="github reference external" href="https://github.com/ablab/quast">ablab/quast</a></p></li>
+<li><p>MetaBAT: <a class="reference external" href="https://bitbucket.org/berkeleylab/metabat/">https://bitbucket.org/berkeleylab/metabat/</a></p></li>
+<li><p>BUSCO: <a class="gitlab reference external" href="https://gitlab.com/ezlab/busco">ezlab/busco</a></p></li>
+<li><p>Sourmash: <a class="github reference external" href="https://github.com/dib-lab/sourmash">dib-lab/sourmash</a></p></li>
+<li><p>Kraken2: <a class="github reference external" href="https://github.com/DerrickWood/kraken2">DerrickWood/kraken2</a></p></li>
+<li><p>QIIME 2: <a class="github reference external" href="https://github.com/qiime2">qiime2</a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To examine your generated QIIME 2 visualizations, you can use QIIME 2 View (<a class="reference external" href="http://view.qiime2.org">view.qiime2.org</a>).</p>
+</div>
+</section>
+<section id="assemble-contigs-with-megahit">
+<h2>Assemble contigs with MEGAHIT<a class="headerlink" href="#assemble-contigs-with-megahit" title="Link to this heading">#</a></h2>
+<p>The first step in recovering MAGs is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-num-partition</span></code> specifies the number of partitions to split the dataset into for parallel processing during assembly.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-presets</span></code> specifies the preset mode for MEGAHIT. In this case, it’s set to “meta-sensitive” for metagenomic data.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-cpu-threads</span></code> specifies the number of CPU threads to use during assembly.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-coassemble</span></code> parameter can be set to “TRUE” if you wish to co-assemble reads into contigs from all samples. <strong>This parameter is still under development</strong>.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">assemble</span><span class="o">-</span><span class="n">megahit</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">presets</span> <span class="s2">&quot;meta-sensitive&quot;</span> \          
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpu</span><span class="o">-</span><span class="n">threads</span> <span class="mi">24</span> \            
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">partitions</span> <span class="mi">4</span> \            
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="n">contig</span><span class="o">-</span><span class="nb">len</span> <span class="mi">200</span> \ 
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">coassemble</span> <span class="kc">False</span> \    <span class="c1"># Co-assembly is disabled for this example</span>
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">contigs</span> <span class="n">contigs</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>   
 </pre></div>
 </div>
 </div>
 </div>
-<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>Jupyter Book uses <a class="reference external" href="https://jupytext.readthedocs.io/en/latest/">Jupytext</a> to convert text-based files to notebooks, and can support <a class="reference external" href="https://jupyterbook.org/file-types/jupytext.html">many other text-based notebook files</a>.</p>
+<ul class="simple">
+<li><p>Alternatively, you can also use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">assembly</span> <span class="pre">assemble-spades</span></code> to assemble contigs with SPAdes.</p></li>
+</ul>
+</section>
+<section id="contig-qc-with-quast">
+<h2>Contig QC with QUAST<a class="headerlink" href="#contig-qc-with-quast" title="Link to this heading">#</a></h2>
+<p>Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many metrics which can be used for that purpose but here we will focus on the two most popular metrics:</p>
+<ul class="simple">
+<li><p><strong>N50</strong>: represents the contiguity of a genome assembly. It’s defined as the length of the contig (or scaffold) at which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.</p></li>
+<li><p><strong>L50</strong>: represents the number of contigs required to cover 50% of the genome’s total length - the smaller this number, the better.</p></li>
+</ul>
+<p>In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to run the analysis against using <code class="docutils literal notranslate"><span class="pre">--i-references</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">contigs</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="n">contigs</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>  \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">128</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">efficient</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">contigs</span><span class="o">-</span><span class="mf">0.</span><span class="n">qzv</span> \ 
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
 </div>
 </section>
-<section id="create-a-notebook-with-myst-markdown">
-<h2>Create a notebook with MyST Markdown<a class="headerlink" href="#create-a-notebook-with-myst-markdown" title="Link to this heading">#</a></h2>
-<p>MyST Markdown notebooks are defined by two things:</p>
-<ol class="arabic simple">
-<li><p>YAML metadata that is needed to understand if / how it should convert text files to notebooks (including information about the kernel needed).
-See the YAML at the top of this page for example.</p></li>
-<li><p>The presence of <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> directives, which will be executed with your book.</p></li>
-</ol>
-<p>That’s all that is needed to get started!</p>
-</section>
-<section id="quickly-add-yaml-metadata-for-myst-notebooks">
-<h2>Quickly add YAML metadata for MyST Notebooks<a class="headerlink" href="#quickly-add-yaml-metadata-for-myst-notebooks" title="Link to this heading">#</a></h2>
-<p>If you have a markdown file and you’d like to quickly add YAML metadata to it, so that Jupyter Book will treat it as a MyST Markdown Notebook, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">markdownfile</span><span class="o">.</span><span class="n">md</span>
+<section id="index-contigs">
+<h2>Index contigs<a class="headerlink" href="#index-contigs" title="Link to this heading">#</a></h2>
+<p>In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs later. Various parameters control the size and structure of the index, as well as resource usage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">index</span><span class="o">-</span><span class="n">contigs</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="n">contigs</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                       
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">8</span> \                                  
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">index</span> <span class="n">index</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>                             
 </pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="map-reads-to-contigs">
+<h2>Map reads to contigs<a class="headerlink" href="#map-reads-to-contigs" title="Link to this heading">#</a></h2>
+<p>This step maps the input paired-end reads to the indexed contigs created in the previous step. We use various alignment settings to ensure optimal mapping, including local alignment mode and sensitivity settings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="nb">map</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">contigs</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">indexed</span><span class="o">-</span><span class="n">contigs</span> <span class="n">index</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                         
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reads</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                                                  
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="nb">map</span> <span class="n">alignment</span><span class="o">-</span><span class="nb">map</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>             
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As an optional parameter, you can request a desired number of partitions to split the contigs into using <code class="docutils literal notranslate"><span class="pre">--p-num-partitions</span></code>. Defaults to partitioning into individual samples.</p>
+</div>
+</section>
+<section id="bin-contigs-with-metabat">
+<h2>Bin contigs with METABAT<a class="headerlink" href="#bin-contigs-with-metabat" title="Link to this heading">#</a></h2>
+<p>Binning contigs involves grouping assembled contigs into MAGs. This step uses Metabat to assign contigs based on co-abundance and other features, producing MAG files that represent putative genomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">bin</span><span class="o">-</span><span class="n">contigs</span><span class="o">-</span><span class="n">metabat</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="n">contigs</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                       
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="n">maps</span> <span class="n">alignment</span><span class="o">-</span><span class="nb">map</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \         
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">threads</span> <span class="mi">64</span> \                              
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">seed</span> <span class="mi">100</span> \                                   
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">verbose</span> \                                    
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">mags</span> <span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                             
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">contig</span><span class="o">-</span><span class="nb">map</span> <span class="n">contig</span><span class="o">-</span><span class="nb">map</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                   
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">unbinned</span><span class="o">-</span><span class="n">contigs</span> <span class="n">unbinned</span><span class="o">-</span><span class="n">contigs</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>          
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tep generated a couple artifacts:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mags-0.qza</span></code>: these are our actual MAGS, per sample.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contig-map-0.qza</span></code>: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unbinned-contigs-0.qza</span></code>: these are all the contigs that could not be assign to any particular MAG.
+From now on, we will focus on the mags-0.qza</p></li>
+</ul>
+</section>
+<section id="evaluate-bins-with-busco">
+<h2>Evaluate bins with BUSCO<a class="headerlink" href="#evaluate-bins-with-busco" title="Link to this heading">#</a></h2>
+<p>This step evaluates the completeness and quality of the MAGs using the BUSCO tool, which checks for the presence of single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.</p>
+<p>First we will use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">fetch-busco-db</span></code> to download a specific lineage’s BUSCO database. BUSCO databases are precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes (bacteria and archaea), or eukaryotes.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-prok</span></code> True parameter specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> \
+ <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">prok</span> <span class="kc">True</span> \
+ <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> <span class="n">busco</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+ <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">busco</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bins</span> <span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                             
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> <span class="n">busco</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                     
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">lineage</span><span class="o">-</span><span class="n">dataset</span> <span class="n">bacteria_odb10</span> \             
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">cpu</span> <span class="mi">16</span> \                                     
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">mags</span><span class="o">-</span><span class="n">qc</span><span class="o">-</span><span class="n">visualization</span><span class="o">-</span><span class="mf">0.</span><span class="n">qzv</span> \  
+  <span class="o">--</span><span class="n">verbose</span>                 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-lineage-dataset</span> <span class="pre">bacteria_odb10</span></code> parameter specifies the particular lineage dataset to use, in this case, the bacteria_odb10 dataset. This is a standard database for bacterial genomes.</p></li>
+</ul>
+</section>
+<section id="filter-mags">
+<h2>Filter MAGs<a class="headerlink" href="#filter-mags" title="Link to this heading">#</a></h2>
+<p>This step filters the MAGs based on completeness. In this example, we filter out any MAGs with completeness below 50%. The filtering process ensures only high-quality genomes are kept for downstream analysis.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We recommed this step to be done before dereplication (as in this example), but we can also use the  dereplicated set and filter this one using <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">filter-derep-mags</span></code>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">filter</span><span class="o">-</span><span class="n">mags</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                             
+  <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="n">results</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \           
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">where</span> <span class="s1">&#39;complete&gt;50&#39;</span> \                        
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">exclude</span><span class="o">-</span><span class="n">ids</span> \                              
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">on</span> <span class="n">mag</span> \                                     
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">mags</span> <span class="n">filtered</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>           
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="compute-minhash-signatures-with-sourmash">
+<h2>Compute MinHash signatures with Sourmash<a class="headerlink" href="#compute-minhash-signatures-with-sourmash" title="Link to this heading">#</a></h2>
+<p>In this step, Sourmash is used to compute MinHash signatures for the filtered MAGs. MinHash is a method used to compare large datasets efficiently by creating compressed representations of genomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">sourmash</span> <span class="n">compute</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequence</span><span class="o">-</span><span class="n">file</span> <span class="n">filtered</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \           
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ksizes</span> <span class="mi">35</span> \                                  
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">scaled</span> <span class="mi">10</span> \                                   
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">track</span><span class="o">-</span><span class="n">abundance</span> \                             
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span> <span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="compare-minhash-signatures">
+<h2>Compare MinHash signatures<a class="headerlink" href="#compare-minhash-signatures" title="Link to this heading">#</a></h2>
+<p>Here we compare the computed MinHash signatures to evaluate the similarity between the genomes. This step allows dereplication by identifying highly similar genomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">sourmash</span> <span class="n">compare</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span> <span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \ 
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ksize</span> <span class="mi">35</span> \                                  
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">abundance</span> \                           
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">compare</span><span class="o">-</span><span class="n">output</span> <span class="n">compare</span><span class="o">-</span><span class="n">output</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>         
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dereplicate-mags">
+<h2>Dereplicate MAGs<a class="headerlink" href="#dereplicate-mags" title="Link to this heading">#</a></h2>
+<p>This step dereplicates the filtered MAGs, ensuring that only unique MAGs are retained. Dereplication reduces redundancy by merging similar genomes based on a similarity threshold.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">dereplicate</span><span class="o">-</span><span class="n">mags</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="n">filtered</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                    
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="n">compare</span><span class="o">-</span><span class="n">output</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \       
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mf">0.99</span> \   <span class="c1"># Similarity threshold for dereplication (99%)</span>
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span> <span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \   
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">table</span> <span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">ft</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>  \
+  <span class="o">--</span><span class="n">verbose</span>              
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-feature-lengths">
+<h2>Get feature lengths<a class="headerlink" href="#get-feature-lengths" title="Link to this heading">#</a></h2>
+<p>This step calculates the lengths of the dereplicated MAGs, which will be used in the next step to estimate abundance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">get</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">lengths</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">features</span> <span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">ft</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \              
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">lengths</span> <span class="n">lengths</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \ 
+  <span class="o">--</span><span class="n">verbose</span>                         
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="index-dereplicated-mags">
+<h2>Index dereplicated MAGs<a class="headerlink" href="#index-dereplicated-mags" title="Link to this heading">#</a></h2>
+<p>This step indexes the dereplicated MAGs for read mapping. The index is necessary to efficiently map the input reads back to the MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">index</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">mags</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \                  
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">8</span> \  
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">seed</span> <span class="mi">100</span> \                                   
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">index</span> <span class="n">index</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>                            
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="map-reads-to-dereplicated-mags">
+<h2>Map reads to dereplicated MAGs<a class="headerlink" href="#map-reads-to-dereplicated-mags" title="Link to this heading">#</a></h2>
+<p>In this step, we map the input paired-end reads back to the dereplicated MAGs. This helps in calculating the abundance of each MAG in the sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="nb">map</span><span class="o">-</span><span class="n">reads</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">index</span> <span class="n">index</span><span class="o">-</span><span class="mf">1.</span><span class="n">qza</span> \                            
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reads</span> <span class="n">paired</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \   
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">8</span> \  
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">seed</span> <span class="mi">100</span> \                  
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="nb">map</span> <span class="n">alignment</span><span class="o">-</span><span class="nb">map</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>            
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="estimate-mag-abundance">
+<h2>Estimate MAG abundance<a class="headerlink" href="#estimate-mag-abundance" title="Link to this heading">#</a></h2>
+<p>This step estimates the abundance of each MAG in the sample based on the read mapping results.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code> : for now, we support RPKM and TPM</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min-mapq</span></code> : indicates the minimum required read mapping quality - for Bowtie2, 42 will allow only perfect matches to be retained
+<code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">min-base-quality</span></code> : only keep alignments with this minimal Phred
+quality score</p></li>
+<li><p>for more, see –help</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">estimate</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">abundance</span> \
+<span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">lengths</span> <span class="n">lengths</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+<span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">maps</span> <span class="n">alignment</span><span class="o">-</span><span class="nb">map</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+<span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">10</span> \
+<span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">metric</span> <span class="n">tpm</span> \
+<span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="n">mapq</span> <span class="mi">42</span> \
+<span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">abundances</span> <span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+<span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="let-s-have-a-look-at-our-estimated-mag-abundance">
+<h2>Let’s have a look at our estimated MAG abundance!<a class="headerlink" href="#let-s-have-a-look-at-our-estimated-mag-abundance" title="Link to this heading">#</a></h2>
+<p>First we will use Kraken 2 to classify provided MAGs into taxonomic groups.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Refer to <strong>Taxonomic classification</strong> section to import your preferred Kraken2 database into <code class="docutils literal notranslate"><span class="pre">QIIME2</span></code> before running <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">classify-kraken2</span></code>.</p>
+</div>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-confidence</span></code> and <code class="docutils literal notranslate"><span class="pre">--p-minimum-base-quality</span></code> are deviations from kraken’s defaults.</p></li>
+<li><p>The database used here is the <code class="docutils literal notranslate"><span class="pre">PlusPF</span></code> database, defined <a class="reference external" href="https://benlangmead.github.io/aws-indexes/k2">here</a>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="n">k2</span><span class="o">-</span><span class="n">plus</span><span class="o">-</span><span class="n">pf</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span><span class="o">.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">40</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.6</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">report</span><span class="o">-</span><span class="n">minimizer</span><span class="o">-</span><span class="n">data</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">quality</span> <span class="mi">20</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">hits</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">hits</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span> \
+  <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we will convert a Kraken 2 report into a  generic taxonomy artifact for downstream analyses.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">features</span> \
+ <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reports</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>  \
+ <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">hits</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">hits</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>  \
+ <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">tax</span><span class="o">.</span><span class="n">qza</span> \
+ <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we are ready to generate a taxa bar plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="n">barplot</span> \
+ <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">reports</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>  \
+ <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="n">kraken</span><span class="o">-</span><span class="n">k2pf</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">tax</span><span class="o">-</span><span class="mf">0.</span><span class="n">qza</span>\
+ <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="n">metadata</span><span class="o">.</span><span class="n">qza</span> \
+ <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">taxa</span><span class="o">-</span><span class="n">barplot</span><span class="o">-</span><span class="n">derep</span><span class="o">-</span><span class="n">mags</span><span class="o">-</span><span class="mf">0.</span><span class="n">qzv</span> \
+ <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -451,9 +796,22 @@ See the YAML at the top of this page for example.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assemble-contigs-with-megahit">Assemble contigs with MEGAHIT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-qc-with-quast">Contig QC with QUAST</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-contigs">Index contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-reads-to-contigs">Map reads to contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bin-contigs-with-metabat">Bin contigs with METABAT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-bins-with-busco">Evaluate bins with BUSCO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-mags">Filter MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-minhash-signatures-with-sourmash">Compute MinHash signatures with Sourmash</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-minhash-signatures">Compare MinHash signatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dereplicate-mags">Dereplicate MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-feature-lengths">Get feature lengths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-dereplicated-mags">Index dereplicated MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-reads-to-dereplicated-mags">Map reads to dereplicated MAGs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-mag-abundance">Estimate MAG abundance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-have-a-look-at-our-estimated-mag-abundance">Let’s have a look at our estimated MAG abundance!</a></li>
 </ul>
   </nav></div>
 
