@@ -136,9 +136,10 @@ qiime moshpit evaluate-busco \
     --o-results-table ./cache:busco_results \
     --verbose                 
 ```
-- The `--p-lineage-dataset bacteria_odb10` parameter specifies the particular lineage dataset to use, in this case, 
-    the bacteria_odb10 dataset. This is a standard database for bacterial genomes.
+The `--p-lineage-dataset bacteria_odb10` parameter specifies the particular lineage dataset to use, in this case, 
+the bacteria_odb10 dataset. This is a standard database for bacterial genomes.
 
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/mags.qzv).
 ## Filter MAGs
 This step filters MAGs based on completeness. In this example, we filter out any MAGs with completeness below 50%. 
 The filtering process ensures only high-quality genomes are kept for downstream analysis.

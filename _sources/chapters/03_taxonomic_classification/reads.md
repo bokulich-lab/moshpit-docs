@@ -92,6 +92,18 @@ Finally, we filter the table to remove the unclassified reads:
 qiime taxa filter-table \
   --i-table ./cache:kaiju_ft \
   --i-taxonomy ./cache:kaiju_taxonomy \
-  --p-exclude Unclassified \
+  --p-exclude unclassified,belong,cannot \
   --o-filtered-table ./cache:kaiju_ft_filtered
 ```
+
+## Visualization
+You can try to generate a taxa bar plot with either of these results now! We will continue with the Kaiju results - to
+generate a taxa bar plot, you can run:
+```{code-cell}
+qiime taxa barplot \
+  --i-table ./cache:kaiju_ft_filtered \
+  --i-taxonomy ./cache:kaiju_taxonomy \
+  --m-metadata-file ./metadata.tsv \
+  --o-visualization ./results/kaiju_barplot.qzv
+```
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/kaiju-filtered.qzv).
