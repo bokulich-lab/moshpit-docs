@@ -79,8 +79,8 @@ qiime assembly index-contigs \
 Here we map the input paired-end reads to the indexed contigs created in the previous step. We use various alignment 
 settings to ensure optimal mapping, including local alignment mode and sensitivity settings.
 ```{code-cell}
-qiime assembly map-reads-to-contigs \
-    --i-indexed-contigs ./cache:contigs_index \                         
+qiime assembly map-reads \
+    --i-index ./cache:contigs_index \                         
     --i-reads ./cache:reads_filtered \                                                  
     --o-alignment-map ./cache:reads_to_contigs \
     --verbose             
