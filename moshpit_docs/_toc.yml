@@ -4,15 +4,28 @@
 format: jb-book
 root: intro
 chapters:
+- file: chapters/00_setup
 - file: chapters/00_data_retrieval
 - file: chapters/01_filtering/intro
   sections:
-      - file: chapters/01_filtering/tutorial
-- file: chapters/mag-recovery
+      - file: chapters/01_filtering/quality-filtering
+      - file: chapters/01_filtering/host-filtering
+- file: chapters/02_mag_reconstruction/intro
+  title: MAG recovery
+  sections:
+      - file: chapters/02_mag_reconstruction/reconstruction
+        title: MAG reconstruction
+      - file: chapters/02_mag_reconstruction/dereplication
+        title: Dereplication
+      - file: chapters/02_mag_reconstruction/abundance
+        title: Abundance estimation
 - file: chapters/03_taxonomic_classification/intro
   sections:
-      - file: chapters/03_taxonomic_classification/tutorial-reads
+      - file: chapters/03_taxonomic_classification/reads
         title: Reads
-      - file: chapters/03_taxonomic_classification/tutorial-mags
+      - file: chapters/03_taxonomic_classification/mags
         title: MAGs
-- file: chapters/functional-annotation
+- file: chapters/04_functional_annotation/intro
+  sections:
+      - file: chapters/04_functional_annotation/mags
+        title: Dereplicated MAGs

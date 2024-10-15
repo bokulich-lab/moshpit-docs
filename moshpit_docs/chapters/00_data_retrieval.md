@@ -11,18 +11,42 @@ kernelspec:
   language: python
   name: python3
 ---
+(data-retrieval)=
+# Data retrieval
+The dataset which we are using in this tutorial is available through the Sequence Read Archive. To retrieve it we will
+use the q2-fondue plugin: we only need to provide a list of accession IDs which we are interested in downloading - 
+everything else will be taken care of for us.
 
+```{note}
+You need to provide an e-mail address when running this command - this is required by the NCBI as a way to 
+ensure they can contact you in case of any issues.
+```
 
-First we use the q2-fondue plugin to download the reads from a preexisting artifact containing the SRA ids. For this step it is necessary to provide an email address.
-
+- download the files containing all the accession IDs and corresponding metadata:
+```{code-cell}
+wget -O ./ids.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/ids.tsv
+```
+```{code-cell}
+wget -O ./metadata.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/metadata.tsv
+```
+- import the file into a QIIME 2 artifact:
+```{code-cell}
+qiime tools cache-import \
+    --type 'NCBIAccessionIDs' \
+    --input-path ./ids.tsv \
+    --cache ./cache \
+    --key ids
+```
+- run the `get-all` action from the `fondue` plugin:
 ```{code-cell}
 qiime fondue get-all \
-  --i-accession-ids ncbi-accession-i-ds-0.qza \
-  --p-email YOUR.EMAIL@domain.com \
-  --p-n-jobs 5 \
-  --p-retries 5 \
-  --o-paired-reads paired-reads-0.qza \
-  --o-metadata XX_metadata \
-  --o-single-reads XX_single_reads \
-  --o-failed-runs XX_failed_runs
+    --i-accession-ids ./cache:ids \
+    --p-email YOUR.EMAIL@domain.com \
+    --p-n-jobs 5 \
+    --p-retries 5 \
+    --o-paired-reads ./cache:reads_paired \
+    --o-metadata ./cache:metadata \
+    --o-single-reads ./cache:reads_single \
+    --o-failed-runs ./cache:failed_runs \
+    --verbose
 ```

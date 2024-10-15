@@ -11,8 +11,9 @@ kernelspec:
   language: python
   name: python3
 ---
-
+(taxonomic-classification)=
 # Taxonomic classification
+![Taxonomic classification workflow](../../images/workflows-taxonomic.png)
 
 ## Read-Based Classification Overview
 
