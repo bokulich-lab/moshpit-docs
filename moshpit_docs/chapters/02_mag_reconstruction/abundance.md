@@ -105,3 +105,4 @@ qiime taxa barplot \
     --o-visualization ./results/mags-derep-taxa-bar-plot.qzv \
     --verbose
 ```
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/mags-derep-taxa-bar-plot.qzv).
