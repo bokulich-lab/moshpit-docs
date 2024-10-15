@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Taxonomic classification &#8212; MOSHPIT plugin suite</title>
+    <title>Quality filtering &#8212; MOSHPIT plugin suite</title>
   
   
   
@@ -58,11 +58,11 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_taxonomic_classification/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/01_filtering/quality-filtering';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Taxonomic classification of reads" href="reads.html" />
-    <link rel="prev" title="MAG abundance estimation" href="../02_mag_reconstruction/abundance.html" />
+    <link rel="next" title="Host read removal" href="host-filtering.html" />
+    <link rel="prev" title="Quality control" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,9 +175,9 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../00_setup.html">Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../00_data_retrieval.html">Data retrieval</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../01_filtering/intro.html">Quality control</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../01_filtering/quality-filtering.html">Quality filtering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../01_filtering/host-filtering.html">Host read removal</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Quality control</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Quality filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="host-filtering.html">Host read removal</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../02_mag_reconstruction/intro.html">MAG recovery</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -186,9 +186,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/abundance.html">Abundance estimation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Taxonomic classification</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="reads.html">Reads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mags.html">MAGs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_taxonomic_classification/intro.html">Taxonomic classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/reads.html">Reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/mags.html">MAGs</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -249,7 +249,7 @@
       
       
       
-      <li><a href="../../_sources/chapters/03_taxonomic_classification/intro.md" target="_blank"
+      <li><a href="../../_sources/chapters/01_filtering/quality-filtering.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -333,7 +333,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Taxonomic classification</h1>
+    <h1>Quality filtering</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -343,11 +343,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-classification-overview">Read-Based Classification Overview</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-dna-to-dna-classification-tool">Kraken 2: DNA-to-DNA Classification Tool</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kaiju-protein-based-classification-tool">Kaiju: Protein-Based Classification Tool</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-overview">Quality overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-trimming-and-quality-filtering">Read trimming and quality filtering</a></li>
 </ul>
             </nav>
         </div>
@@ -359,44 +356,39 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="taxonomic-classification">
-<span id="id1"></span><h1>Taxonomic classification<a class="headerlink" href="#taxonomic-classification" title="Link to this heading">#</a></h1>
-<p><img alt="Taxonomic classification workflow" src="../../_images/workflows-taxonomic.png" /></p>
-<section id="read-based-classification-overview">
-<h2>Read-Based Classification Overview<a class="headerlink" href="#read-based-classification-overview" title="Link to this heading">#</a></h2>
-<p><strong>What is the goal of read-Based classification?</strong></p>
-<p>Read-based classification is commonly used to determine the taxonomic groups present within a given sample. This technique is useful for assessing the biodiversity or the composition of microbial communities by assigning DNA reads to known organisms. One significant advantage of read-based classification is that it allows for the classification of all reads, including those that may not be directly involved in downstream analyses (e.g. assemblies or MAGs).</p>
-<p><strong>Key Factors Influencing Read Classification:</strong></p>
-<p>The outcome of read classification is heavily influenced by the selection of reference databases. These databases vary in size, quality, and scope, which means that the more comprehensive and accurate the reference database is, the more accurate the classification of reads will be. Some databases might be specific to certain taxonomic groups, while others could provide a broader reference, potentially affecting the results depending on the sample type and research goals.</p>
-<p><strong>Types of Read-Based Classification:</strong></p>
-<ul class="simple">
-<li><p><strong>DNA-to-DNA Classification (BLASTn-like):</strong> This type compares DNA sequences from the sample directly to DNA sequences from reference databases. It is ideal for detecting organisms with available genomic sequences and is more accurate but may miss organisms that are poorly represented in genomic databases.</p></li>
-<li><p><strong>DNA-to-Protein Classification (BLASTx-like):</strong> This classification translates DNA reads into potential protein sequences and compares them to known protein databases. This is useful for identifying organisms based on conserved protein functions, which can be helpful when nucleotide sequences are too divergent to yield results through DNA-to-DNA methods.</p></li>
-<li><p><strong>Marker-Based Classification:</strong> Marker-based classification focuses on specific genetic markers that are conserved within certain taxonomic groups. These markers are known for their taxonomic relevance, allowing more precise identification at various taxonomic levels.</p></li>
-</ul>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>For more information and a benchmark, consult <a class="reference external" href="https://www.cell.com/cell/fulltext/S0092-8674(19)30775-5?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867419307755%3Fshowall%3Dtrue">Ye et al., 2019</a>.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="quality-filtering">
+<h1>Quality filtering<a class="headerlink" href="#quality-filtering" title="Link to this heading">#</a></h1>
+<section id="quality-overview">
+<h2>Quality overview<a class="headerlink" href="#quality-overview" title="Link to this heading">#</a></h2>
+<p>We can get an overview of the read quality by using the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> action from the <code class="docutils literal notranslate"><span class="pre">demux</span></code> QIIME 2 plugin. This command
+will generate a visualization of the quality scores at each position. You can learn more about this action in the <a class="reference external" href="https://docs.qiime2.org/2024.5/plugins/available/demux/summarize/">QIIME 2
+documentation</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">demux</span> <span class="n">summarize</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">data</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">demux</span><span class="o">.</span><span class="n">qzv</span>
+</pre></div>
 </div>
-<section id="kraken-2-dna-to-dna-classification-tool">
-<h3>Kraken 2: DNA-to-DNA Classification Tool<a class="headerlink" href="#kraken-2-dna-to-dna-classification-tool" title="Link to this heading">#</a></h3>
-<p>Kraken 2 is a DNA-to-DNA classification tool that assigns taxonomic labels to reads by directly comparing k-mers (short DNA sequence fragments of a fixed length, typically 31 base pairs) from the query read to a database of known sequences. Kraken 2 classifies the read based on the majority of k-mer matches within the read, providing fast and accurate taxonomic classification.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>For more information on Kraken 2, consult <a class="reference external" href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Wood et al., 2019</a>.</p>
+</div>
+</div>
+<p>To see an example of the visualization you can go <a class="reference external" href="https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/taxa-bar-plots.qzv">here</a>.</p>
+</section>
+<section id="read-trimming-and-quality-filtering">
+<h2>Read trimming and quality filtering<a class="headerlink" href="#read-trimming-and-quality-filtering" title="Link to this heading">#</a></h2>
+<p>In order to remove low quality bases from the reads, we can use one of the <code class="docutils literal notranslate"><span class="pre">trim</span></code> actions from the <code class="docutils literal notranslate"><span class="pre">cutadapt</span></code> QIIME 2 plugin.
+Here we are using the <code class="docutils literal notranslate"><span class="pre">trim-paired</span></code> action to remove all the reads shorter than 90 bp:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">cutadapt</span> <span class="n">trim</span><span class="o">-</span><span class="n">paired</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">demultiplexed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads</span> \
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">length</span> <span class="mi">90</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">trimmed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span>
+</pre></div>
+</div>
+</div>
 </div>
 </section>
-<section id="kaiju-protein-based-classification-tool">
-<h3>Kaiju: Protein-Based Classification Tool<a class="headerlink" href="#kaiju-protein-based-classification-tool" title="Link to this heading">#</a></h3>
-<p>Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads against a reference database of protein sequences.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>For more information on Kaiju, consult <a class="reference external" href="https://www.nature.com/articles/ncomms11257">Menzel et al., 2016</a>.</p>
-</div>
-</section>
-</section>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -412,7 +404,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters/03_taxonomic_classification"
+            path: "./chapters/01_filtering"
         },
         predefinedOutput: true
     }
@@ -430,20 +422,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../02_mag_reconstruction/abundance.html"
+       href="intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">MAG abundance estimation</p>
+        <p class="prev-next-title">Quality control</p>
       </div>
     </a>
     <a class="right-next"
-       href="reads.html"
+       href="host-filtering.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Taxonomic classification of reads</p>
+        <p class="prev-next-title">Host read removal</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -463,11 +455,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-classification-overview">Read-Based Classification Overview</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken-2-dna-to-dna-classification-tool">Kraken 2: DNA-to-DNA Classification Tool</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kaiju-protein-based-classification-tool">Kaiju: Protein-Based Classification Tool</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-overview">Quality overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-trimming-and-quality-filtering">Read trimming and quality filtering</a></li>
 </ul>
   </nav></div>
 

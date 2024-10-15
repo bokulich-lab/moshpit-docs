@@ -11,6 +11,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(kraken-reads)=
 # Taxonomic classification of reads
 In this section we will focus on the taxonomic classification of shotgun metagenomic reads using two different tools: Kraken 2 and Kaiju. 
 We will use the data which we got from the steps described in the [data retrieval section](../00_data_retrieval.md).
@@ -29,7 +30,7 @@ qiime moshpit build-kraken-db \
 We can now use the `classify-kraken2` command to run Kraken2 using the paired-end reads as a query and the PlusPF database retrieved in the previous step:
 ```{code-cell}
 qiime moshpit classify-kraken2 \
-  --i-seqs ./cache:reads_paired \
+  --i-seqs ./cache:reads_filtered \
   --i-kraken2-db ./cache:kraken2_db \
   --p-threads 72 \
   --p-confidence 0.5 \

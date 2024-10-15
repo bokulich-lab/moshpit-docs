@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Recovery of MAGs &#8212; MOSHPIT plugin suite</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/02_mag_reconstruction/reconstruction';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="MAG set dereplication" href="dereplication.html" />
+    <link rel="prev" title="Recovery of Metagenome-assembled Genomes" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="MOSHPIT plugin suite - Home"/>
+    <script>document.write(`<img src="../../_static/logo_dark.svg" class="logo__image only-dark" alt="MOSHPIT plugin suite - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_data_retrieval.html">Data retrieval</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_filtering/intro.html">Quality control</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_filtering/quality-filtering.html">Quality filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_filtering/host-filtering.html">Host read removal</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">MAG recovery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">MAG reconstruction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dereplication.html">Dereplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abundance.html">Abundance estimation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_taxonomic_classification/intro.html">Taxonomic classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/reads.html">Reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/mags.html">MAGs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_functional_annotation/mags.html">Dereplicated MAGs</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/02_mag_reconstruction/reconstruction.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Recovery of MAGs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assemble-contigs-with-megahit">Assemble contigs with MEGAHIT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-qc-with-quast">Contig QC with QUAST</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-contigs">Index contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-reads-to-contigs">Map reads to contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bin-contigs-with-metabat">Bin contigs with MetaBAT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-bins-with-busco">Evaluate bins with BUSCO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-mags">Filter MAGs</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="recovery-of-mags">
+<h1>Recovery of MAGs<a class="headerlink" href="#recovery-of-mags" title="Link to this heading">#</a></h1>
+<p>In this part of the tutorial we will go thorugh the steps required to recover metagenome-assembled genomes (MAGs) from
+metagenomic data. The workflow is divided into several steps, from contig assembly to binning and quality control.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Genome assembly and contig binning can be highly resource-intensive. Ensure that your system has sufficient CPU and
+memory resources before running these commands.</p>
+</div>
+<section id="assemble-contigs-with-megahit">
+<h2>Assemble contigs with MEGAHIT<a class="headerlink" href="#assemble-contigs-with-megahit" title="Link to this heading">#</a></h2>
+<p>The first step in recovering MAGs is genome assembly itself. There are many genome assemblers available, two of which
+you can use through the q2-assembly plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads,
+constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable
+genetic information for the next steps of our analysis.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-presets</span></code> specifies the preset mode for MEGAHIT. In this case, it’s set to “meta-sensitive” for metagenomic data.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-cpu-threads</span></code> specifies the number of CPU threads to use during assembly.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-min-contig-len</span></code> specifies the minimum length of contigs to keep.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-coassemble</span></code> parameter can be set to “True” if you wish to co-assemble reads into contigs from all samples.
+<strong>This parameter is still under development</strong>: you will not be able to use the generated contigs for further analysis.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">assemble</span><span class="o">-</span><span class="n">megahit</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_paired</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">presets</span> <span class="s2">&quot;meta-sensitive&quot;</span> \          
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpu</span><span class="o">-</span><span class="n">threads</span> <span class="mi">24</span> \                      
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="n">contig</span><span class="o">-</span><span class="nb">len</span> <span class="mi">200</span> \ 
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">coassemble</span> <span class="kc">False</span> \    <span class="c1"># Co-assembly is disabled for this example</span>
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span> \
+    <span class="o">--</span><span class="n">verbose</span>   
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Alternatively, you can also use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">assembly</span> <span class="pre">assemble-spades</span></code> to assemble contigs with SPAdes.</p></li>
+</ul>
+</section>
+<section id="contig-qc-with-quast">
+<h2>Contig QC with QUAST<a class="headerlink" href="#contig-qc-with-quast" title="Link to this heading">#</a></h2>
+<p>Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many
+metrics which can be used for that purpose but here we will focus on the two most popular metrics:</p>
+<ul class="simple">
+<li><p><strong>N50</strong>: represents the contiguity of a genome assembly. It’s defined as the length of the contig (or scaffold) at
+which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.</p></li>
+<li><p><strong>L50</strong>: represents the number of contigs required to cover 50% of the genome’s total length - the smaller this number,
+the better.</p></li>
+</ul>
+<p>In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which
+the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to
+run the analysis against using <code class="docutils literal notranslate"><span class="pre">--i-references</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">contigs</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span>  \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">128</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">efficient</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="o">./</span><span class="n">results</span><span class="o">/</span><span class="n">contigs</span><span class="o">.</span><span class="n">qzv</span> \ 
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="index-contigs">
+<h2>Index contigs<a class="headerlink" href="#index-contigs" title="Link to this heading">#</a></h2>
+<p>In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs
+later. Various parameters control the size and structure of the index, as well as resource usage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">index</span><span class="o">-</span><span class="n">contigs</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span> \                       
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">8</span> \                                  
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">index</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs_index</span> \
+    <span class="o">--</span><span class="n">verbose</span>                             
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="map-reads-to-contigs">
+<h2>Map reads to contigs<a class="headerlink" href="#map-reads-to-contigs" title="Link to this heading">#</a></h2>
+<p>Here we map the input paired-end reads to the indexed contigs created in the previous step. We use various alignment
+settings to ensure optimal mapping, including local alignment mode and sensitivity settings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="nb">map</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">contigs</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">indexed</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs_index</span> \                         
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reads</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \                                                  
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="nb">map</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_to_contigs</span> \
+    <span class="o">--</span><span class="n">verbose</span>             
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bin-contigs-with-metabat">
+<h2>Bin contigs with MetaBAT<a class="headerlink" href="#bin-contigs-with-metabat" title="Link to this heading">#</a></h2>
+<p>Binning contigs involves grouping assembled contigs into MAGs. This step uses MetaBAT to assign contigs based on
+co-abundance and other features, producing MAG files that represent putative genomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">bin</span><span class="o">-</span><span class="n">contigs</span><span class="o">-</span><span class="n">metabat</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span> \                       
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="n">maps</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_to_contigs</span> \         
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">threads</span> <span class="mi">64</span> \                              
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">seed</span> <span class="mi">100</span> \                                   
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">verbose</span> \                                    
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">contig</span><span class="o">-</span><span class="nb">map</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contig_map</span> \                   
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">unbinned</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">unbinned_contigs</span> \
+  <span class="o">--</span><span class="n">verbose</span>          
+</pre></div>
+</div>
+</div>
+</div>
+<p>This tep generated a couple artifacts:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mags</span></code>: these are our actual MAGS, per sample.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contig_map</span></code>: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unbinned_contigs</span></code>: these are all the contigs that could not be assign to any particular MAG.
+From now on, we will focus on the <code class="docutils literal notranslate"><span class="pre">mags</span></code>.</p></li>
+</ul>
+</section>
+<section id="evaluate-bins-with-busco">
+<h2>Evaluate bins with BUSCO<a class="headerlink" href="#evaluate-bins-with-busco" title="Link to this heading">#</a></h2>
+<p>This step evaluates the completeness and quality of MAGs using the BUSCO tool, which checks for the presence of
+single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.</p>
+<p>First we will use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">fetch-busco-db</span></code> to download a specific lineage’s BUSCO database. BUSCO databases are
+precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes
+(bacteria and archaea), or eukaryotes.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-prok</span></code> True parameter specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">prok</span> <span class="kc">True</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_db</span>
+    <span class="o">--</span><span class="n">verbose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">busco</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bins</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_db</span> \                     
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">lineage</span><span class="o">-</span><span class="n">dataset</span> <span class="n">bacteria_odb10</span> \             
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">cpu</span> <span class="mi">16</span> \                                     
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="o">./</span><span class="n">results</span><span class="o">/</span><span class="n">mags</span><span class="o">.</span><span class="n">qzv</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">results</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_results</span> \
+    <span class="o">--</span><span class="n">verbose</span>                 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--p-lineage-dataset</span> <span class="pre">bacteria_odb10</span></code> parameter specifies the particular lineage dataset to use, in this case,
+the bacteria_odb10 dataset. This is a standard database for bacterial genomes.</p></li>
+</ul>
+</section>
+<section id="filter-mags">
+<h2>Filter MAGs<a class="headerlink" href="#filter-mags" title="Link to this heading">#</a></h2>
+<p>This step filters MAGs based on completeness. In this example, we filter out any MAGs with completeness below 50%.
+The filtering process ensures only high-quality genomes are kept for downstream analysis.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We recommed this step to be done before dereplication (as in this example). Alternatively, we can also use the
+<a class="reference internal" href="dereplication.html#dereplication"><span class="std std-ref">dereplicated set</span></a> and filter this one using <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">filter-derep-mags</span></code>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">filter</span><span class="o">-</span><span class="n">mags</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
+    <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_results</span> \           
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">where</span> <span class="s1">&#39;complete&gt;50&#39;</span> \                        
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">exclude</span><span class="o">-</span><span class="n">ids</span> \                              
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">on</span> <span class="n">mag</span> \                                     
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_filtered_50</span> \
+    <span class="o">--</span><span class="n">verbose</span>           
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/02_mag_reconstruction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Recovery of Metagenome-assembled Genomes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="dereplication.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">MAG set dereplication</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assemble-contigs-with-megahit">Assemble contigs with MEGAHIT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-qc-with-quast">Contig QC with QUAST</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#index-contigs">Index contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-reads-to-contigs">Map reads to contigs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bin-contigs-with-metabat">Bin contigs with MetaBAT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-bins-with-busco">Evaluate bins with BUSCO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-mags">Filter MAGs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Bokulich Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

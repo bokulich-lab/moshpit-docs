@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Quality filtering &#8212; MOSHPIT plugin suite</title>
+    <title>Quality control &#8212; MOSHPIT plugin suite</title>
   
   
   
@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -60,8 +61,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/01_filtering/intro';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Quality filtering" href="tutorial.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="../00_data_retrieval.html" />
+    <link rel="next" title="Quality filtering" href="quality-filtering.html" />
+    <link rel="prev" title="Data retrieval" href="../00_data_retrieval.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,17 +173,28 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Quality filtering</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html">Quality filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_data_retrieval.html">Data retrieval</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Quality control</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="quality-filtering.html">Quality filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="host-filtering.html">Host read removal</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../mag-recovery.html">Recovery of MAGs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_mag_reconstruction/intro.html">MAG recovery</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/reconstruction.html">MAG reconstruction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/dereplication.html">Dereplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/abundance.html">Abundance estimation</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../03_taxonomic_classification/intro.html">Taxonomic classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/tutorial-reads.html">Reads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/tutorial-mags.html">MAGs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/reads.html">Reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/mags.html">MAGs</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../functional-annotation.html">Functional annotation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_functional_annotation/mags.html">Dereplicated MAGs</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -319,7 +331,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Quality filtering</h1>
+    <h1>Quality control</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -333,19 +345,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="quality-filtering">
-<h1>Quality filtering<a class="headerlink" href="#quality-filtering" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="quality-control">
+<span id="id1"></span><h1>Quality control<a class="headerlink" href="#quality-control" title="Link to this heading">#</a></h1>
 <p>Just like any other NGS experiment, shotgun metagenomics data should be quality controlled before any downstream analysis.
 The filtering steps may include adapter removal, quality trimming, and filtering out low-quality reads. Moreover, metagenomic
 reads may contain host DNA, which should be removed. QIIME 2 provides functionality to address some of those issues - the
-MOSHPIT plugin suite only expands on those by focusing more on host DNA removal. Below is a brief overview of the filtering steps
-which can be done using QIIME 2 and MOSHPIT.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>filter-reads-pangenome<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-reads<span class="w"> </span>./cache:reads_trimmed<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-reads<span class="w"> </span>./cache:reads_filtered<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-reference-index<span class="w"> </span>./cache:human_reference_index
-</pre></div>
-</div>
+MOSHPIT plugin suite only expands on those by focusing more on host DNA removal. The next sections contain a brief overview
+of the filtering steps which can be done using QIIME 2 and MOSHPIT.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -386,11 +392,11 @@ which can be done using QIIME 2 and MOSHPIT.</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Data retrieval</p>
       </div>
     </a>
     <a class="right-next"
-       href="tutorial.html"
+       href="quality-filtering.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

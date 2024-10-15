@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to your Jupyter Book &#8212; MOSHPIT plugin suite</title>
+    <title>MOSHPIT tutorial &#8212; MOSHPIT plugin suite</title>
   
   
   
@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles.css?v=3437f865" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -60,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="chapters/00_data_retrieval.html" />
+    <link rel="next" title="Setup" href="chapters/00_setup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -173,17 +174,28 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="chapters/01_filtering/intro.html">Quality filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="chapters/01_filtering/tutorial.html">Quality filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/00_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/00_data_retrieval.html">Data retrieval</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapters/01_filtering/intro.html">Quality control</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01_filtering/quality-filtering.html">Quality filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01_filtering/host-filtering.html">Host read removal</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="chapters/mag-recovery.html">Recovery of MAGs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapters/02_mag_reconstruction/intro.html">MAG recovery</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02_mag_reconstruction/reconstruction.html">MAG reconstruction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02_mag_reconstruction/dereplication.html">Dereplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02_mag_reconstruction/abundance.html">Abundance estimation</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="chapters/03_taxonomic_classification/intro.html">Taxonomic classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="chapters/03_taxonomic_classification/tutorial-reads.html">Reads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="chapters/03_taxonomic_classification/tutorial-mags.html">MAGs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_taxonomic_classification/reads.html">Reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_taxonomic_classification/mags.html">MAGs</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="chapters/functional-annotation.html">Functional annotation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapters/04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04_functional_annotation/mags.html">Dereplicated MAGs</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -320,7 +332,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to your Jupyter Book</h1>
+    <h1>MOSHPIT tutorial</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -334,20 +346,20 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Link to this heading">#</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
-<p>Check out the content pages bundled with this sample book to see more.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="moshpit-tutorial">
+<h1>MOSHPIT tutorial<a class="headerlink" href="#moshpit-tutorial" title="Link to this heading">#</a></h1>
+<p>Welcome to the MOSHPIT tutorial! This tutorial will guide you through the process of analyzing metagenomic data using
+the QIIME 2 framework and the MOSHPIT plugin suite. The tutorial is divided into several chapters, each focusing on a
+different aspect of metagenomic data analysis. We will use a small published dataset to demonstrate the capabilities of
+most of the methods available in MOSHPIT.</p>
+<p>We will begin by setting up our computational environment and fetching all the necessary data (see <a class="reference internal" href="chapters/00_setup.html#setup"><span class="std std-ref">Setup</span></a> and
+<a class="reference internal" href="chapters/00_data_retrieval.html#data-retrieval"><span class="std std-ref">Data retrieval</span></a>). Then, we will move to quality control and filtering of the raw reads (see
+<a class="reference internal" href="chapters/01_filtering/intro.html#quality-control"><span class="std std-ref">Quality control</span></a>). Once we have our clean dataset, we can start by recovering metagenome-assembled
+genomes (MAGs) (see <a class="reference internal" href="chapters/02_mag_reconstruction/intro.html#mag-recovery"><span class="std std-ref">here</span></a>), followed by taxonomic classification of reads and MAGs themselves (see
+<a class="reference internal" href="chapters/03_taxonomic_classification/intro.html#taxonomic-classification"><span class="std std-ref">Taxonomic classification</span></a>). Finally, we will estimate perform functional annotation of
+the dereplicated MAGs (see <a class="reference internal" href="chapters/04_functional_annotation/intro.html#functional-annotation"><span class="std std-ref">Functional annotation</span></a>).</p>
+<p>Let’s dive in!</p>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="chapters/01_filtering/intro.html">Quality filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapters/mag-recovery.html">Recovery of MAGs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapters/03_taxonomic_classification/intro.html">Taxonomic classification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chapters/functional-annotation.html">Functional annotation</a></li>
-</ul>
 </div>
 </section>
 
@@ -382,11 +394,11 @@ It does not go in-depth into any particular topic - check out <a class="referenc
                   
 <div class="prev-next-area">
     <a class="right-next"
-       href="chapters/00_data_retrieval.html"
+       href="chapters/00_setup.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Setup</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

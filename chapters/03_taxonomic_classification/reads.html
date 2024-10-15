@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -57,10 +58,10 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_taxonomic_classification/tutorial-reads';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_taxonomic_classification/reads';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Taxonomic classification of MAGs" href="tutorial-mags.html" />
+    <link rel="next" title="Taxonomic classification of MAGs" href="mags.html" />
     <link rel="prev" title="Taxonomic classification" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -172,17 +173,28 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../01_filtering/intro.html">Quality filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../01_filtering/tutorial.html">Quality filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_data_retrieval.html">Data retrieval</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_filtering/intro.html">Quality control</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_filtering/quality-filtering.html">Quality filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_filtering/host-filtering.html">Host read removal</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../mag-recovery.html">Recovery of MAGs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_mag_reconstruction/intro.html">MAG recovery</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/reconstruction.html">MAG reconstruction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/dereplication.html">Dereplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_mag_reconstruction/abundance.html">Abundance estimation</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Taxonomic classification</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Reads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial-mags.html">MAGs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mags.html">MAGs</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../functional-annotation.html">Functional annotation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_functional_annotation/mags.html">Dereplicated MAGs</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -237,7 +249,7 @@
       
       
       
-      <li><a href="../../_sources/chapters/03_taxonomic_classification/tutorial-reads.md" target="_blank"
+      <li><a href="../../_sources/chapters/03_taxonomic_classification/reads.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -345,7 +357,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="taxonomic-classification-of-reads">
-<h1>Taxonomic classification of reads<a class="headerlink" href="#taxonomic-classification-of-reads" title="Link to this heading">#</a></h1>
+<span id="kraken-reads"></span><h1>Taxonomic classification of reads<a class="headerlink" href="#taxonomic-classification-of-reads" title="Link to this heading">#</a></h1>
 <p>In this section we will focus on the taxonomic classification of shotgun metagenomic reads using two different tools: Kraken 2 and Kaiju.
 We will use the data which we got from the steps described in the <a class="reference internal" href="../00_data_retrieval.html"><span class="std std-doc">data retrieval section</span></a>.</p>
 <section id="approach-1-kraken-2">
@@ -367,7 +379,7 @@ human, UniVec_Core, protozoa and fungi.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_paired</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
   <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
   <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
   <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.5</span> \
@@ -495,7 +507,7 @@ prokaryotes and eukaryotes (more info on the taxa <a class="reference external" 
       </div>
     </a>
     <a class="right-next"
-       href="tutorial-mags.html"
+       href="mags.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

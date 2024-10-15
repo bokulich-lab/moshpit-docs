@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Quality filtering &#8212; MOSHPIT plugin suite</title>
+    <title>MAG set dereplication &#8212; MOSHPIT plugin suite</title>
   
   
   
@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -57,11 +58,11 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/01_filtering/tutorial';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/02_mag_reconstruction/dereplication';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Recovery of MAGs" href="../mag-recovery.html" />
-    <link rel="prev" title="Quality filtering" href="intro.html" />
+    <link rel="next" title="MAG abundance estimation" href="abundance.html" />
+    <link rel="prev" title="Recovery of MAGs" href="reconstruction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,17 +173,28 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Quality filtering</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Quality filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_data_retrieval.html">Data retrieval</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_filtering/intro.html">Quality control</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_filtering/quality-filtering.html">Quality filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_filtering/host-filtering.html">Host read removal</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../mag-recovery.html">Recovery of MAGs</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">MAG recovery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="reconstruction.html">MAG reconstruction</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Dereplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abundance.html">Abundance estimation</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../03_taxonomic_classification/intro.html">Taxonomic classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/tutorial-reads.html">Reads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/tutorial-mags.html">MAGs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/reads.html">Reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/mags.html">MAGs</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../functional-annotation.html">Functional annotation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_functional_annotation/mags.html">Dereplicated MAGs</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -237,7 +249,7 @@
       
       
       
-      <li><a href="../../_sources/chapters/01_filtering/tutorial.md" target="_blank"
+      <li><a href="../../_sources/chapters/02_mag_reconstruction/dereplication.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -321,7 +333,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Quality filtering</h1>
+    <h1>MAG set dereplication</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -331,12 +343,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-overview">Quality overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-trimming-and-quality-filtering">Read trimming and quality filtering</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removal-of-contaminating-reads">Removal of contaminating reads</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#human-host-reads">Human host reads</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-minhash-signatures-with-sourmash">Compute MinHash signatures with Sourmash</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-minhash-signatures">Compare MinHash signatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dereplicate-mags">Dereplicate MAGs</a></li>
 </ul>
             </nav>
         </div>
@@ -348,82 +357,63 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="quality-filtering">
-<h1>Quality filtering<a class="headerlink" href="#quality-filtering" title="Link to this heading">#</a></h1>
-<p>Just like any other NGS experiment, shotgun metagenomics data should be quality controlled before any downstream analysis.
-The filtering steps may include adapter removal, quality trimming, and filtering out low-quality reads. Moreover, metagenomic
-reads may contain host DNA, which should be removed. QIIME 2 provides functionality to address some of those issues - the
-MOSHPIT plugin suite only expands on those by focusing more on host DNA removal. Below is a brief overview of the filtering steps
-which can be done using QIIME 2 and MOSHPIT.</p>
-<section id="quality-overview">
-<h2>Quality overview<a class="headerlink" href="#quality-overview" title="Link to this heading">#</a></h2>
-<p>We can get an overview of the read quality by using the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> action from the <code class="docutils literal notranslate"><span class="pre">demux</span></code> QIIME 2 plugin. This command
-will generate a visualization of the quality scores at each position. You can learn more about this action in the <a class="reference external" href="https://docs.qiime2.org/2024.5/plugins/available/demux/summarize/">QIIME 2
-documentation</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>demux<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-data<span class="w"> </span>./cache:reads<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-visualization<span class="w"> </span>demux.qzv
+  <section class="tex2jax_ignore mathjax_ignore" id="mag-set-dereplication">
+<span id="dereplication"></span><h1>MAG set dereplication<a class="headerlink" href="#mag-set-dereplication" title="Link to this heading">#</a></h1>
+<p>Depending on the application, it may be necessary to dereplicate the set of MAGs to remove redundancy and retain only
+unique genome representatives. Our workflow includes a dereplication step which uses any genome distance matrix, which is
+used to find clusters of similar genomes (based on a specific similarity threshold) and identify the most representative
+MAG (in our case, it will be the longest genome in the cluster). Here we use Sourmash to generate the distance matrix
+but any other tool could also be used.</p>
+<section id="compute-minhash-signatures-with-sourmash">
+<h2>Compute MinHash signatures with Sourmash<a class="headerlink" href="#compute-minhash-signatures-with-sourmash" title="Link to this heading">#</a></h2>
+<p>In this step, Sourmash is used to compute MinHash signatures for the filtered MAGs. MinHash is a method used to compare
+large datasets efficiently by creating compressed representations of genomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">sourmash</span> <span class="n">compute</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequence</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_filtered_50</span> \           
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ksizes</span> <span class="mi">35</span> \                                  
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">scaled</span> <span class="mi">10</span> \                                                             
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_minhash_50</span> \
+    <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
-<p>To see an example of the visualization you can go <a class="reference external" href="https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/taxa-bar-plots.qzv">here</a>.</p>
-</section>
-<section id="read-trimming-and-quality-filtering">
-<h2>Read trimming and quality filtering<a class="headerlink" href="#read-trimming-and-quality-filtering" title="Link to this heading">#</a></h2>
-<p>In order to remove low quality bases from the reads, we can use one of the <code class="docutils literal notranslate"><span class="pre">trim</span></code> actions from the <code class="docutils literal notranslate"><span class="pre">cutadapt</span></code> QIIME 2 plugin.
-Here we are using the <code class="docutils literal notranslate"><span class="pre">trim-paired</span></code> action to remove all the reads shorter than 90 bp:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>cutadapt<span class="w"> </span>trim-paired<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-demultiplexed-sequences<span class="w"> </span>./cache:reads<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--p-minimum-length<span class="w"> </span><span class="m">90</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-trimmed-sequences<span class="w"> </span>./cache:reads_trimmed
-</pre></div>
+</div>
 </div>
 </section>
-<section id="removal-of-contaminating-reads">
-<h2>Removal of contaminating reads<a class="headerlink" href="#removal-of-contaminating-reads" title="Link to this heading">#</a></h2>
-<p>Removal of contaminating reads can generally be done by mapping the reads to a reference database and filtering out the reads
-that map to it. In QIIME 2 this can be done by using the <code class="docutils literal notranslate"><span class="pre">filter-reads</span></code> action from the <code class="docutils literal notranslate"><span class="pre">quality-control</span></code> plugin. Before the filtering
-we need to construct the index of the reference database which will be used by Bowtie 2:</p>
-<ul>
-<li><p>start with the FASTA files contaning the reference sequences - we will import them into a QIIME 2 artifact</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--key<span class="w"> </span>reference_seqs<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--type<span class="w"> </span><span class="s2">&quot;FeatureData[Sequence]&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--input-path<span class="w"> </span>./reference_seeqs.fasta
+<section id="compare-minhash-signatures">
+<h2>Compare MinHash signatures<a class="headerlink" href="#compare-minhash-signatures" title="Link to this heading">#</a></h2>
+<p>Here we compare the computed MinHash signatures to evaluate the similarity between the genomes. This step will allow for
+dereplication by identifying highly similar genomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">sourmash</span> <span class="n">compare</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_minhash_50</span> \ 
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ksize</span> <span class="mi">35</span> \                                                          
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">compare</span><span class="o">-</span><span class="n">output</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_dist_matrix_50</span> \
+    <span class="o">--</span><span class="n">verbose</span>         
 </pre></div>
 </div>
-</li>
-<li><p>build the Bowtie 2 index</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>quality-control<span class="w"> </span>bowtie2-build<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-sequences<span class="w"> </span>./cache:reference_seqs<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-database<span class="w"> </span>./cache:reference_index
-</pre></div>
 </div>
-</li>
-<li><p>filter out the reads that map to the reference database</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>quality-control<span class="w"> </span>filter-reads<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-demultiplexed-sequences<span class="w"> </span>./cache:reads_trimmed<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-database<span class="w"> </span>./cache:reference_index<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-sequences<span class="w"> </span>./cache:reads_filtered
-</pre></div>
-</div>
-</li>
-</ul>
-<section id="human-host-reads">
-<h3>Human host reads<a class="headerlink" href="#human-host-reads" title="Link to this heading">#</a></h3>
-<p>Contaminating human reads can also be filtered out using the approach shown above by providing a human reference genome.
-Since a single human reference genome is not enough to cover all the human genetic diversity, it is now recommended to use a
-collection of genomes represented by the human pangenome (__CIT). We have built a new QIIME 2 action <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code>
-which allows to first fetch the human pangenome sequence, combine it with the GRCh38 reference genome, build a combined
-Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated
-index so that it can be used in any other experiments.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>filter-reads-pangenome<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-reads<span class="w"> </span>./cache:reads_trimmed<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-reads<span class="w"> </span>./cache:reads_filtered<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-reference-index<span class="w"> </span>./cache:human_reference_index
-</pre></div>
 </div>
 </section>
+<section id="dereplicate-mags">
+<h2>Dereplicate MAGs<a class="headerlink" href="#dereplicate-mags" title="Link to this heading">#</a></h2>
+<p>This step dereplicates the filtered MAGs, ensuring that only unique MAGs are retained. Dereplication reduces redundancy
+by merging similar genomes based on a similarity threshold.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">dereplicate</span><span class="o">-</span><span class="n">mags</span> \
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_filtered_50</span> \                    
+  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_dist_matrix_50</span> \       
+  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mf">0.99</span> \
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep_50</span> \   
+  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_ft_50</span>  \
+  <span class="o">--</span><span class="n">verbose</span>              
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -440,7 +430,7 @@ index so that it can be used in any other experiments.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters/01_filtering"
+            path: "./chapters/02_mag_reconstruction"
         },
         predefinedOutput: true
     }
@@ -458,20 +448,20 @@ index so that it can be used in any other experiments.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="intro.html"
+       href="reconstruction.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Quality filtering</p>
+        <p class="prev-next-title">Recovery of MAGs</p>
       </div>
     </a>
     <a class="right-next"
-       href="../mag-recovery.html"
+       href="abundance.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Recovery of MAGs</p>
+        <p class="prev-next-title">MAG abundance estimation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -491,12 +481,9 @@ index so that it can be used in any other experiments.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-overview">Quality overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-trimming-and-quality-filtering">Read trimming and quality filtering</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removal-of-contaminating-reads">Removal of contaminating reads</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#human-host-reads">Human host reads</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-minhash-signatures-with-sourmash">Compute MinHash signatures with Sourmash</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-minhash-signatures">Compare MinHash signatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dereplicate-mags">Dereplicate MAGs</a></li>
 </ul>
   </nav></div>
 
