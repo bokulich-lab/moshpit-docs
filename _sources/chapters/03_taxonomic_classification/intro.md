@@ -15,7 +15,7 @@ kernelspec:
 # Taxonomic classification
 ![Taxonomic classification workflow](../../images/workflows-taxonomic.png)
 
-## Read-Based Classification Overview
+## Read-based classification overview
 Read-based classification is commonly used to determine the taxonomic groups present within a given sample. This technique 
 is useful for assessing the biodiversity or the composition of microbial communities by assigning DNA reads to known 
 organisms. One significant advantage of read-based classification is that it allows for the classification of all reads, 
@@ -41,7 +41,7 @@ accurate taxonomic classification.
 For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0).
 ```
 
-## Kaiju: Protein-based classification
+## Kaiju: protein-based classification
 Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify 
 organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a 
 fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads 

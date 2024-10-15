@@ -21,7 +21,7 @@ qiime demux summarize \
   --i-data ./cache:reads \
   --o-visualization demux.qzv
 ```
-To see an example of the visualization you can go [here](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/taxa-bar-plots.qzv).
+To see an example of the visualization you can go [here](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/demux-summarize.qzv).
 
 ## Read trimming and quality filtering
 In order to remove low quality bases from the reads, we can use one of the `trim` actions from the `cutadapt` QIIME 2 plugin.
