@@ -63,6 +63,7 @@ qiime assembly evaluate-contigs \
     --o-visualization ./results/contigs.qzv \ 
     --verbose
 ```
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/contigs.qzv).
 
 ## Index contigs
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs 
