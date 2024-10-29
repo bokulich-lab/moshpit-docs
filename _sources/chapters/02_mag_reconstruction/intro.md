@@ -20,6 +20,10 @@ name: workflows-mag-fig
 MAG reconstruction workflow
 ```
 
+```{image} ../../images/workflows-mags.png
+:align: center
+```
+
 **Metagenome-assembled genomes (MAGs)** are genomes reconstructed directly from DNA from complex microbial mixtures without 
 the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of 
 microbial communities in various environments, providing insights into the diversity, functions, and ecological roles of 
