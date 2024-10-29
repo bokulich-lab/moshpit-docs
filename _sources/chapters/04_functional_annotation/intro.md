@@ -13,7 +13,13 @@ kernelspec:
 ---
 (functional-annotation)=
 # Functional annotation
-![Functional annotation workflow](../../images/workflows-functional.png)
+```{figure} ../../images/workflows-functional.png
+---
+name: workflows-function-fig
+width: 100%
+---
+Functional annotation workflow
+```
 
 Functional annotation of **metagenome-assembled genomes (MAGs)** involves the identification and classification of genes 
 within these reconstructed genomes to understand their roles and potential functions. MAGs are recovered from DNA directly 
