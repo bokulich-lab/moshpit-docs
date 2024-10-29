@@ -16,6 +16,7 @@ kernelspec:
 ```{figure} ../../images/workflows-mags.png
 ---
 name: workflows-mag-fig
+height: 200px
 ---
 MAG reconstruction workflow
 ```
