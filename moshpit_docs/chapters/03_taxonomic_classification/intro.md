@@ -13,7 +13,13 @@ kernelspec:
 ---
 (taxonomic-classification)=
 # Taxonomic classification
-![Taxonomic classification workflow](../../images/workflows-taxonomic.png)
+```{figure} ../../images/workflows-taxonomic.png
+---
+name: workflows-taxonomy-fig
+width: 100%
+---
+Taxonomic classification workflow
+```
 
 ## Read-based classification overview
 Read-based classification is commonly used to determine the taxonomic groups present within a given sample. This technique 
