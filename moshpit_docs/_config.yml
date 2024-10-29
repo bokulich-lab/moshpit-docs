@@ -8,8 +8,8 @@ sphinx:
   config:
     html_theme_options:
       logo:
-        image_light: logo_light.svg
-        image_dark: logo_dark.svg
+        image_light: images/logo_light.svg
+        image_dark: images/logo_dark.svg
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 82.63 83.16">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill: none;
+      }
+
+      .cls-8 {
+        fill: #010101;
+      }
+
+      .cls-9 {
+        fill: #3a53a4;
+      }
+
+      .cls-10 {
+        fill: #ed2224;
+      }
+
+      .cls-11 {
+        font-size: 6px;
+      }
+
+      .cls-11, .cls-12 {
+        fill: #231f20;
+      }
+
+      .cls-11, .cls-13, .cls-14 {
+        font-family: Verdana, Verdana;
+      }
+
+      .cls-2 {
+        stroke: #3a53a4;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2, .cls-4, .cls-5 {
+        stroke-linecap: round;
+        stroke-width: 4px;
+      }
+
+      .cls-15 {
+        isolation: isolate;
+      }
+
+      .cls-16 {
+        fill: #7f8080;
+      }
+
+      .cls-17 {
+        clip-path: url(#clippath-1);
+      }
+
+      .cls-18 {
+        clip-path: url(#clippath-3);
+      }
+
+      .cls-19 {
+        clip-path: url(#clippath-4);
+      }
+
+      .cls-20 {
+        clip-path: url(#clippath-2);
+      }
+
+      .cls-3 {
+        stroke-width: .98px;
+      }
+
+      .cls-3, .cls-6, .cls-7 {
+        stroke: #010101;
+      }
+
+      .cls-4 {
+        stroke: #ed2224;
+      }
+
+      .cls-12 {
+        font-size: 10.63px;
+      }
+
+      .cls-13 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        stroke: #6abd45;
+      }
+
+      .cls-6 {
+        stroke-width: 2.85px;
+      }
+
+      .cls-7 {
+        stroke-width: 2.44px;
+      }
+
+      .cls-21 {
+        fill: #6abd45;
+      }
+
+      .cls-22 {
+        font-family: ArialMT, Arial;
+      }
+
+      .cls-23 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="28.65" y="18.5" width="24.39" height="24.39"/>
+    </clipPath>
+    <clipPath id="clippath-1">
+      <rect class="cls-1" x="28.65" y="18.5" width="24.39" height="24.39"/>
+    </clipPath>
+    <clipPath id="clippath-2">
+      <polygon class="cls-1" points="48.44 29.29 46.14 31.59 43.84 33.89 46.14 36.18 48.44 33.89 50.74 36.18 53.04 33.89 50.74 31.59 48.44 29.29"/>
+    </clipPath>
+    <clipPath id="clippath-3">
+      <rect class="cls-1" x="28.65" y="18.5" width="24.39" height="24.39"/>
+    </clipPath>
+    <clipPath id="clippath-4">
+      <rect class="cls-1" x="28.65" y="18.5" width="24.39" height="24.39"/>
+    </clipPath>
+  </defs>
+  <g class="cls-15">
+    <g class="cls-23">
+      <g class="cls-17">
+        <rect class="cls-16" x="41.37" y="18.74" width="2.76" height="4.8"/>
+        <rect class="cls-16" x="35.4" y="20.77" width="14.71" height="2.76"/>
+        <rect class="cls-16" x="35.4" y="20.77" width="2.76" height="4.06"/>
+        <rect class="cls-16" x="47.35" y="20.77" width="2.76" height="7.32"/>
+        <rect class="cls-16" x="45.64" y="25.32" width="6.18" height="2.76"/>
+        <rect class="cls-10" x="34.18" y="29.06" width="5.2" height="3.33"/>
+        <rect class="cls-10" x="35.4" y="24.84" width="2.76" height="2.76"/>
+        <rect class="cls-21" x="45.64" y="28.09" width="2.76" height="2.76"/>
+        <rect class="cls-9" x="49.05" y="28.09" width="2.76" height="2.76"/>
+        <circle class="cls-6" cx="36.78" cy="33.13" r="5.49"/>
+        <line class="cls-8" x1="41.25" y1="37.6" x2="44.91" y2="41.66"/>
+        <line class="cls-7" x1="41.25" y1="37.6" x2="44.91" y2="41.66"/>
+      </g>
+      <g class="cls-20">
+        <g class="cls-18">
+          <circle class="cls-3" cx="48.57" cy="33.94" r="1.95"/>
+        </g>
+      </g>
+      <g class="cls-19">
+        <line class="cls-8" x1="49.95" y1="35.32" x2="46.53" y2="38.74"/>
+        <line class="cls-3" x1="49.95" y1="35.32" x2="46.53" y2="38.74"/>
+        <line class="cls-3" x1="46.21" y1="38.82" x2="51" y2="38.82"/>
+      </g>
+    </g>
+  </g>
+  <g>
+    <text class="cls-11" transform="translate(35.09 7.19) rotate(-6.92)"><tspan x="0" y="0">b</tspan></text>
+    <text class="cls-11" transform="translate(39.17 6.76) rotate(-1.93)"><tspan x="0" y="0">i</tspan></text>
+    <text class="cls-11" transform="translate(41.18 6.66) rotate(3.04)"><tspan x="0" y="0">n</tspan></text>
+    <text class="cls-11" transform="translate(45.29 6.89) rotate(9.77)"><tspan x="0" y="0">n</tspan></text>
+    <text class="cls-11" transform="translate(49.38 7.66) rotate(14.86)"><tspan x="0" y="0">i</tspan></text>
+    <text class="cls-11" transform="translate(51.34 8.15) rotate(19.98)"><tspan x="0" y="0">n</tspan></text>
+    <text class="cls-11" transform="translate(55.21 9.58) rotate(26.74)"><tspan x="0" y="0">g</tspan></text>
+    <text class="cls-11" transform="translate(9.07 55.42) rotate(-110.3)"><tspan x="0" y="0">a</tspan></text>
+    <text class="cls-11" transform="translate(7.74 51.73) rotate(-104.21)"><tspan x="0" y="0">s</tspan></text>
+    <text class="cls-11" transform="translate(6.9 48.34) rotate(-98.45)"><tspan x="0" y="0">s</tspan></text>
+    <text class="cls-11" transform="translate(6.39 44.89) rotate(-92.4)"><tspan x="0" y="0">e</tspan></text>
+    <text class="cls-11" transform="translate(6.17 41.01) rotate(-84.3)"><tspan x="0" y="0">m</tspan></text>
+    <text class="cls-11" transform="translate(6.88 34.91) rotate(-75.91)"><tspan x="0" y="0">b</tspan></text>
+    <text class="cls-11" transform="translate(7.94 30.93) rotate(-70.84)"><tspan x="0" y="0">l</tspan></text>
+    <text class="cls-11" transform="translate(8.57 29.03) rotate(-65.97)"><tspan x="0" y="0">y</tspan></text>
+    <text class="cls-11" transform="translate(74.71 52.21) rotate(110.73)"><tspan x="0" y="0">a</tspan></text>
+    <text class="cls-11" transform="translate(73.3 55.89) rotate(117.35)"><tspan x="0" y="0">n</tspan></text>
+    <text class="cls-11" transform="translate(71.39 59.54) rotate(124.09)"><tspan x="0" y="0">n</tspan></text>
+    <text class="cls-11" transform="translate(69.05 62.95) rotate(130.71)"><tspan x="0" y="0">o</tspan></text>
+    <text class="cls-11" transform="translate(66.39 65.97) rotate(136.23)"><tspan x="0" y="0">t</tspan></text>
+    <text class="cls-11" transform="translate(64.44 67.86) rotate(141.68)"><tspan x="0" y="0">a</tspan></text>
+    <text class="cls-11" transform="translate(61.3 70.26) rotate(146.57)"><tspan x="0" y="0">i</tspan></text>
+    <text class="cls-11" transform="translate(59.61 71.38) rotate(150.5)"><tspan x="0" y="0">t</tspan></text>
+    <text class="cls-11" transform="translate(57.21 72.71) rotate(154.46)"><tspan x="0" y="0">i</tspan></text>
+    <text class="cls-11" transform="translate(55.4 73.6) rotate(159.43)"><tspan x="0" y="0">o</tspan></text>
+    <text class="cls-11" transform="translate(51.67 74.99) rotate(166.11)"><tspan x="0" y="0">n</tspan></text>
+  </g>
+  <g>
+    <path class="cls-5" d="M24.84,15.69c4.73-2.99,10.34-4.72,16.36-4.72,4.23,0,8.26.86,11.93,2.41s6.9,3.75,9.66,6.49c.96.95,1.85,1.96,2.68,3.03"/>
+    <path class="cls-4" d="M21.7,65.27c-6.81-5.62-11.15-14.13-11.15-23.65,0-9.02,3.9-17.14,10.1-22.74"/>
+    <path class="cls-2" d="M70.05,31.25c1.16,3.24,1.8,6.73,1.8,10.37,0,16.93-13.72,30.65-30.65,30.65-5.55,0-10.76-1.48-15.26-4.06"/>
+  </g>
+  <text class="cls-12" transform="translate(16.95 52.95)"><tspan class="cls-14" x="0" y="0">MOSHP</tspan><tspan class="cls-22" x="38.99" y="0">I</tspan><tspan class="cls-13" x="41.94" y="0">T</tspan></text>
+  <text/>
+</svg>
