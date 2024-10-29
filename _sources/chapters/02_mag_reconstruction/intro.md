@@ -16,13 +16,9 @@ kernelspec:
 ```{figure} ../../images/workflows-mags.png
 ---
 name: workflows-mag-fig
-height: 200px
+width: 100%
 ---
 MAG reconstruction workflow
-```
-
-```{image} ../../images/workflows-mags.png
-:align: center
 ```
 
 **Metagenome-assembled genomes (MAGs)** are genomes reconstructed directly from DNA from complex microbial mixtures without 
