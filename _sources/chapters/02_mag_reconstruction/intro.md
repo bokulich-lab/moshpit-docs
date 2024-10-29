@@ -13,7 +13,12 @@ kernelspec:
 ---
 (mag-recovery)=
 # Recovery of Metagenome-assembled Genomes
-![MAG reconstruction workflow](../../images/workflows-mags.png)
+```{figure} ../../images/workflows-mags.png
+---
+name: workflows-mag-fig
+---
+MAG reconstruction workflow
+```
 
 **Metagenome-assembled genomes (MAGs)** are genomes reconstructed directly from DNA from complex microbial mixtures without 
 the need for culturing organisms in the laboratory. This approach allows researchers to explore the genetic makeup of 

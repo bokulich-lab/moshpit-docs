@@ -14,8 +14,8 @@ kernelspec:
 (setup)=
 # Setup
 Before we dive into the tutorial, let's make sure we have all the necessary components in place. Make sure you have a 
-working QIIME 2 metagenome environment available - please follow the instructions from the official [QIIME 2 documentation]
-(https://docs.qiime2.org/2024.5/install/native/) to learn more.
+working QIIME 2 metagenome environment available - please follow the instructions from the official [QIIME 2 documentation](https://docs.qiime2.org/2024.5/install/native/) 
+to learn more.
 
 In this tutorial we will be storing all the data in the QIIME 2 cache. To learn more about how the cache works you can 
 consult [this](https://dev.qiime2.org/latest/api-reference/cache) QIIME 2 forum post. You should create a single cache 
