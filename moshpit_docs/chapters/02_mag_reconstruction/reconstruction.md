@@ -34,7 +34,7 @@ genetic information for the next steps of our analysis.
 ```
 ```{code-cell}
 qiime assembly assemble-megahit \
-    --i-seqs ./cache:reads_paired \
+    --i-seqs ./cache:reads_filtered \
     --p-presets "meta-sensitive" \          
     --p-num-cpu-threads 24 \                      
     --p-min-contig-len 200 \ 
