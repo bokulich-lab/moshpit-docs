@@ -339,6 +339,9 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="host-read-removal">
 <h1>Host read removal<a class="headerlink" href="#host-read-removal" title="Link to this heading">#</a></h1>
+<p>There are a few different options to perform host read removal in QIIME 2: a more generic one using the <code class="docutils literal notranslate"><span class="pre">filter-reads</span></code> action
+and a more specific one using the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action. Below you can see how to use both of them. In this tutorial we will
+use the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action to remove human reads from the dataset.</p>
 <section id="removal-of-contaminating-reads">
 <h2>Removal of contaminating reads<a class="headerlink" href="#removal-of-contaminating-reads" title="Link to this heading">#</a></h2>
 <p>Removal of contaminating reads can generally be done by mapping the reads to a reference database and filtering out the reads

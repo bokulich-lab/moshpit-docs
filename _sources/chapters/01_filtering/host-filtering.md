@@ -12,6 +12,10 @@ kernelspec:
   name: python3
 ---
 # Host read removal
+There are a few different options to perform host read removal in QIIME 2: a more generic one using the `filter-reads` action
+and a more specific one using the `filter-reads-pangenome` action. Below you can see how to use both of them. In this tutorial we will 
+use the `filter-reads-pangenome` action to remove human reads from the dataset.
+
 ## Removal of contaminating reads
 Removal of contaminating reads can generally be done by mapping the reads to a reference database and filtering out the reads
 that map to it. In QIIME 2 this can be done by using the `filter-reads` action from the `quality-control` plugin. Before the filtering
