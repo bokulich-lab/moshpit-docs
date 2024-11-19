@@ -1,9 +1,13 @@
 # MOSHPIT tutorial
 
-Welcome to the MOSHPIT tutorial! This tutorial will guide you through the process of analyzing metagenomic data using 
-the QIIME 2 framework and the MOSHPIT plugin suite. The tutorial is divided into several chapters, each focusing on a 
-different aspect of metagenomic data analysis. We will use a small published dataset to demonstrate the capabilities of 
-most of the methods available in MOSHPIT.
+MOSHPIT (MOdular SHotgun metagenome Pipelines with Integrated provenance Tracking) is a suite of plugins for whole 
+metagenome assembly and analysis as part of the microbiome multi-omics data science platform [QIIME 2](https://qiime2.org/). 
+MOSHPIT enables flexible, modular, fully reproducible workflows for read-based or assembly-based analysis of 
+metagenome data.
+
+This tutorial will guide you through the process of analyzing metagenomic data using QIIME 2 framework and MOSHPIT. 
+The tutorial is divided into several chapters, each focusing on a different aspect of metagenomic data analysis. 
+We will use a small published dataset to demonstrate the capabilities of most of the methods available in MOSHPIT.
 
 We will begin by setting up our computational environment and fetching all the necessary data (see [Setup](setup) and 
 [Data retrieval](data-retrieval)). Then, we will move to quality control and filtering of the raw reads (see 

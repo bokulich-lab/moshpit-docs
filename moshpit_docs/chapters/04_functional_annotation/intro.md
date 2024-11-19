@@ -27,7 +27,7 @@ extracted from complex microbial communities, bypassing the need to culture the 
 
 This process provides insights into the genes that code for enzymes, transporters, and other proteins critical to the 
 survival and function of the microbes in various ecosystems. Annotating these genomes allows for the study of their 
-contributions to nutrient cycles, disease processes, or specialized ecological functions.
+contributions to nutrient cycles, disease processes, or specialized ecological functions, to name only a few examples.
 
 This workflow outlines the step-by-step process for functional annotation of MAGs or contigs using tools like EggNOG and 
 the Diamond aligner in QIIME2.
@@ -35,7 +35,8 @@ the Diamond aligner in QIIME2.
 ```{note}
 Functional annotation can be performed on fully reconstructed **MAGs** or directly on **contigs** (the contiguous sequences 
 assembled from sequencing reads). Annotating **contigs** can provide early insights into important functional genes even 
-before complete genomes are assembled.
+before complete genomes are assembled. Annotating **MAGs** has the added benefit of seeing how these annotated genes are 
+connected and organized in a single genome.
 
 In this tutorial, we will focus on functional annotation of our previously reconstructed MAGs (see **Recovery of MAGs section**)
 ```

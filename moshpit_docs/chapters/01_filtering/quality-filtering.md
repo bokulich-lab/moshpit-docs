@@ -15,7 +15,7 @@ kernelspec:
 ## Quality overview
 We can get an overview of the read quality by using the `summarize` action from the `demux` QIIME 2 plugin. This command 
 will generate a visualization of the quality scores at each position. You can learn more about this action in the [QIIME 2
-documentation](https://docs.qiime2.org/2024.5/plugins/available/demux/summarize/).
+documentation](https://docs.qiime2.org/2024.10/plugins/available/demux/summarize/).
 ```{code-cell}
 qiime demux summarize \
   --i-data ./cache:reads \
