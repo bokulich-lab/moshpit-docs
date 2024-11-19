@@ -13,7 +13,7 @@ kernelspec:
 ---
 # MAG abundance estimation
 Once we recover MAGs from metagenomic data, we may be interested in estimating their abundance in the samples. We can do 
-it by mapping the original reads to the derepliacted MAGs and calculating the abundance based on the read mapping results.
+it by mapping the original reads to the dereplicated MAGs and calculating the abundance based on the read mapping results.
 There are a couple of ways to estimate MAG abundance, such as RPKM (Reads Per Kilobase per Million mapped reads) and TPM
 (Transcripts Per Million). Here we will use TPM to estimate the abundance of each MAG in all samples.
 

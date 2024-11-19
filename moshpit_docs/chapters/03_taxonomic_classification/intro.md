@@ -48,7 +48,7 @@ For more information on Kraken 2, consult [Wood et al., 2019](https://genomebiol
 ```
 
 ## Kaiju: protein-based classification
-Kaiju compares reads by translating DNA sequences into protein sequences (BLASTx-like). This allows Kaiju to identify 
+Kaiju compares reads by translating DNA sequences into protein sequences (similar to BLASTx). This allows Kaiju to identify 
 organisms accurately when nucleotide sequences are too divergent to be identified with DNA-based methods. Kaiju uses a 
 fast exact matching algorithm based on Burrows-Wheeler Transform (BWT) and FM-index to align translated DNA reads 
 against a reference database of protein sequences.

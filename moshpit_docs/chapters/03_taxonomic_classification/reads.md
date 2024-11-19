@@ -14,7 +14,7 @@ kernelspec:
 (kraken-reads)=
 # Taxonomic classification of reads
 In this section we will focus on the taxonomic classification of shotgun metagenomic reads using two different tools: Kraken 2 and Kaiju. 
-We will use the data which we got from the steps described in the [data retrieval section](../00_data_retrieval.md).
+We will use the data obtained in the [data retrieval section](../00_data_retrieval.md).
 
 ## Approach 1: Kraken 2
 Before we can use Kraken 2, we need to build or download a database. We will use the `build-kraken-db` action to fetch the PlusPF database 
@@ -43,7 +43,7 @@ qiime moshpit classify-kraken2 \
 
 ```{seealso}
 [Bracken](https://ccb.jhu.edu/software/bracken/) is a related tool that additionally estimates relative abundances of species or genera to adjust for
-genome size which the reads originated from. In order to use this tool we need the Bracken database that was fetched in the first step.
+the genome size the organisms from which each read originated. In order to use this tool we need the Bracken database that was fetched in the first step.
 ```
 
 ```{code-cell}
@@ -57,7 +57,7 @@ qiime moshpit estimate-bracken \
   --o-reports ./cache:bracken_reports
 ```
 
-To remove the unclassified read fraction we can use the `filter-table` action from the `taxa` QIIME 2 plugin:
+To remove the unclassified read fraction we can use the `filter-table` action from the `q2-taxa` QIIME 2 plugin:
 ```{code-cell}
 qiime taxa filter-table \
   --i-table ./cache:bracken_ft \
@@ -67,8 +67,8 @@ qiime taxa filter-table \
 ```
 
 ## Approach 2: Kaiju
-Similarly to Kraken 2, Kaiju requires a reference database to perform the classification. We will use the `fetch-kaiju-db` 
-action to download the [nr_euk](https://bioinformatics-centre.github.io/kaiju/downloads.html) database that includes both, 
+Similarly to Kraken 2, Kaiju requires a reference database to perform taxonomic classification. We will use the `fetch-kaiju-db` 
+action to download the [nr_euk](https://bioinformatics-centre.github.io/kaiju/downloads.html) database that includes both 
 prokaryotes and eukaryotes (more info on the taxa [here](https://github.com/bioinformatics-centre/kaiju/blob/master/util/kaiju-taxonlistEuk.tsv)).
 ```{code-cell}
 qiime moshpit fetch-kaiju-db \
