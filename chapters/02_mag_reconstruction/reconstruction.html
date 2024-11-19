@@ -355,8 +355,8 @@ memory resources before running these commands.</p>
 <h2>Assemble contigs with MEGAHIT<a class="headerlink" href="#assemble-contigs-with-megahit" title="Link to this heading">#</a></h2>
 <p>The first step in recovering MAGs is genome assembly itself. There are many genome assemblers available, two of which
 you can use through the q2-assembly plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads,
-constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable
-genetic information for the next steps of our analysis.</p>
+constructs a simplified <a class="reference external" href="https://en.wikipedia.org/wiki/De_Bruijn_graph">De Bruijn graph</a>, and generates longer contiguous
+sequences called contigs, providing valuable genetic information for the next steps of our analysis.</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">--p-presets</span></code> specifies the preset mode for MEGAHIT. In this case, it’s set to “meta-sensitive” for metagenomic data.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">--p-cpu-threads</span></code> specifies the number of CPU threads to use during assembly.</p></li>
@@ -388,7 +388,7 @@ genetic information for the next steps of our analysis.</p>
 <section id="contig-qc-with-quast">
 <h2>Contig QC with QUAST<a class="headerlink" href="#contig-qc-with-quast" title="Link to this heading">#</a></h2>
 <p>Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many
-metrics which can be used for that purpose but here we will focus on the two most popular metrics:</p>
+metrics that can be used for that purpose but here we will focus on the two most popular metrics:</p>
 <ul class="simple">
 <li><p><strong>N50</strong>: represents the contiguity of a genome assembly. It’s defined as the length of the contig (or scaffold) at
 which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.</p></li>
@@ -464,10 +464,10 @@ co-abundance and other features, producing MAG files that represent putative gen
 </div>
 </div>
 </div>
-<p>This tep generated a couple artifacts:</p>
+<p>This step generated several artifacts:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">mags</span></code>: these are our actual MAGS, per sample.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">contig_map</span></code>: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contig_map</span></code>: this is a mapping between MAG IDs and IDs of contigs that belong to a given MAG.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">unbinned_contigs</span></code>: these are all the contigs that could not be assign to any particular MAG.
 From now on, we will focus on the <code class="docutils literal notranslate"><span class="pre">mags</span></code>.</p></li>
 </ul>
@@ -517,7 +517,7 @@ the bacteria_odb10 dataset. This is a standard database for bacterial genomes.</
 The filtering process ensures only high-quality genomes are kept for downstream analysis.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>We recommed this step to be done before dereplication (as in this example). Alternatively, we can also use the
+<p>We recommed that this step is done before dereplication (as in this example). Alternatively, we can also use the
 <a class="reference internal" href="dereplication.html#dereplication"><span class="std std-ref">dereplicated set</span></a> and filter this one using <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">filter-derep-mags</span></code>.</p>
 </div>
 <div class="cell docutils container">

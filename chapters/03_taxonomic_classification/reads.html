@@ -341,7 +341,7 @@
   <section class="tex2jax_ignore mathjax_ignore" id="taxonomic-classification-of-reads">
 <span id="kraken-reads"></span><h1>Taxonomic classification of reads<a class="headerlink" href="#taxonomic-classification-of-reads" title="Link to this heading">#</a></h1>
 <p>In this section we will focus on the taxonomic classification of shotgun metagenomic reads using two different tools: Kraken 2 and Kaiju.
-We will use the data which we got from the steps described in the <a class="reference internal" href="../00_data_retrieval.html"><span class="std std-doc">data retrieval section</span></a>.</p>
+We will use the data obtained in the <a class="reference internal" href="../00_data_retrieval.html"><span class="std std-doc">data retrieval section</span></a>.</p>
 <section id="approach-1-kraken-2">
 <h2>Approach 1: Kraken 2<a class="headerlink" href="#approach-1-kraken-2" title="Link to this heading">#</a></h2>
 <p>Before we can use Kraken 2, we need to build or download a database. We will use the <code class="docutils literal notranslate"><span class="pre">build-kraken-db</span></code> action to fetch the PlusPF database
@@ -377,7 +377,7 @@ human, UniVec_Core, protozoa and fungi.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://ccb.jhu.edu/software/bracken/">Bracken</a> is a related tool that additionally estimates relative abundances of species or genera to adjust for
-genome size which the reads originated from. In order to use this tool we need the Bracken database that was fetched in the first step.</p>
+the genome size the organisms from which each read originated. In order to use this tool we need the Bracken database that was fetched in the first step.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -393,7 +393,7 @@ genome size which the reads originated from. In order to use this tool we need t
 </div>
 </div>
 </div>
-<p>To remove the unclassified read fraction we can use the <code class="docutils literal notranslate"><span class="pre">filter-table</span></code> action from the <code class="docutils literal notranslate"><span class="pre">taxa</span></code> QIIME 2 plugin:</p>
+<p>To remove the unclassified read fraction we can use the <code class="docutils literal notranslate"><span class="pre">filter-table</span></code> action from the <code class="docutils literal notranslate"><span class="pre">q2-taxa</span></code> QIIME 2 plugin:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
@@ -408,8 +408,8 @@ genome size which the reads originated from. In order to use this tool we need t
 </section>
 <section id="approach-2-kaiju">
 <h2>Approach 2: Kaiju<a class="headerlink" href="#approach-2-kaiju" title="Link to this heading">#</a></h2>
-<p>Similarly to Kraken 2, Kaiju requires a reference database to perform the classification. We will use the <code class="docutils literal notranslate"><span class="pre">fetch-kaiju-db</span></code>
-action to download the <a class="reference external" href="https://bioinformatics-centre.github.io/kaiju/downloads.html">nr_euk</a> database that includes both,
+<p>Similarly to Kraken 2, Kaiju requires a reference database to perform taxonomic classification. We will use the <code class="docutils literal notranslate"><span class="pre">fetch-kaiju-db</span></code>
+action to download the <a class="reference external" href="https://bioinformatics-centre.github.io/kaiju/downloads.html">nr_euk</a> database that includes both
 prokaryotes and eukaryotes (more info on the taxa <a class="reference external" href="https://github.com/bioinformatics-centre/kaiju/blob/master/util/kaiju-taxonlistEuk.tsv">here</a>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

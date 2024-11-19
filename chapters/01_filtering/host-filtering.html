@@ -340,15 +340,15 @@
   <section class="tex2jax_ignore mathjax_ignore" id="host-read-removal">
 <h1>Host read removal<a class="headerlink" href="#host-read-removal" title="Link to this heading">#</a></h1>
 <p>There are a few different options to perform host read removal in QIIME 2: a more generic one using the <code class="docutils literal notranslate"><span class="pre">filter-reads</span></code> action
-and a more specific one using the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action. Below you can see how to use both of them. In this tutorial we will
+and a more specific one using the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action. Below you can learn how to use both of them. In this tutorial we will
 use the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action to remove human reads from the dataset.</p>
 <section id="removal-of-contaminating-reads">
 <h2>Removal of contaminating reads<a class="headerlink" href="#removal-of-contaminating-reads" title="Link to this heading">#</a></h2>
 <p>Removal of contaminating reads can generally be done by mapping the reads to a reference database and filtering out the reads
-that map to it. In QIIME 2 this can be done by using the <code class="docutils literal notranslate"><span class="pre">filter-reads</span></code> action from the <code class="docutils literal notranslate"><span class="pre">quality-control</span></code> plugin. Before the filtering
-we need to construct the index of the reference database which will be used by Bowtie 2:</p>
+that map to it. In QIIME 2 this can be done by using the <code class="docutils literal notranslate"><span class="pre">filter-reads</span></code> action from the <code class="docutils literal notranslate"><span class="pre">quality-control</span></code> plugin. Before filtering
+we need to construct the index of the reference database that will be used by Bowtie 2:</p>
 <ul class="simple">
-<li><p>start with the FASTA files contaning the reference sequences - we will import them into a QIIME 2 artifact:</p></li>
+<li><p>start with the FASTA files containing the reference sequences - we will import them into a QIIME 2 artifact:</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -390,7 +390,7 @@ we need to construct the index of the reference database which will be used by B
 <section id="human-host-reads">
 <h2>Human host reads<a class="headerlink" href="#human-host-reads" title="Link to this heading">#</a></h2>
 <p>Contaminating human reads can also be filtered out using the approach shown above by providing a human reference genome.
-Since a single human reference genome is not enough to cover all the human genetic diversity, it is now recommended to use a
+Since a single human reference genome is not enough to cover all the human genetic diversity, it is recommended to use a
 collection of genomes represented by the human pangenome (__CIT). We have built a new QIIME 2 action <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code>
 which allows to first fetch the human pangenome sequence, combine it with the GRCh38 reference genome, build a combined
 Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated

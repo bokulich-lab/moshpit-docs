@@ -13,9 +13,10 @@ kernelspec:
 ---
 (data-retrieval)=
 # Data retrieval
-The dataset which we are using in this tutorial is available through the Sequence Read Archive. To retrieve it we will
-use the q2-fondue plugin: we only need to provide a list of accession IDs which we are interested in downloading - 
-everything else will be taken care of for us.
+The dataset used in this tutorial is available through the [NCBI Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra) (SRA). 
+To retrieve it we will use the [q2-fondue plugin](https://github.com/bokulich-lab/q2-fondue) for programmatic access to 
+sequences and metadata from SRA; we only need to provide a list of accession IDs to download - q2-fondue will take care of 
+the rest.
 
 ```{note}
 You need to provide an e-mail address when running this command - this is required by the NCBI as a way to 

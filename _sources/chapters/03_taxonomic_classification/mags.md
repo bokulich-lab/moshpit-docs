@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 # Taxonomic classification of MAGs
-Kraken 2 can also be used to obtain a classification of metagenome-assembled genomes (MAGs). In this tutorial we use this
+Kraken 2 can also be used to taxonomically classify metagenome-assembled genomes (MAGs). In this tutorial we use this
 tool to classify a subset of dereplicated MAGs but the same approach can be used for the entire set of MAGs contained in 
 the `SampleData[MAGs]` or `SampleData[Contigs]` artifacts.
 ```{code-cell}

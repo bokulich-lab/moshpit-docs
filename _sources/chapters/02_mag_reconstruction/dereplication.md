@@ -14,8 +14,8 @@ kernelspec:
 (dereplication)=
 # MAG set dereplication
 Depending on the application, it may be necessary to dereplicate the set of MAGs to remove redundancy and retain only 
-unique genome representatives. Our workflow includes a dereplication step which uses any genome distance matrix, which is
-used to find clusters of similar genomes (based on a specific similarity threshold) and identify the most representative 
+unique genome representatives. Our workflow includes a dereplication step that can use any genome distance matrix to 
+find clusters of similar genomes (based on a specific similarity threshold) and identify the most representative 
 MAG (in our case, it will be the longest genome in the cluster). Here we use Sourmash to generate the distance matrix 
 but any other tool could also be used. 
 ## Compute MinHash signatures with Sourmash
