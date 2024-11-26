@@ -333,6 +333,21 @@
 metagenome assembly and analysis as part of the microbiome multi-omics data science platform <a class="reference external" href="https://qiime2.org/">QIIME 2</a>.
 MOSHPIT enables flexible, modular, fully reproducible workflows for read-based or assembly-based analysis of
 metagenome data.</p>
+<p>The following main plugins comprise the core of the MOSHPIT suite:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/bokulich-lab/q2-assembly">q2-assembly</a>: contains actions for (meta)genome and quality control,
+genome indexing and red mapping</p></li>
+<li><p><a class="reference external" href="https://github.com/bokulich-lab/q2-moshpit">q2-moshpit</a>: provides actions for contig binning and quality control,
+taxonomic and functional annotations of contigs and MAGs, human host removal.</p></li>
+</ul>
+<p>Additionally, you may want to check out our plugins for AMR genes detection and viromics applications (they are not
+covered in this tutorial but you may use them with some of the artifacts produced by the MOSHPIT plugins):</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/bokulich-lab/q2-rgi">q2-rgi</a>: antimicrobial resistance gene annotation of MAGs and metagenomic
+reads with RGI and CARD</p></li>
+<li><p><a class="reference external" href="https://github.com/bokulich-lab/q2-amrfinderplus">q2-amrfinderplus</a>: AMR detection using the AMRFinderPlus tool</p></li>
+<li><p><a class="reference external" href="https://github.com/bokulich-lab/q2-viromics">q2-viromics</a>: detection of viral sequences and their quality control.</p></li>
+</ul>
 <p>This tutorial will guide you through the process of analyzing metagenomic data using QIIME 2 framework and MOSHPIT.
 The tutorial is divided into several chapters, each focusing on a different aspect of metagenomic data analysis.
 We will use a small published dataset to demonstrate the capabilities of most of the methods available in MOSHPIT.</p>
