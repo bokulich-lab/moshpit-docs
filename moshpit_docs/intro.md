@@ -11,11 +11,10 @@ The following main plugins comprise the core of the MOSHPIT suite:
 - [q2-moshpit](https://github.com/bokulich-lab/q2-moshpit): provides actions for contig binning and quality control, 
     taxonomic and functional annotations of contigs and MAGs, human host removal.
 
-Additionally, you may want to check out our plugins for AMR genes detection and viromics applications (they are not 
-covered in this tutorial but you may use them with some of the artifacts produced by the MOSHPIT plugins):
+Additionally, you may want to check out these other QIIME 2 plugins for antimicrobial resistance gene (ARG) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-moshpit:
 - [q2-rgi](https://github.com/bokulich-lab/q2-rgi): antimicrobial resistance gene annotation of MAGs and metagenomic 
     reads with RGI and CARD
-- [q2-amrfinderplus](https://github.com/bokulich-lab/q2-amrfinderplus): AMR detection using the AMRFinderPlus tool
+- [q2-amrfinderplus](https://github.com/bokulich-lab/q2-amrfinderplus): ARG detection using the AMRFinderPlus tool
 - [q2-viromics](https://github.com/bokulich-lab/q2-viromics): detection of viral sequences and their quality control.
 
 This tutorial will guide you through the process of analyzing metagenomic data using QIIME 2 framework and MOSHPIT. 
