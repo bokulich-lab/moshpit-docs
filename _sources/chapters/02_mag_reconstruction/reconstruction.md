@@ -11,6 +11,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(mag-recovery)=
 # Recovery of MAGs
 In this part of the tutorial we will go thorugh the steps required to recover metagenome-assembled genomes (MAGs) from 
 metagenomic data. The workflow is divided into several steps, from contig assembly to binning and quality control.

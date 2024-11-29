@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Functional annotation &#8212; MOSHPIT plugin suite</title>
+    <title>Exporting data and connecting with other tools &#8212; MOSHPIT plugin suite</title>
   
   
   
@@ -61,11 +61,10 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04_functional_annotation/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05_interoperability/export';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Functional annotation" href="mags.html" />
-    <link rel="prev" title="Taxonomic classification of MAGs" href="../03_taxonomic_classification/mags.html" />
+    <link rel="prev" title="Importing data from other tools" href="import.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -180,13 +179,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../03_taxonomic_classification/mags.html">MAGs</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Functional annotation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="mags.html">Dereplicated MAGs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_functional_annotation/intro.html">Functional annotation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_functional_annotation/mags.html">Dereplicated MAGs</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../05_interoperability/intro.html">Interoperability with other tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../05_interoperability/import.html">Importing data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../05_interoperability/export.html">Exporting data</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Interoperability with other tools</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="import.html">Importing data</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Exporting data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -243,7 +242,7 @@
       
       
       
-      <li><a href="../../_sources/chapters/04_functional_annotation/intro.md" target="_blank"
+      <li><a href="../../_sources/chapters/05_interoperability/export.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,7 +305,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -317,11 +318,20 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Functional annotation</h1>
+    <h1>Exporting data and connecting with other tools</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-kraken-2-reports-with-pavian">Visualizing Kraken 2 reports with Pavian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microbial-pangenomics-with-anvi-o">Microbial pangenomics with Anvi’o</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -331,42 +341,48 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="functional-annotation">
-<span id="id1"></span><h1>Functional annotation<a class="headerlink" href="#functional-annotation" title="Link to this heading">#</a></h1>
-<figure class="align-default" id="workflows-function-fig">
-<a class="reference internal image-reference" href="../../_images/workflows-functional.png"><img alt="../../_images/workflows-functional.png" src="../../_images/workflows-functional.png" style="width: 100%;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Functional annotation workflow</span><a class="headerlink" href="#workflows-function-fig" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>Functional annotation of <strong>metagenome-assembled genomes (MAGs)</strong> involves the identification and classification of genes
-within these reconstructed genomes to understand their roles and potential functions. MAGs are recovered from DNA directly
-extracted from complex microbial communities, bypassing the need to culture the organisms.</p>
-<p>This process provides insights into the genes that code for enzymes, transporters, and other proteins critical to the
-survival and function of the microbes in various ecosystems. Annotating these genomes allows for the study of their
-contributions to nutrient cycles, disease processes, or specialized ecological functions, to name only a few examples.</p>
-<p>This workflow outlines the step-by-step process for functional annotation of MAGs or contigs using tools like EggNOG and
-the Diamond aligner in QIIME2.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Functional annotation can be performed on fully reconstructed <strong>MAGs</strong> or directly on <strong>contigs</strong> (the contiguous sequences
-assembled from sequencing reads). Annotating <strong>contigs</strong> can provide early insights into important functional genes even
-before complete genomes are assembled. Annotating <strong>MAGs</strong> has the added benefit of seeing how these annotated genes are
-connected and organized in a single genome.</p>
-<p>In this tutorial, we will focus on functional annotation of our previously reconstructed MAGs (see <strong>Recovery of MAGs section</strong>)</p>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="exporting-data-and-connecting-with-other-tools">
+<span id="data-export"></span><h1>Exporting data and connecting with other tools<a class="headerlink" href="#exporting-data-and-connecting-with-other-tools" title="Link to this heading">#</a></h1>
+<p>QIIME 2 offers various ways of visualizing and processing your data further, but sometimes you may want to use other tools
+that are not (yet) available through QIIME 2. This is, of course, possible and very easy to do: you can export your data
+from any QIIME 2 artifact and use it with any of your other favourite tools, as long as the underlying format is compatible.
+The formats that QIIME 2 supports are common and should be readable by most bioinformatics tools - most of the time, the
+artifacts will contain data in the original format that the underlying tool uses. Below are some examples of how you can
+export data from QIIME 2 and connect it with other tools.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Functional annotation can be highly resource-intensive. Ensure that your system has sufficient CPU and memory resources before running these commands.</p>
+<p>QIIME 2 does not yet support exporting data from the cache. This means that you will need to manually copy the data from the
+cache directory to a location where you can access it with other tools. In our examples, the cache directory is located directly
+in the working directory and that is where we will copy the data from. Keep in mind that you should never temper with the files
+in the cache directory directly, as this may lead to broken artifacts and failed analyses.</p>
 </div>
-<p><strong>For more information on the tools used in this workflow, refer to their official documentation:</strong></p>
-<ul class="simple">
-<li><p>EggNOG-mapper: <a class="github reference external" href="https://github.com/eggnogdb/eggnog-mapper">eggnogdb/eggnog-mapper</a></p></li>
-<li><p>DIAMOND: <a class="github reference external" href="https://github.com/bbuchfink/diamond">bbuchfink/diamond</a></p></li>
-<li><p>QIIME 2: <a class="github reference external" href="https://github.com/qiime2">qiime2</a></p></li>
-</ul>
-<div class="toctree-wrapper compound">
+<section id="visualizing-kraken-2-reports-with-pavian">
+<h2>Visualizing Kraken 2 reports with Pavian<a class="headerlink" href="#visualizing-kraken-2-reports-with-pavian" title="Link to this heading">#</a></h2>
+<p>If you have used Kraken 2 to <a class="reference internal" href="../03_taxonomic_classification/reads.html#kraken-reads"><span class="std std-ref">classify your reads</span></a>, you can export the resulting reports from the corresponding
+QIIME 2 artifact and visualize them with <a class="reference external" href="https://github.com/fbreitwieser/pavian">Pavian</a> which will allow you to explore the
+taxonomic composition of your samples in an interactive way. To export the Kraken 2 reports, you can use the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UUID</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>./cache/keys/kraken_reports_reads<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;data&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+mkdir<span class="w"> </span>exported_reports
+cp<span class="w"> </span>-r<span class="w"> </span>./cache/data/<span class="nv">$UUID</span>/data/*<span class="w"> </span>exported_reports/
+</pre></div>
 </div>
+<p>This will find the UUID of the reports artifact, use it to locate the data within the cache directory, create a directory
+for the exported data and copy the files from the cache into it. You can then use those files (within the <code class="docutils literal notranslate"><span class="pre">exported_reports</span></code>
+directory) with Pavian. To give it a quick try, navigate to <a class="reference external" href="https://fbreitwieser.shinyapps.io/pavian/">Pavian’s demo site</a>
+and upload the exported files.</p>
+</section>
+<section id="microbial-pangenomics-with-anvi-o">
+<h2>Microbial pangenomics with Anvi’o<a class="headerlink" href="#microbial-pangenomics-with-anvi-o" title="Link to this heading">#</a></h2>
+<p>Another suite of tools you may be familiar with is the <a class="reference external" href="http://anvio.org/">Anvi’o</a> platform. One of the workflows that Anvi’o
+provides is the microbial pangenomics analysis, which can be used to explore the gene clusters within your samples. You
+could export the MAGs obtained from the <a class="reference internal" href="../02_mag_reconstruction/reconstruction.html#mag-recovery"><span class="std std-ref">binning step</span></a> and use them as input to the <code class="docutils literal notranslate"><span class="pre">anvi-pan-genome</span></code> workflow, as
+described <a class="reference external" href="https://merenlab.org/2016/11/08/pangenomics-v2/">here</a>. To export the MAGs, you can use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UUID</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>./cache/keys/mags<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;data&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+mkdir<span class="w"> </span>exported_mags
+cp<span class="w"> </span>-r<span class="w"> </span>./cache/data/<span class="nv">$UUID</span>/data/*<span class="w"> </span>exported_mags/
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -382,7 +398,7 @@ connected and organized in a single genome.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters/04_functional_annotation"
+            path: "./chapters/05_interoperability"
         },
         predefinedOutput: true
     }
@@ -400,22 +416,13 @@ connected and organized in a single genome.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../03_taxonomic_classification/mags.html"
+       href="import.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Taxonomic classification of MAGs</p>
+        <p class="prev-next-title">Importing data from other tools</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="mags.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Functional annotation</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -423,6 +430,23 @@ connected and organized in a single genome.</p>
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-kraken-2-reports-with-pavian">Visualizing Kraken 2 reports with Pavian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microbial-pangenomics-with-anvi-o">Microbial pangenomics with Anvi’o</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
