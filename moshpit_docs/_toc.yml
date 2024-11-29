@@ -29,3 +29,9 @@ chapters:
   sections:
       - file: chapters/04_functional_annotation/mags
         title: Dereplicated MAGs
+- file: chapters/05_interoperability/intro
+  sections:
+      - file: chapters/05_interoperability/import
+        title: Importing data
+      - file: chapters/05_interoperability/export
+        title: Exporting data
