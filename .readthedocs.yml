@@ -6,7 +6,7 @@ build:
     python: "3.11"
   jobs:
     pre_build:
-      - "jupyter-book config sphinx docs/"
+      - "jupyter-book config sphinx moshpit_docs/"
 
 python:
   install:
