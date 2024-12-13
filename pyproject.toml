@@ -1,0 +1,8 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "MOSHPIT Tutorials"
+authors = [{name = "Michal Ziemski", email = "michal.ziemski@hest.ethz.ch"}, {name = "Paula Momo Cabrera", email = "paula.momocabrera@hest.ethz.ch"}, {name = "Rodrigo Hernandez Velazquez", email = "rodrigo.hernandezvelazquez@hest.ethz.ch"}]
+dynamic = ["version", "description"]
