@@ -351,7 +351,7 @@ artifacts will contain data in the original format that the underlying tool uses
 export data from QIIME 2 and connect it with other tools.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>QIIME 2 does not yet support exporting data from the cache. This means that you will need to manually copy the data from the
+<p>QIIME 2 does not yet support exporting data from the cache (see below). This means that you will need to manually copy the data from the
 cache directory to a location where you can access it with other tools. In our examples, the cache directory is located directly
 in the working directory and that is where we will copy the data from. Keep in mind that you should never temper with the files
 in the cache directory directly, as this may lead to broken artifacts and failed analyses.</p>
@@ -361,15 +361,42 @@ in the cache directory directly, as this may lead to broken artifacts and failed
 <p>If you have used Kraken 2 to <a class="reference internal" href="../03_taxonomic_classification/reads.html#kraken-reads"><span class="std std-ref">classify your reads</span></a>, you can export the resulting reports from the corresponding
 QIIME 2 artifact and visualize them with <a class="reference external" href="https://github.com/fbreitwieser/pavian">Pavian</a> which will allow you to explore the
 taxonomic composition of your samples in an interactive way. To export the Kraken 2 reports, you can use the following commands:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Direct export</label><div class="sd-tab-content docutils">
+<p>Support for extracting data out of the cache is not yet available but is coming soon! You can track the progress of
+the issue <a class="reference external" href="https://github.com/qiime2/qiime2/issues/822">here</a>.</p>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Workaround 1: without using QIIME</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UUID</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>./cache/keys/kraken_reports_reads<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;data&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
-mkdir<span class="w"> </span>exported_reports
-cp<span class="w"> </span>-r<span class="w"> </span>./cache/data/<span class="nv">$UUID</span>/data/*<span class="w"> </span>exported_reports/
+mkdir<span class="w"> </span>./exported_reports
+cp<span class="w"> </span>-r<span class="w"> </span>./cache/data/<span class="nv">$UUID</span>/data/*<span class="w"> </span>./exported_reports/
 </pre></div>
 </div>
 <p>This will find the UUID of the reports artifact, use it to locate the data within the cache directory, create a directory
-for the exported data and copy the files from the cache into it. You can then use those files (within the <code class="docutils literal notranslate"><span class="pre">exported_reports</span></code>
-directory) with Pavian. To give it a quick try, navigate to <a class="reference external" href="https://fbreitwieser.shinyapps.io/pavian/">Pavian’s demo site</a>
-and upload the exported files.</p>
+for the exported data and copy the files from the cache into it.</p>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Workaround 2: with QIIME</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-fetch<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--key<span class="w"> </span>kraken_reports_reads<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>./kraken_reports_reads.qza
+
+qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-path<span class="w"> </span>./kraken_reports_reads.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>./exported_reports
+</pre></div>
+</div>
+<p>This will first fetch the reports artifact from the cache and then export it to the <code class="docutils literal notranslate"><span class="pre">exported_reports</span></code> directory.</p>
+</div>
+</div>
+<p>Once you got the data into the <code class="docutils literal notranslate"><span class="pre">exported_reports</span></code> directory, you can then use those with Pavian.
+To give it a quick try, navigate to <a class="reference external" href="https://fbreitwieser.shinyapps.io/pavian/">Pavian’s demo site</a> and upload the exported files.</p>
 </section>
 <section id="microbial-pangenomics-with-anvi-o">
 <h2>Microbial pangenomics with Anvi’o<a class="headerlink" href="#microbial-pangenomics-with-anvi-o" title="Link to this heading">#</a></h2>
@@ -377,10 +404,39 @@ and upload the exported files.</p>
 provides is the microbial pangenomics analysis, which can be used to explore the gene clusters within your samples. You
 could export the MAGs obtained from the <a class="reference internal" href="../02_mag_reconstruction/reconstruction.html#mag-recovery"><span class="std std-ref">binning step</span></a> and use them as input to the <code class="docutils literal notranslate"><span class="pre">anvi-pan-genome</span></code> workflow, as
 described <a class="reference external" href="https://merenlab.org/2016/11/08/pangenomics-v2/">here</a>. To export the MAGs, you can use the following command:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Direct export</label><div class="sd-tab-content docutils">
+<p>Support for extracting data out of the cache is not yet available but is coming soon! You can track the progress of
+the issue <a class="reference external" href="https://github.com/qiime2/qiime2/issues/822">here</a>.</p>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Workaround 1: without using QIIME</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UUID</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>./cache/keys/mags<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;data&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
-mkdir<span class="w"> </span>exported_mags
-cp<span class="w"> </span>-r<span class="w"> </span>./cache/data/<span class="nv">$UUID</span>/data/*<span class="w"> </span>exported_mags/
+mkdir<span class="w"> </span>./exported_mags
+cp<span class="w"> </span>-r<span class="w"> </span>./cache/data/<span class="nv">$UUID</span>/data/*<span class="w"> </span>./exported_mags/
 </pre></div>
+</div>
+<p>This will find the UUID of the MAGs artifact, use it to locate the data within the cache directory, create a directory
+for the exported data and copy the files from the cache into it.</p>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+Workaround 2: with QIIME</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-fetch<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--key<span class="w"> </span>mags<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>./mags.qza
+
+qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-path<span class="w"> </span>./mags.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>./exported_mags
+</pre></div>
+</div>
+<p>This will first fetch the MAGs artifact from the cache and then export it to the <code class="docutils literal notranslate"><span class="pre">exported_mags</span></code> directory.</p>
+</div>
 </div>
 </section>
 </section>
