@@ -3,10 +3,10 @@
 
 title: MOSHPIT tutorials
 author: The Bokulich Lab
+project: "MOSHPIT tutorials"
 
 sphinx:
   config:
-    project: "MOSHPIT tutorials"
     html_theme_options:
       logo:
         image_light: images/logo_light.svg
