@@ -1,11 +1,12 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: MOSHPIT plugin suite
+title: MOSHPIT tutorials
 author: The Bokulich Lab
 
 sphinx:
   config:
+    project: "MOSHPIT tutorials"
     html_theme_options:
       logo:
         image_light: images/logo_light.svg
