@@ -1,4 +1,4 @@
-# MOSHPIT tutorial
+# MOSHPIT tutorials
 
 MOSHPIT (MOdular SHotgun metagenome Pipelines with Integrated provenance Tracking) is a suite of plugins for whole 
 metagenome assembly and analysis as part of the microbiome multi-omics data science platform [QIIME 2](https://qiime2.org/). 
