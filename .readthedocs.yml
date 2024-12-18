@@ -14,6 +14,7 @@ python:
 
 sphinx:
   builder: html
+  configuration: moshpit_docs/conf.py
 
 formats:
   - pdf
