@@ -23,7 +23,7 @@ In case you already have contigs assembled from your metagenomic data, you can i
 artifact. This should not differ much from the typical import process (see [here](https://docs.qiime2.org/2024.10/tutorials/importing/) 
 for more details on importing data), but the command may look like:
 ```bash
-qiime tools cache-import \
+mosh tools cache-import \
     --cache ./cache \
     --key contigs \
     --type "SampleData[Contigs]" \
@@ -32,7 +32,7 @@ qiime tools cache-import \
 Some actions in the MOSHPIT pipeline assume that contig IDs are unique across your entire sample set. If this is not the case, 
 you may use the `qiime assembly rename-contigs` action to rename contigs with unique identifiers:
 ```bash
-qiime assembly rename-contigs \
+mosh assembly rename-contigs \
     --i-contigs ./cache:contigs \
     --p-uuid-type shortuuid \
     --o-renamed-contigs ./cache:contigs_renamed
@@ -55,7 +55,7 @@ for file in os.listdir(path):
 ```
 Once you have renamed the MAGs, you can import them into a QIIME 2 artifact:
 ```bash
-qiime tools cache-import \
+mosh tools cache-import \
     --cache ./cache \
     --key mags \
     --type "SampleData[MAGs]" \
@@ -63,7 +63,7 @@ qiime tools cache-import \
 ```
 for MAGs-per-sample, or:
 ```bash
-qiime tools cache-import \
+mosh tools cache-import \
     --cache ./cache \
     --key mags \
     --type "FeatureData[MAG]" \
@@ -76,7 +76,7 @@ If you have other data that you would like to import into QIIME 2, you can use t
 additional steps should be required. For example, you can import a set of Kraken 2 reports into a `SampleData[Kraken2Report % Properties('reads')]` 
 like this:
 ```bash
-qiime tools cache-import \
+mosh tools cache-import \
     --cache ./cache \
     --key kraken2_reports_reads \
     --type "SampleData[Kraken2Report % reads]" \

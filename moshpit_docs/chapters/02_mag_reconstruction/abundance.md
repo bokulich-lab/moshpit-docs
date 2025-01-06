@@ -20,7 +20,7 @@ There are a couple of ways to estimate MAG abundance, such as RPKM (Reads Per Ki
 ## Get MAG lengths
 This step calculates the lengths of each dereplicated MAG, which will be used in the next step to estimate abundance.
 ```{code-cell}
-qiime moshpit get-feature-lengths \
+mosh moshpit get-feature-lengths \
     --i-features ./cache:mags_derep \              
     --o-lengths ./cache:mags_derep_length \ 
     --verbose                         
@@ -29,7 +29,7 @@ qiime moshpit get-feature-lengths \
 ## Index dereplicated MAGs
 This step indexes the dereplicated MAGs for read mapping. The index is necessary to efficiently map the input reads back to the MAGs.
 ```{code-cell}
-qiime assembly index-derep-mags \
+mosh assembly index-derep-mags \
     --i-mags ./cache:mags_derep \                  
     --p-threads 8 \  
     --p-seed 100 \                                   
@@ -41,7 +41,7 @@ qiime assembly index-derep-mags \
 In this step, we map the input paired-end reads back to the dereplicated MAGs. This helps in calculating the abundance 
 of each MAG in the sample.
 ```{code-cell}
-qiime assembly map-reads \
+mosh assembly map-reads \
     --i-index ./cache:mags_derep_index \                            
     --i-reads ./cache:reads_filtered \   
     --p-threads 8 \  
@@ -58,7 +58,7 @@ This step estimates the abundance of each MAG in the sample based on the read ma
 
 For more options, see --help.
 ```{code-cell}
-qiime moshpit estimate-mag-abundance \
+mosh moshpit estimate-mag-abundance \
     --i-mag-lengths ./cache:mags_derep_length \
     --i-maps ./cache:reads_to_derep_mags \
     --p-threads 10 \
@@ -76,7 +76,7 @@ Refer to {ref}`kraken-reads` section for more details on taxonomic classificatio
 
 The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
 ```{code-cell}
-qiime moshpit classify-kraken2 \
+mosh moshpit classify-kraken2 \
     --i-seqs ./cache:mags_derep \
     --i-kraken2-db ./cache:kraken2_db \
     --p-threads 40 \
@@ -89,7 +89,7 @@ qiime moshpit classify-kraken2 \
 
 Then we will convert a Kraken 2 report into a  generic taxonomy artifact for downstream analyses.
 ```{code-cell}
-qiime moshpit kraken2-to-mag-features \
+mosh moshpit kraken2-to-mag-features \
     --i-reports ./cache:kraken_reports_mags_derep  \
     --i-hits ./cache:kraken_hits_mags_derep  \
     --o-taxonomy ./cache:mags_derep_taxonomy \
@@ -98,7 +98,7 @@ qiime moshpit kraken2-to-mag-features \
 
 Now we are ready to generate a taxa bar plot.
 ```{code-cell}
-qiime taxa barplot \
+mosh taxa barplot \
     --i-table ./cache:mags_derep_ft \
     --i-taxonomy ./cache:mags_derep_taxonomy \
     --m-metadata-file ./cocoa-metadata.tsv \

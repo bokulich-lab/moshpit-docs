@@ -23,7 +23,7 @@ consult [this](https://dev.qiime2.org/latest/api-reference/cache) QIIME 2 forum 
 directory in the current working directory by running the following command:
 
 ```{code-cell}
-qiime tools cache-create --cache ./cache
+mosh tools cache-create --cache ./cache
 ```
 
 ## Note on parallelization

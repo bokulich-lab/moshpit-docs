@@ -50,12 +50,12 @@ for the exported data and copy the files from the cache into it.
 
 ````{tab-item} Workaround 2: with QIIME
 ```bash
-qiime tools cache-fetch \
+mosh tools cache-fetch \
     --cache ./cache \
     --key kraken_reports_reads \
     --output-path ./kraken_reports_reads.qza
 
-qiime tools export \
+mosh tools export \
     --input-path ./kraken_reports_reads.qza \
     --output-path ./exported_reports
 ```
@@ -89,12 +89,12 @@ for the exported data and copy the files from the cache into it.
 
 ````{tab-item} Workaround 2: with QIIME
 ```bash
-qiime tools cache-fetch \
+mosh tools cache-fetch \
     --cache ./cache \
     --key mags \
     --output-path ./mags.qza
 
-qiime tools export \
+mosh tools export \
     --input-path ./mags.qza \
     --output-path ./exported_mags
 ```
