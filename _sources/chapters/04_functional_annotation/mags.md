@@ -16,24 +16,24 @@ kernelspec:
 In order to perform the functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using MOSHPIT.
 
 ```{code-cell}
-qiime moshpit fetch-diamond-db \
+mosh moshpit fetch-diamond-db \
     --o-diamond-db ./cache:diamond_db \
     --verbose
 ```
 
 ```{code-cell}
-qiime moshpit fetch-eggnog-db \
+mosh moshpit fetch-eggnog-db \
     --o-eggnog-db ./cache:eggnog_db \
     --verbose
 ```
 Alternatively, you can use:
-- `qiime moshpit build-eggnog-diamond-db` to create a DIAMOND formatted reference database for the specified taxon.
-- `qiime moshpit build-custom-diamond-db` to create a DIAMOND formatted reference database from a FASTA input file.
+- `mosh moshpit build-eggnog-diamond-db` to create a DIAMOND formatted reference database for the specified taxon.
+- `mosh moshpit build-custom-diamond-db` to create a DIAMOND formatted reference database from a FASTA input file.
 
 ## EggNOG search using Diamond aligner
 We will search the dereplicated MAGs against the EggNOG database using the Diamond aligner to identify functional annotations.
 ```{code-cell}
-qiime moshpit eggnog-diamond-search \
+mosh moshpit eggnog-diamond-search \
     --i-sequences ./cache:mags_derep \
     --i-diamond-db ./cache:diamond_db \
     --p-num-cpus 16 \
@@ -46,7 +46,7 @@ qiime moshpit eggnog-diamond-search \
 Orthologs from dereplicated MAGs are annotated against the EggNOG database, providing functional insights into the genes 
 and gene products present in the MAGs.
 ```{code-cell}
-qiime moshpit eggnog-annotate \
+mosh moshpit eggnog-annotate \
     --i-eggnog-hits ./cache:eggnog_hits \
     --i-eggnog-db ./cache:eggnog_db \
     --p-num-cpus 16 \
@@ -64,7 +64,7 @@ all dereplicated MAGs.
 In this tutorial, we focus on demonstrating the extraction of **CAZymes**.
 ```
 ```{code-cell}
-qiime moshpit extract-annotations \
+mosh moshpit extract-annotations \
     --i-ortholog-annotations ./cache:eggnog_annotations \
     --p-annotation caz \
     --p-max-evalue 0.0001 \
@@ -78,7 +78,7 @@ combining the annotation data (e.g., **CAZymes**) with MAG abundance to determin
 are distributed across MAGs, and use this information to estimate the total frequency of each annotation in each sample. 
 
 ```{code-cell}
-qiime moshpit multiply-tables \
+mosh moshpit multiply-tables \
     --i-table1 ./cache:mags_derep_ft \
     --i-table2 ./cache:caz_annot_ft \
     --o-result-table ./cache:caz_ft \
@@ -89,7 +89,7 @@ qiime moshpit multiply-tables \
 We will start by calculating a Bray-curtis dissimilarity matrix to measure the dissimilarity between each sample, based on 
 observed frequency of different CAZyme annotations in each sample.
 ```{code-cell}
-qiime diversity beta \
+mosh diversity beta \
     --i-table ./cache:caz_ft \
     --p-metric braycurtis \
     --o-distance-matrix ./cache:caz_braycurtis_dist
@@ -97,13 +97,13 @@ qiime diversity beta \
 
 Next, we will perform principal coordinate analysis (PCoA) from the obtained Bray-curtis matrix.
 ```{code-cell}
-qiime diversity pcoa \
+mosh diversity pcoa \
     --i-distance-matrix ./cache:caz_braycurtis_dist  \
     --o-pcoa ./cache:caz_braycurtis_pcoa
 ```
 Visualization time! Let's plot the PCoA results.
 ```{code-cell}
-qiime emperor plot \
+mosh emperor plot \
     --i-pcoa ./cache:caz_braycurtis_dist \
     --m-metadata-file ./metadata.tsv \
     --o-visualization caz-pcoa.qzv

@@ -14,16 +14,17 @@ kernelspec:
 (setup)=
 # Setup
 Before we dive into the tutorial, let's make sure we have all the necessary components in place. Make sure you have a 
-working QIIME 2 metagenome environment available - please follow the instructions from the official 
-[QIIME 2 documentation](https://docs.qiime2.org/2024.10/install/native/#qiime-2-metagenome-distribution) to install 
-the QIIME 2 "Metagenome Distribution".
+working MOSHPIT environment available - please follow the instructions from the developer 
+[QIIME 2 documentation](https://develop.qiime2.org/en/latest/plugins/how-to-guides/set-up-development-environment.html#moshpit-previously-known-as-the-metagenome-distribution) 
+to install all the required components. These installation instructions will also become available 
+through the official QIIME 2 user documentation in the 2025.4 release later this year.
 
 In this tutorial we will be storing all the data in the QIIME 2 cache. To learn more about how the cache works you can 
 consult [this](https://dev.qiime2.org/latest/api-reference/cache) QIIME 2 forum post. You should create a single cache 
 directory in the current working directory by running the following command:
 
 ```{code-cell}
-qiime tools cache-create --cache ./cache
+mosh tools cache-create --cache ./cache
 ```
 
 ## Note on parallelization

@@ -34,7 +34,7 @@ sequences called contigs, providing valuable genetic information for the next st
 **This parameter is still under development**: you will not be able to use the generated contigs for further analysis.
 ```
 ```{code-cell}
-qiime assembly assemble-megahit \
+mosh assembly assemble-megahit \
     --i-seqs ./cache:reads_filtered \
     --p-presets "meta-sensitive" \          
     --p-num-cpu-threads 24 \                      
@@ -43,7 +43,7 @@ qiime assembly assemble-megahit \
     --o-contigs ./cache:contigs \
     --verbose   
 ```
-- Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
+- Alternatively, you can also use `mosh assembly assemble-spades` to assemble contigs with SPAdes.
 
 ## Contig QC with QUAST
 Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many 
@@ -57,7 +57,7 @@ In addition to calculating generic statistics like N50 and L50, QUAST will try t
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
 ```{code-cell}
-qiime assembly evaluate-contigs \
+mosh assembly evaluate-contigs \
     --i-contigs ./cache:contigs  \
     --p-threads 128 \
     --p-memory-efficient \
@@ -70,7 +70,7 @@ Your visualization should look similar to [this one](https://view.qiime2.org/vis
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs 
 later. Various parameters control the size and structure of the index, as well as resource usage.
 ```{code-cell}
-qiime assembly index-contigs \
+mosh assembly index-contigs \
     --i-contigs ./cache:contigs \                       
     --p-threads 8 \                                  
     --o-index ./cache:contigs_index \
@@ -81,7 +81,7 @@ qiime assembly index-contigs \
 Here we map the input paired-end reads to the indexed contigs created in the previous step. We use various alignment 
 settings to ensure optimal mapping, including local alignment mode and sensitivity settings.
 ```{code-cell}
-qiime assembly map-reads \
+mosh assembly map-reads \
     --i-index ./cache:contigs_index \                         
     --i-reads ./cache:reads_filtered \                                                  
     --o-alignment-map ./cache:reads_to_contigs \
@@ -92,16 +92,16 @@ qiime assembly map-reads \
 Binning contigs involves grouping assembled contigs into MAGs. This step uses MetaBAT to assign contigs based on 
 co-abundance and other features, producing MAG files that represent putative genomes.
 ```{code-cell}
-qiime moshpit bin-contigs-metabat \
-  --i-contigs ./cache:contigs \                       
-  --i-alignment-maps ./cache:reads_to_contigs \         
-  --p-num-threads 64 \                              
-  --p-seed 100 \                                   
-  --p-verbose \                                    
-  --o-mags ./cache:mags \                             
-  --o-contig-map ./cache:contig_map \                   
-  --o-unbinned-contigs ./cache:unbinned_contigs \
-  --verbose          
+mosh moshpit bin-contigs-metabat \
+    --i-contigs ./cache:contigs \                       
+    --i-alignment-maps ./cache:reads_to_contigs \         
+    --p-num-threads 64 \                              
+    --p-seed 100 \                                   
+    --p-verbose \                                    
+    --o-mags ./cache:mags \                             
+    --o-contig-map ./cache:contig_map \                   
+    --o-unbinned-contigs ./cache:unbinned_contigs \
+    --verbose          
 ```
 This step generated several artifacts:
 
@@ -114,14 +114,14 @@ From now on, we will focus on the `mags`.
 This step evaluates the completeness and quality of MAGs using the BUSCO tool, which checks for the presence of 
 single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.
 
-First we will use `qiime moshpit fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
+First we will use `mosh moshpit fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
 precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes 
 (bacteria and archaea), or eukaryotes.
 
 - The `--p-prok` True parameter specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).
 
 ```{code-cell}
-qiime moshpit fetch-busco-db \
+mosh moshpit fetch-busco-db \
     --p-prok True \
     --o-busco-db ./cache:busco_db
     --verbose
@@ -129,7 +129,7 @@ qiime moshpit fetch-busco-db \
 
 Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.
 ```{code-cell}
-qiime moshpit evaluate-busco \
+mosh moshpit evaluate-busco \
     --i-bins ./cache:mags \                             
     --i-busco-db ./cache:busco_db \                     
     --p-lineage-dataset bacteria_odb10 \             
@@ -152,7 +152,7 @@ We recommed that this step is done before dereplication (as in this example). Al
 ```
 
 ```{code-cell}
-qiime moshpit filter-mags \
+mosh moshpit filter-mags \
     --i-mags ./cache:mags \                             
     --m-metadata-file ./cache:busco_results \           
     --p-where 'complete>50' \                        

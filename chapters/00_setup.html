@@ -349,15 +349,16 @@
   <section class="tex2jax_ignore mathjax_ignore" id="setup">
 <span id="id1"></span><h1>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h1>
 <p>Before we dive into the tutorial, let’s make sure we have all the necessary components in place. Make sure you have a
-working QIIME 2 metagenome environment available - please follow the instructions from the official
-<a class="reference external" href="https://docs.qiime2.org/2024.10/install/native/#qiime-2-metagenome-distribution">QIIME 2 documentation</a> to install
-the QIIME 2 “Metagenome Distribution”.</p>
+working MOSHPIT environment available - please follow the instructions from the developer
+<a class="reference external" href="https://develop.qiime2.org/en/latest/plugins/how-to-guides/set-up-development-environment.html#moshpit-previously-known-as-the-metagenome-distribution">QIIME 2 documentation</a>
+to install all the required components. These installation instructions will also become available
+through the official QIIME 2 user documentation in the 2025.4 release later this year.</p>
 <p>In this tutorial we will be storing all the data in the QIIME 2 cache. To learn more about how the cache works you can
 consult <a class="reference external" href="https://dev.qiime2.org/latest/api-reference/cache">this</a> QIIME 2 forum post. You should create a single cache
 directory in the current working directory by running the following command:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">tools</span> <span class="n">cache</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">cache</span> <span class="o">./</span><span class="n">cache</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">tools</span> <span class="n">cache</span><span class="o">-</span><span class="n">create</span> <span class="o">--</span><span class="n">cache</span> <span class="o">./</span><span class="n">cache</span>
 </pre></div>
 </div>
 </div>

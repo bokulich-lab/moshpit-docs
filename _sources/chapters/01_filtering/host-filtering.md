@@ -22,24 +22,24 @@ that map to it. In QIIME 2 this can be done by using the `filter-reads` action f
 we need to construct the index of the reference database that will be used by Bowtie 2:
 - start with the FASTA files containing the reference sequences - we will import them into a QIIME 2 artifact:
 ```{code-cell}
-qiime tools cache-import \
- --cache ./cache \
- --key reference_seqs \
- --type "FeatureData[Sequence]" \
- --input-path ./reference_seeqs.fasta
+mosh tools cache-import \
+    --cache ./cache \
+    --key reference_seqs \
+    --type "FeatureData[Sequence]" \
+    --input-path ./reference_seeqs.fasta
 ```
 - build the Bowtie 2 index:
 ```{code-cell}
-qiime quality-control bowtie2-build \
- --i-sequences ./cache:reference_seqs \
- --o-database ./cache:reference_index
+mosh quality-control bowtie2-build \
+    --i-sequences ./cache:reference_seqs \
+    --o-database ./cache:reference_index
 ```
 - filter out the reads that map to the reference database:
 ```{code-cell}
-qiime quality-control filter-reads \
- --i-demultiplexed-sequences ./cache:reads_trimmed \
- --i-database ./cache:reference_index \
- --o-filtered-sequences ./cache:reads_filtered
+mosh quality-control filter-reads \
+    --i-demultiplexed-sequences ./cache:reads_trimmed \
+    --i-database ./cache:reference_index \
+    --o-filtered-sequences ./cache:reads_filtered
 ```
 
 ## Human host reads
@@ -50,8 +50,8 @@ which allows to first fetch the human pangenome sequence, combine it with the GR
 Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated 
 index so that it can be used in any other experiments.
 ```{code-cell}
-qiime moshpit filter-reads-pangenome \
-  --i-reads ./cache:reads_trimmed \
-  --o-filtered-reads ./cache:reads_filtered \
-  --o-reference-index ./cache:human_reference_index
+mosh moshpit filter-reads-pangenome \
+    --i-reads ./cache:reads_trimmed \
+    --o-filtered-reads ./cache:reads_filtered \
+    --o-reference-index ./cache:human_reference_index
 ```

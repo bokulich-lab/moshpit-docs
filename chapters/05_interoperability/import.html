@@ -359,7 +359,7 @@ use cases where this may be relevant.</p>
 <p>In case you already have contigs assembled from your metagenomic data, you can import them into a <code class="docutils literal notranslate"><span class="pre">SampleData[Contigs]</span></code>
 artifact. This should not differ much from the typical import process (see <a class="reference external" href="https://docs.qiime2.org/2024.10/tutorials/importing/">here</a>
 for more details on importing data), but the command may look like:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--key<span class="w"> </span>contigs<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--type<span class="w"> </span><span class="s2">&quot;SampleData[Contigs]&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -368,7 +368,7 @@ for more details on importing data), but the command may look like:</p>
 </div>
 <p>Some actions in the MOSHPIT pipeline assume that contig IDs are unique across your entire sample set. If this is not the case,
 you may use the <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">assembly</span> <span class="pre">rename-contigs</span></code> action to rename contigs with unique identifiers:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>assembly<span class="w"> </span>rename-contigs<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>assembly<span class="w"> </span>rename-contigs<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-contigs<span class="w"> </span>./cache:contigs<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--p-uuid-type<span class="w"> </span>shortuuid<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--o-renamed-contigs<span class="w"> </span>./cache:contigs_renamed
@@ -392,7 +392,7 @@ which could be used for that purpose:</p>
 </pre></div>
 </div>
 <p>Once you have renamed the MAGs, you can import them into a QIIME 2 artifact:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--key<span class="w"> </span>mags<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--type<span class="w"> </span><span class="s2">&quot;SampleData[MAGs]&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -400,7 +400,7 @@ which could be used for that purpose:</p>
 </pre></div>
 </div>
 <p>for MAGs-per-sample, or:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--key<span class="w"> </span>mags<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--type<span class="w"> </span><span class="s2">&quot;FeatureData[MAG]&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -414,7 +414,7 @@ which could be used for that purpose:</p>
 <p>If you have other data that you would like to import into QIIME 2, you can use the <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">cache-import</span></code> command - no
 additional steps should be required. For example, you can import a set of Kraken 2 reports into a <code class="docutils literal notranslate"><span class="pre">SampleData[Kraken2Report</span> <span class="pre">%</span> <span class="pre">Properties('reads')]</span></code>
 like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>tools<span class="w"> </span>cache-import<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--key<span class="w"> </span>kraken2_reports_reads<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--type<span class="w"> </span><span class="s2">&quot;SampleData[Kraken2Report % reads]&quot;</span><span class="w"> </span><span class="se">\</span>

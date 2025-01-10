@@ -362,11 +362,11 @@ we need to construct the index of the reference database that will be used by Bo
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">tools</span> <span class="n">cache</span><span class="o">-</span><span class="kn">import</span><span class="w"> \</span>
-<span class="w"> </span><span class="o">--</span><span class="n">cache</span> <span class="o">./</span><span class="n">cache</span> \
- <span class="o">--</span><span class="n">key</span> <span class="n">reference_seqs</span> \
- <span class="o">--</span><span class="nb">type</span> <span class="s2">&quot;FeatureData[Sequence]&quot;</span> \
- <span class="o">--</span><span class="nb">input</span><span class="o">-</span><span class="n">path</span> <span class="o">./</span><span class="n">reference_seeqs</span><span class="o">.</span><span class="n">fasta</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">tools</span> <span class="n">cache</span><span class="o">-</span><span class="kn">import</span><span class="w"> \</span>
+<span class="w">    </span><span class="o">--</span><span class="n">cache</span> <span class="o">./</span><span class="n">cache</span> \
+    <span class="o">--</span><span class="n">key</span> <span class="n">reference_seqs</span> \
+    <span class="o">--</span><span class="nb">type</span> <span class="s2">&quot;FeatureData[Sequence]&quot;</span> \
+    <span class="o">--</span><span class="nb">input</span><span class="o">-</span><span class="n">path</span> <span class="o">./</span><span class="n">reference_seeqs</span><span class="o">.</span><span class="n">fasta</span>
 </pre></div>
 </div>
 </div>
@@ -376,9 +376,9 @@ we need to construct the index of the reference database that will be used by Bo
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">quality</span><span class="o">-</span><span class="n">control</span> <span class="n">bowtie2</span><span class="o">-</span><span class="n">build</span> \
- <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reference_seqs</span> \
- <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reference_index</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">quality</span><span class="o">-</span><span class="n">control</span> <span class="n">bowtie2</span><span class="o">-</span><span class="n">build</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reference_seqs</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reference_index</span>
 </pre></div>
 </div>
 </div>
@@ -388,10 +388,10 @@ we need to construct the index of the reference database that will be used by Bo
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">quality</span><span class="o">-</span><span class="n">control</span> <span class="nb">filter</span><span class="o">-</span><span class="n">reads</span> \
- <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">demultiplexed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span> \
- <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reference_index</span> \
- <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">quality</span><span class="o">-</span><span class="n">control</span> <span class="nb">filter</span><span class="o">-</span><span class="n">reads</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">demultiplexed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reference_index</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span>
 </pre></div>
 </div>
 </div>
@@ -407,10 +407,10 @@ Bowtie 2 index and, finally, filter the reads against it. Next to the filtered r
 index so that it can be used in any other experiments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">filter</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="n">pangenome</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reads</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">reads</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reference</span><span class="o">-</span><span class="n">index</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">human_reference_index</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="nb">filter</span><span class="o">-</span><span class="n">reads</span><span class="o">-</span><span class="n">pangenome</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reads</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">reads</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reference</span><span class="o">-</span><span class="n">index</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">human_reference_index</span>
 </pre></div>
 </div>
 </div>

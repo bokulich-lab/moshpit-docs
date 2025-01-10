@@ -361,7 +361,7 @@ but any other tool could also be used.</p>
 large datasets efficiently by creating compressed representations of genomes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">sourmash</span> <span class="n">compute</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">sourmash</span> <span class="n">compute</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequence</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_filtered_50</span> \           
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ksizes</span> <span class="mi">35</span> \                                  
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">scaled</span> <span class="mi">10</span> \                                                             
@@ -378,7 +378,7 @@ large datasets efficiently by creating compressed representations of genomes.</p
 dereplication by identifying highly similar genomes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">sourmash</span> <span class="n">compare</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">sourmash</span> <span class="n">compare</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="nb">min</span><span class="o">-</span><span class="nb">hash</span><span class="o">-</span><span class="n">signature</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_minhash_50</span> \ 
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">ksize</span> <span class="mi">35</span> \                                                          
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">compare</span><span class="o">-</span><span class="n">output</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_dist_matrix_50</span> \
@@ -394,13 +394,13 @@ dereplication by identifying highly similar genomes.</p>
 by merging similar genomes based on a similarity threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">dereplicate</span><span class="o">-</span><span class="n">mags</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_filtered_50</span> \                    
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_dist_matrix_50</span> \       
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mf">0.99</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep_50</span> \   
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_ft_50</span>  \
-  <span class="o">--</span><span class="n">verbose</span>              
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">dereplicate</span><span class="o">-</span><span class="n">mags</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_filtered_50</span> \                    
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_dist_matrix_50</span> \       
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mf">0.99</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">dereplicated</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep_50</span> \   
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">feature</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_ft_50</span>  \
+    <span class="o">--</span><span class="n">verbose</span>              
 </pre></div>
 </div>
 </div>

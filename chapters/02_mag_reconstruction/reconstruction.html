@@ -379,7 +379,7 @@ sequences called contigs, providing valuable genetic information for the next st
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">assemble</span><span class="o">-</span><span class="n">megahit</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">assembly</span> <span class="n">assemble</span><span class="o">-</span><span class="n">megahit</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">presets</span> <span class="s2">&quot;meta-sensitive&quot;</span> \          
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpu</span><span class="o">-</span><span class="n">threads</span> <span class="mi">24</span> \                      
@@ -392,7 +392,7 @@ sequences called contigs, providing valuable genetic information for the next st
 </div>
 </div>
 <ul class="simple">
-<li><p>Alternatively, you can also use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">assembly</span> <span class="pre">assemble-spades</span></code> to assemble contigs with SPAdes.</p></li>
+<li><p>Alternatively, you can also use <code class="docutils literal notranslate"><span class="pre">mosh</span> <span class="pre">assembly</span> <span class="pre">assemble-spades</span></code> to assemble contigs with SPAdes.</p></li>
 </ul>
 </section>
 <section id="contig-qc-with-quast">
@@ -410,7 +410,7 @@ the analyzed contigs originated. Alternatively, we can provide it with a set of 
 run the analysis against using <code class="docutils literal notranslate"><span class="pre">--i-references</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">contigs</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">assembly</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">contigs</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span>  \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">128</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">efficient</span> \
@@ -428,7 +428,7 @@ run the analysis against using <code class="docutils literal notranslate"><span 
 later. Various parameters control the size and structure of the index, as well as resource usage.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="n">index</span><span class="o">-</span><span class="n">contigs</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">assembly</span> <span class="n">index</span><span class="o">-</span><span class="n">contigs</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span> \                       
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">8</span> \                                  
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">index</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs_index</span> \
@@ -444,7 +444,7 @@ later. Various parameters control the size and structure of the index, as well a
 settings to ensure optimal mapping, including local alignment mode and sensitivity settings.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">assembly</span> <span class="nb">map</span><span class="o">-</span><span class="n">reads</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">assembly</span> <span class="nb">map</span><span class="o">-</span><span class="n">reads</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">index</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs_index</span> \                         
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reads</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \                                                  
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="nb">map</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_to_contigs</span> \
@@ -460,16 +460,16 @@ settings to ensure optimal mapping, including local alignment mode and sensitivi
 co-abundance and other features, producing MAG files that represent putative genomes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">bin</span><span class="o">-</span><span class="n">contigs</span><span class="o">-</span><span class="n">metabat</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span> \                       
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="n">maps</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_to_contigs</span> \         
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">threads</span> <span class="mi">64</span> \                              
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">seed</span> <span class="mi">100</span> \                                   
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">verbose</span> \                                    
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">contig</span><span class="o">-</span><span class="nb">map</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contig_map</span> \                   
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">unbinned</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">unbinned_contigs</span> \
-  <span class="o">--</span><span class="n">verbose</span>          
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="nb">bin</span><span class="o">-</span><span class="n">contigs</span><span class="o">-</span><span class="n">metabat</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contigs</span> \                       
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">alignment</span><span class="o">-</span><span class="n">maps</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_to_contigs</span> \         
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">threads</span> <span class="mi">64</span> \                              
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">seed</span> <span class="mi">100</span> \                                   
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">verbose</span> \                                    
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">contig</span><span class="o">-</span><span class="nb">map</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">contig_map</span> \                   
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">unbinned</span><span class="o">-</span><span class="n">contigs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">unbinned_contigs</span> \
+    <span class="o">--</span><span class="n">verbose</span>          
 </pre></div>
 </div>
 </div>
@@ -486,7 +486,7 @@ From now on, we will focus on the <code class="docutils literal notranslate"><sp
 <h2>Evaluate bins with BUSCO<a class="headerlink" href="#evaluate-bins-with-busco" title="Link to this heading">#</a></h2>
 <p>This step evaluates the completeness and quality of MAGs using the BUSCO tool, which checks for the presence of
 single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.</p>
-<p>First we will use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">fetch-busco-db</span></code> to download a specific lineage’s BUSCO database. BUSCO databases are
+<p>First we will use <code class="docutils literal notranslate"><span class="pre">mosh</span> <span class="pre">moshpit</span> <span class="pre">fetch-busco-db</span></code> to download a specific lineage’s BUSCO database. BUSCO databases are
 precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes
 (bacteria and archaea), or eukaryotes.</p>
 <ul class="simple">
@@ -494,7 +494,7 @@ precompiled collections of orthologous genes, tailored to specific lineages such
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">prok</span> <span class="kc">True</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_db</span>
     <span class="o">--</span><span class="n">verbose</span>
@@ -505,7 +505,7 @@ precompiled collections of orthologous genes, tailored to specific lineages such
 <p>Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">busco</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">evaluate</span><span class="o">-</span><span class="n">busco</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bins</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">busco</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_db</span> \                     
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">lineage</span><span class="o">-</span><span class="n">dataset</span> <span class="n">bacteria_odb10</span> \             
@@ -532,7 +532,7 @@ The filtering process ensures only high-quality genomes are kept for downstream 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="nb">filter</span><span class="o">-</span><span class="n">mags</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="nb">filter</span><span class="o">-</span><span class="n">mags</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">mags</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags</span> \                             
     <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">busco_results</span> \           
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">where</span> <span class="s1">&#39;complete&gt;50&#39;</span> \                        

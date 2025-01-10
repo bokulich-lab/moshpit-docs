@@ -356,9 +356,9 @@ will generate a visualization of the quality scores at each position. You can le
 documentation</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">demux</span> <span class="n">summarize</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">data</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">demux</span><span class="o">.</span><span class="n">qzv</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">demux</span> <span class="n">summarize</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">data</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">demux</span><span class="o">.</span><span class="n">qzv</span>
 </pre></div>
 </div>
 </div>
@@ -371,10 +371,10 @@ documentation</a>.</p>
 Here we are using the <code class="docutils literal notranslate"><span class="pre">trim-paired</span></code> action to remove all the reads shorter than 90 bp:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">cutadapt</span> <span class="n">trim</span><span class="o">-</span><span class="n">paired</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">demultiplexed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">length</span> <span class="mi">90</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">trimmed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">cutadapt</span> <span class="n">trim</span><span class="o">-</span><span class="n">paired</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">demultiplexed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">minimum</span><span class="o">-</span><span class="n">length</span> <span class="mi">90</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">trimmed</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_trimmed</span>
 </pre></div>
 </div>
 </div>

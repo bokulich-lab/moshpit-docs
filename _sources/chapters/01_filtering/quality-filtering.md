@@ -17,9 +17,9 @@ We can get an overview of the read quality by using the `summarize` action from 
 will generate a visualization of the quality scores at each position. You can learn more about this action in the [QIIME 2
 documentation](https://docs.qiime2.org/2024.10/plugins/available/demux/summarize/).
 ```{code-cell}
-qiime demux summarize \
-  --i-data ./cache:reads \
-  --o-visualization demux.qzv
+mosh demux summarize \
+    --i-data ./cache:reads \
+    --o-visualization demux.qzv
 ```
 To see an example of the visualization you can go [here](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/demux-summarize.qzv).
 
@@ -27,8 +27,8 @@ To see an example of the visualization you can go [here](https://view.qiime2.org
 In order to remove low quality bases from the reads, we can use one of the `trim` actions from the `cutadapt` QIIME 2 plugin.
 Here we are using the `trim-paired` action to remove all the reads shorter than 90 bp:
 ```{code-cell}
-qiime cutadapt trim-paired \
-  --i-demultiplexed-sequences ./cache:reads \
-  --p-minimum-length 90 \
-  --o-trimmed-sequences ./cache:reads_trimmed
+mosh cutadapt trim-paired \
+    --i-demultiplexed-sequences ./cache:reads \
+    --p-minimum-length 90 \
+    --o-trimmed-sequences ./cache:reads_trimmed
 ```

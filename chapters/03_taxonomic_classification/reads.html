@@ -359,10 +359,10 @@ from <a class="reference external" href="https://benlangmead.github.io/aws-index
 human, UniVec_Core, protozoa and fungi.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">build</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">collection</span> <span class="n">pluspf</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">build</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">collection</span> <span class="n">pluspf</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
 </pre></div>
 </div>
 </div>
@@ -370,16 +370,16 @@ human, UniVec_Core, protozoa and fungi.</p>
 <p>We can now use the <code class="docutils literal notranslate"><span class="pre">classify-kraken2</span></code> command to run Kraken2 using the paired-end reads as a query and the PlusPF database retrieved in the previous step:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.5</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">mapping</span> <span class="kc">False</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">report</span><span class="o">-</span><span class="n">minimizer</span><span class="o">-</span><span class="n">data</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_hits_reads</span>
-  <span class="o">--</span><span class="n">verbose</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.5</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">mapping</span> <span class="kc">False</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">report</span><span class="o">-</span><span class="n">minimizer</span><span class="o">-</span><span class="n">data</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_hits_reads</span>
+    <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
 </div>
@@ -391,14 +391,14 @@ the genome size the organisms from which each read originated. In order to use t
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">estimate</span><span class="o">-</span><span class="n">bracken</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mi">5</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="nb">len</span> <span class="mi">150</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_taxonomy</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_ft</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_reports</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">estimate</span><span class="o">-</span><span class="n">bracken</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mi">5</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="nb">len</span> <span class="mi">150</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_taxonomy</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_ft</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_reports</span>
 </pre></div>
 </div>
 </div>
@@ -406,11 +406,11 @@ the genome size the organisms from which each read originated. In order to use t
 <p>To remove the unclassified read fraction we can use the <code class="docutils literal notranslate"><span class="pre">filter-table</span></code> action from the <code class="docutils literal notranslate"><span class="pre">q2-taxa</span></code> QIIME 2 plugin:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_ft</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_taxonomy</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">exclude</span> <span class="n">Unclassified</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_ft_filtered</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_ft</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_taxonomy</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">exclude</span> <span class="n">Unclassified</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_ft_filtered</span>
 </pre></div>
 </div>
 </div>
@@ -423,9 +423,9 @@ action to download the <a class="reference external" href="https://bioinformatic
 prokaryotes and eukaryotes (more info on the taxa <a class="reference external" href="https://github.com/bioinformatics-centre/kaiju/blob/master/util/kaiju-taxonlistEuk.tsv">here</a>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">kaiju</span><span class="o">-</span><span class="n">db</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="nb">type</span> <span class="n">nr_euk</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">kaiju</span><span class="o">-</span><span class="n">db</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="nb">type</span> <span class="n">nr_euk</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span>
 </pre></div>
 </div>
 </div>
@@ -433,13 +433,13 @@ prokaryotes and eukaryotes (more info on the taxa <a class="reference external" 
 <p>We run Kaiju with the confidence of 0.1 using the paired-end reads as a query and the database artifact that was generated in the previous step:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kaiju</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_paired</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">z</span> <span class="mi">16</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">c</span> <span class="mf">0.1</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_taxonomy</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">abundances</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kaiju</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_paired</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">z</span> <span class="mi">16</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">c</span> <span class="mf">0.1</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_taxonomy</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">abundances</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft</span>
 </pre></div>
 </div>
 </div>
@@ -447,11 +447,11 @@ prokaryotes and eukaryotes (more info on the taxa <a class="reference external" 
 <p>Finally, we filter the table to remove the unclassified reads:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_taxonomy</span> \
-  <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">exclude</span> <span class="n">unclassified</span><span class="p">,</span><span class="n">belong</span><span class="p">,</span><span class="n">cannot</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft_filtered</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">taxa</span> <span class="nb">filter</span><span class="o">-</span><span class="n">table</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_taxonomy</span> \
+    <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">exclude</span> <span class="n">unclassified</span><span class="p">,</span><span class="n">belong</span><span class="p">,</span><span class="n">cannot</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">filtered</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft_filtered</span>
 </pre></div>
 </div>
 </div>
@@ -463,11 +463,11 @@ prokaryotes and eukaryotes (more info on the taxa <a class="reference external" 
 generate a taxa bar plot, you can run:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">taxa</span> <span class="n">barplot</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft_filtered</span> \
-  <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_taxonomy</span> \
-  <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">metadata</span><span class="o">.</span><span class="n">tsv</span> \
-  <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="o">./</span><span class="n">results</span><span class="o">/</span><span class="n">kaiju_barplot</span><span class="o">.</span><span class="n">qzv</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">taxa</span> <span class="n">barplot</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_ft_filtered</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_taxonomy</span> \
+    <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">metadata</span><span class="o">.</span><span class="n">tsv</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="o">./</span><span class="n">results</span><span class="o">/</span><span class="n">kaiju_barplot</span><span class="o">.</span><span class="n">qzv</span>
 </pre></div>
 </div>
 </div>

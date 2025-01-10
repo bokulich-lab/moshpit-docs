@@ -358,7 +358,7 @@
 <p>In order to perform the functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using MOSHPIT.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
     <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
@@ -367,7 +367,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
     <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
@@ -376,8 +376,8 @@
 </div>
 <p>Alternatively, you can use:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">build-eggnog-diamond-db</span></code> to create a DIAMOND formatted reference database for the specified taxon.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">build-custom-diamond-db</span></code> to create a DIAMOND formatted reference database from a FASTA input file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mosh</span> <span class="pre">moshpit</span> <span class="pre">build-eggnog-diamond-db</span></code> to create a DIAMOND formatted reference database for the specified taxon.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mosh</span> <span class="pre">moshpit</span> <span class="pre">build-custom-diamond-db</span></code> to create a DIAMOND formatted reference database from a FASTA input file.</p></li>
 </ul>
 </section>
 <section id="eggnog-search-using-diamond-aligner">
@@ -385,7 +385,7 @@
 <p>We will search the dereplicated MAGs against the EggNOG database using the Diamond aligner to identify functional annotations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">search</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">search</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
@@ -404,7 +404,7 @@
 and gene products present in the MAGs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annotate</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annotate</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_hits</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
@@ -428,7 +428,7 @@ all dereplicated MAGs.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">extract</span><span class="o">-</span><span class="n">annotations</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">extract</span><span class="o">-</span><span class="n">annotations</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">ortholog</span><span class="o">-</span><span class="n">annotations</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_annotations</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">annotation</span> <span class="n">caz</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="n">evalue</span> <span class="mf">0.0001</span> \
@@ -446,7 +446,7 @@ combining the annotation data (e.g., <strong>CAZymes</strong>) with MAG abundanc
 are distributed across MAGs, and use this information to estimate the total frequency of each annotation in each sample.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">moshpit</span> <span class="n">multiply</span><span class="o">-</span><span class="n">tables</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">multiply</span><span class="o">-</span><span class="n">tables</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table1</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep_ft</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table2</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_annot_ft</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">result</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_ft</span> \
@@ -462,7 +462,7 @@ are distributed across MAGs, and use this information to estimate the total freq
 observed frequency of different CAZyme annotations in each sample.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">diversity</span> <span class="n">beta</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">diversity</span> <span class="n">beta</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_ft</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">metric</span> <span class="n">braycurtis</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_braycurtis_dist</span>
@@ -473,7 +473,7 @@ observed frequency of different CAZyme annotations in each sample.</p>
 <p>Next, we will perform principal coordinate analysis (PCoA) from the obtained Bray-curtis matrix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">diversity</span> <span class="n">pcoa</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">diversity</span> <span class="n">pcoa</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">distance</span><span class="o">-</span><span class="n">matrix</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_braycurtis_dist</span>  \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">pcoa</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_braycurtis_pcoa</span>
 </pre></div>
@@ -483,7 +483,7 @@ observed frequency of different CAZyme annotations in each sample.</p>
 <p>Visualization time! Let’s plot the PCoA results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qiime</span> <span class="n">emperor</span> <span class="n">plot</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">emperor</span> <span class="n">plot</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">pcoa</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">caz_braycurtis_dist</span> \
     <span class="o">--</span><span class="n">m</span><span class="o">-</span><span class="n">metadata</span><span class="o">-</span><span class="n">file</span> <span class="o">./</span><span class="n">metadata</span><span class="o">.</span><span class="n">tsv</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">visualization</span> <span class="n">caz</span><span class="o">-</span><span class="n">pcoa</span><span class="o">.</span><span class="n">qzv</span>

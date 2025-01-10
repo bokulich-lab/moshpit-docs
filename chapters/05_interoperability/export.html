@@ -387,12 +387,12 @@ for the exported data and copy the files from the cache into it.</p>
 <input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-2">
 Workaround 2: with QIIME</label><div class="sd-tab-content docutils">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-fetch<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>tools<span class="w"> </span>cache-fetch<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--key<span class="w"> </span>kraken_reports_reads<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--output-path<span class="w"> </span>./kraken_reports_reads.qza
 
-qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+mosh<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--input-path<span class="w"> </span>./kraken_reports_reads.qza<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--output-path<span class="w"> </span>./exported_reports
 </pre></div>
@@ -430,12 +430,12 @@ for the exported data and copy the files from the cache into it.</p>
 <input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-5">
 Workaround 2: with QIIME</label><div class="sd-tab-content docutils">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-fetch<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mosh<span class="w"> </span>tools<span class="w"> </span>cache-fetch<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--cache<span class="w"> </span>./cache<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--key<span class="w"> </span>mags<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--output-path<span class="w"> </span>./mags.qza
 
-qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+mosh<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--input-path<span class="w"> </span>./mags.qza<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--output-path<span class="w"> </span>./exported_mags
 </pre></div>

@@ -32,7 +32,7 @@ wget -O ./metadata.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-do
 ```
 - import the file into a QIIME 2 artifact:
 ```{code-cell}
-qiime tools cache-import \
+mosh tools cache-import \
     --type 'NCBIAccessionIDs' \
     --input-path ./ids.tsv \
     --cache ./cache \
@@ -40,7 +40,7 @@ qiime tools cache-import \
 ```
 - run the `get-all` action from the `fondue` plugin:
 ```{code-cell}
-qiime fondue get-all \
+mosh fondue get-all \
     --i-accession-ids ./cache:ids \
     --p-email YOUR.EMAIL@domain.com \
     --p-n-jobs 5 \
