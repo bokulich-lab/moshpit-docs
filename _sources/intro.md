@@ -1,11 +1,11 @@
 # MOSHPIT tutorials
 
-MOSHPIT (MOdular SHotgun metagenome Pipelines with Integrated provenance Tracking) is a suite of plugins for whole 
-metagenome assembly and analysis as part of the microbiome multi-omics data science platform [QIIME 2](https://qiime2.org/). 
+MOSHPIT (MOdular SHotgun metagenome Pipelines with Integrated provenance Tracking) is a toolkit of plugins for whole 
+metagenome assembly, annotation, and analysis built on the microbiome multi-omics data science framework [QIIME 2](https://qiime2.org/). 
 MOSHPIT enables flexible, modular, fully reproducible workflows for read-based or assembly-based analysis of 
 metagenome data.
 
-The following main plugins comprise the core of the MOSHPIT suite:
+The following main plugins comprise the core of the MOSHPIT toolkit:
 - [q2-assembly](https://github.com/bokulich-lab/q2-assembly): contains actions for (meta)genome and quality control, 
     genome indexing and red mapping
 - [q2-moshpit](https://github.com/bokulich-lab/q2-moshpit): provides actions for contig binning and quality control, 
