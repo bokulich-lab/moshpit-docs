@@ -19,9 +19,8 @@ working MOSHPIT environment available - please follow the instructions from the 
 to install all the required components. These installation instructions will also become available 
 through the official QIIME 2 user documentation in the 2025.4 release later this year.
 
-In this tutorial we will be storing all the data in the QIIME 2 cache. To learn more about how the cache works you can 
-consult [this](https://dev.qiime2.org/latest/api-reference/cache) QIIME 2 forum post. You should create a single cache 
-directory in the current working directory by running the following command:
+In this tutorial we will be storing all the data in the QIIME 2 cache. To learn more about how the cache works, you can refer to the [*Using an Artifact Cache* tutorial](https://use.qiime2.org/en/latest/tutorials/use-the-artifact-cache.html). (Note that all calls to `qiime` in that document can be replaced by calls to `mosh`.) 
+You should create a single cache directory in the current working directory by running the following command:
 
 ```{code-cell}
 mosh tools cache-create --cache ./cache
