@@ -8,10 +8,10 @@ metagenome data.
 The following main plugins comprise the core of the MOSHPIT toolkit:
 - [q2-assembly](https://github.com/bokulich-lab/q2-assembly): contains actions for (meta)genome and quality control, 
     genome indexing and red mapping
-- [q2-moshpit](https://github.com/bokulich-lab/q2-moshpit): provides actions for contig binning and quality control, 
+- [q2-annotate](https://github.com/bokulich-lab/q2-annotate): provides actions for contig binning and quality control, 
     taxonomic and functional annotations of contigs and MAGs, human host removal.
 
-Additionally, you may want to check out these other QIIME 2 plugins for antimicrobial resistance gene (ARG) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-moshpit:
+Additionally, you may want to check out these other QIIME 2 plugins for antimicrobial resistance gene (ARG) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-annotate:
 - [q2-rgi](https://github.com/bokulich-lab/q2-rgi): antimicrobial resistance gene annotation of MAGs and metagenomic 
     reads with RGI and CARD
 - [q2-amrfinderplus](https://github.com/bokulich-lab/q2-amrfinderplus): ARG detection using the AMRFinderPlus tool

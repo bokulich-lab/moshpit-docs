@@ -385,7 +385,7 @@
 <p>We will search the dereplicated MAGs against the EggNOG database using the Diamond aligner to identify functional annotations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">search</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">search</span><span class="o">-</span><span class="n">orthologs</span><span class="o">-</span><span class="n">diamond</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
@@ -404,7 +404,7 @@
 and gene products present in the MAGs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">eggnog</span><span class="o">-</span><span class="n">annotate</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="nb">map</span><span class="o">-</span><span class="n">eggnog</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_hits</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \

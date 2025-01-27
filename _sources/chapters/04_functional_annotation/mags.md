@@ -33,7 +33,7 @@ Alternatively, you can use:
 ## EggNOG search using Diamond aligner
 We will search the dereplicated MAGs against the EggNOG database using the Diamond aligner to identify functional annotations.
 ```{code-cell}
-mosh moshpit eggnog-diamond-search \
+mosh moshpit search-orthologs-diamond \
     --i-sequences ./cache:mags_derep \
     --i-diamond-db ./cache:diamond_db \
     --p-num-cpus 16 \
@@ -46,7 +46,7 @@ mosh moshpit eggnog-diamond-search \
 Orthologs from dereplicated MAGs are annotated against the EggNOG database, providing functional insights into the genes 
 and gene products present in the MAGs.
 ```{code-cell}
-mosh moshpit eggnog-annotate \
+mosh moshpit map-eggnog \
     --i-eggnog-hits ./cache:eggnog_hits \
     --i-eggnog-db ./cache:eggnog_db \
     --p-num-cpus 16 \
