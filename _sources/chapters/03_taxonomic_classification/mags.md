@@ -16,7 +16,7 @@ Kraken 2 can also be used to taxonomically classify metagenome-assembled genomes
 tool to classify a subset of dereplicated MAGs but the same approach can be used for the entire set of MAGs contained in 
 the `SampleData[MAGs]` or `SampleData[Contigs]` artifacts.
 ```{code-cell}
-mosh moshpit classify-kraken2 \
+mosh annotate classify-kraken2 \
     --i-seqs ./cache:mags_derep_50 \
     --i-kraken2-db ./cache:kraken2_db \
     --p-threads 72 \
@@ -30,7 +30,7 @@ mosh moshpit classify-kraken2 \
 
 We can now extract the taxonomy from the Kraken 2 reports using the `kraken2-to-mag-features` command:
 ```{code-cell}
-mosh moshpit kraken2-to-mag-features \
+mosh annotate kraken2-to-mag-features \
     --i-reports ./cache:kraken_reports_mags_derep_50 \
     --i-hits ./cache:kraken_hits_derep_50 \
     --p-coverage-threshold 0.1 \

@@ -343,7 +343,7 @@ tool to classify a subset of dereplicated MAGs but the same approach can be used
 the <code class="docutils literal notranslate"><span class="pre">SampleData[MAGs]</span></code> or <code class="docutils literal notranslate"><span class="pre">SampleData[Contigs]</span></code> artifacts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep_50</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
@@ -360,7 +360,7 @@ the <code class="docutils literal notranslate"><span class="pre">SampleData[MAGs
 <p>We can now extract the taxonomy from the Kraken 2 reports using the <code class="docutils literal notranslate"><span class="pre">kraken2-to-mag-features</span></code> command:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">features</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">kraken2</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">features</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_mags_derep_50</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_hits_derep_50</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">coverage</span><span class="o">-</span><span class="n">threshold</span> <span class="mf">0.1</span> \

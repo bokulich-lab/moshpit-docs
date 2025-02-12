@@ -359,7 +359,7 @@ from <a class="reference external" href="https://benlangmead.github.io/aws-index
 human, UniVec_Core, protozoa and fungi.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">build</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">build</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">collection</span> <span class="n">pluspf</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
@@ -370,7 +370,7 @@ human, UniVec_Core, protozoa and fungi.</p>
 <p>We can now use the <code class="docutils literal notranslate"><span class="pre">classify-kraken2</span></code> command to run Kraken2 using the paired-end reads as a query and the PlusPF database retrieved in the previous step:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
@@ -391,7 +391,7 @@ the genome size the organisms from which each read originated. In order to use t
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">estimate</span><span class="o">-</span><span class="n">bracken</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">estimate</span><span class="o">-</span><span class="n">bracken</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mi">5</span> \
@@ -423,7 +423,7 @@ action to download the <a class="reference external" href="https://bioinformatic
 prokaryotes and eukaryotes (more info on the taxa <a class="reference external" href="https://github.com/bioinformatics-centre/kaiju/blob/master/util/kaiju-taxonlistEuk.tsv">here</a>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">fetch</span><span class="o">-</span><span class="n">kaiju</span><span class="o">-</span><span class="n">db</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">fetch</span><span class="o">-</span><span class="n">kaiju</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="nb">type</span> <span class="n">nr_euk</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span>
 </pre></div>
@@ -433,7 +433,7 @@ prokaryotes and eukaryotes (more info on the taxa <a class="reference external" 
 <p>We run Kaiju with the confidence of 0.1 using the paired-end reads as a query and the database artifact that was generated in the previous step:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">moshpit</span> <span class="n">classify</span><span class="o">-</span><span class="n">kaiju</span> \
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">classify</span><span class="o">-</span><span class="n">kaiju</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_paired</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">z</span> <span class="mi">16</span> \
