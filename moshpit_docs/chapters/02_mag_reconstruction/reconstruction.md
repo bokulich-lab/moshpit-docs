@@ -92,7 +92,7 @@ mosh assembly map-reads \
 Binning contigs involves grouping assembled contigs into MAGs. This step uses MetaBAT to assign contigs based on 
 co-abundance and other features, producing MAG files that represent putative genomes.
 ```{code-cell}
-mosh moshpit bin-contigs-metabat \
+mosh annotate bin-contigs-metabat \
     --i-contigs ./cache:contigs \                       
     --i-alignment-maps ./cache:reads_to_contigs \         
     --p-num-threads 64 \                              
@@ -114,14 +114,14 @@ From now on, we will focus on the `mags`.
 This step evaluates the completeness and quality of MAGs using the BUSCO tool, which checks for the presence of 
 single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.
 
-First we will use `mosh moshpit fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
+First we will use `mosh annotate fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
 precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes 
 (bacteria and archaea), or eukaryotes.
 
 - The `--p-prok` True parameter specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).
 
 ```{code-cell}
-mosh moshpit fetch-busco-db \
+mosh annotate fetch-busco-db \
     --p-prok True \
     --o-busco-db ./cache:busco_db
     --verbose
@@ -129,7 +129,7 @@ mosh moshpit fetch-busco-db \
 
 Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.
 ```{code-cell}
-mosh moshpit evaluate-busco \
+mosh annotate evaluate-busco \
     --i-bins ./cache:mags \                             
     --i-busco-db ./cache:busco_db \                     
     --p-lineage-dataset bacteria_odb10 \             
@@ -148,11 +148,11 @@ This step filters MAGs based on completeness. In this example, we filter out any
 The filtering process ensures only high-quality genomes are kept for downstream analysis.
 ```{tip}
 We recommed that this step is done before dereplication (as in this example). Alternatively, we can also use the 
-[dereplicated set](dereplication) and filter this one using `qiime moshpit filter-derep-mags`.
+[dereplicated set](dereplication) and filter this one using `mosh annotate filter-derep-mags`.
 ```
 
 ```{code-cell}
-mosh moshpit filter-mags \
+mosh annotate filter-mags \
     --i-mags ./cache:mags \                             
     --m-metadata-file ./cache:busco_results \           
     --p-where 'complete>50' \                        

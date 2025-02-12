@@ -20,7 +20,7 @@ There are a couple of ways to estimate MAG abundance, such as RPKM (Reads Per Ki
 ## Get MAG lengths
 This step calculates the lengths of each dereplicated MAG, which will be used in the next step to estimate abundance.
 ```{code-cell}
-mosh moshpit get-feature-lengths \
+mosh annotate get-feature-lengths \
     --i-features ./cache:mags_derep \              
     --o-lengths ./cache:mags_derep_length \ 
     --verbose                         
@@ -58,7 +58,7 @@ This step estimates the abundance of each MAG in the sample based on the read ma
 
 For more options, see --help.
 ```{code-cell}
-mosh moshpit estimate-mag-abundance \
+mosh annotate estimate-mag-abundance \
     --i-mag-lengths ./cache:mags_derep_length \
     --i-maps ./cache:reads_to_derep_mags \
     --p-threads 10 \
@@ -76,7 +76,7 @@ Refer to {ref}`kraken-reads` section for more details on taxonomic classificatio
 
 The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
 ```{code-cell}
-mosh moshpit classify-kraken2 \
+mosh annotate classify-kraken2 \
     --i-seqs ./cache:mags_derep \
     --i-kraken2-db ./cache:kraken2_db \
     --p-threads 40 \
@@ -89,7 +89,7 @@ mosh moshpit classify-kraken2 \
 
 Then we will convert a Kraken 2 report into a  generic taxonomy artifact for downstream analyses.
 ```{code-cell}
-mosh moshpit kraken2-to-mag-features \
+mosh annotate kraken2-to-mag-features \
     --i-reports ./cache:kraken_reports_mags_derep  \
     --i-hits ./cache:kraken_hits_mags_derep  \
     --o-taxonomy ./cache:mags_derep_taxonomy \

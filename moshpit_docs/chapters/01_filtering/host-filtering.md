@@ -50,7 +50,7 @@ which allows to first fetch the human pangenome sequence, combine it with the GR
 Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated 
 index so that it can be used in any other experiments.
 ```{code-cell}
-mosh moshpit filter-reads-pangenome \
+mosh annotate filter-reads-pangenome \
     --i-reads ./cache:reads_trimmed \
     --o-filtered-reads ./cache:reads_filtered \
     --o-reference-index ./cache:human_reference_index
