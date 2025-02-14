@@ -54,9 +54,9 @@ mosh assembly map-reads \
 This step estimates the abundance of each MAG in the sample based on the read mapping results.
 - `metric` : currently, we support RPKM and TPM
 - `min-mapq` : indicates the minimum required read mapping quality - for Bowtie2, 42 will allow only perfect matches to be retained
-`- min-base-quality` : only keep alignments with this minimal Phred quality score
+- `min-base-quality` : only keep alignments with this minimal Phred quality score
 
-For more options, see --help.
+For more options, see `--help`.
 ```{code-cell}
 mosh annotate estimate-mag-abundance \
     --i-mag-lengths ./cache:mags_derep_length \
