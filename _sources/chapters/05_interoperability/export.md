@@ -23,7 +23,7 @@ export data from QIIME 2 and connect it with other tools.
 ```{warning}
 QIIME 2 does not yet support exporting data from the cache (see below). This means that you will need to manually copy the data from the 
 cache directory to a location where you can access it with other tools. In our examples, the cache directory is located directly 
-in the working directory and that is where we will copy the data from. Keep in mind that you should never temper with the files 
+in the working directory and that is where we will copy the data from. Keep in mind that you should never tamper with the files 
 in the cache directory directly, as this may lead to broken artifacts and failed analyses. 
 ```
 

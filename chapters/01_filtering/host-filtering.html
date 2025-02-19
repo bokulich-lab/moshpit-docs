@@ -334,6 +334,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-host-read-removal">Multiple host read removal</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removal-of-contaminating-reads">Removal of contaminating reads</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#human-host-reads">Human host reads</a></li>
 </ul>
@@ -352,6 +353,11 @@
 <p>There are a few different options to perform host read removal in QIIME 2: a more generic one using the <code class="docutils literal notranslate"><span class="pre">filter-reads</span></code> action
 and a more specific one using the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action. Below you can learn how to use both of them. In this tutorial we will
 use the <code class="docutils literal notranslate"><span class="pre">filter-reads-pangenome</span></code> action to remove human reads from the dataset.</p>
+<section id="multiple-host-read-removal">
+<h2>Multiple host read removal<a class="headerlink" href="#multiple-host-read-removal" title="Link to this heading">#</a></h2>
+<p>For cases in which a pangenome reference does not exist, or filtering reads from multiple hosts is warented, the example commands below can be “daisy-chained” (<em>i.e.</em> output from one filtering step is fed into the next) to remove reads from several host reference genomes. That is, you may want to remove all murine and human host reads from your samples prior to analyes. It’s often a good idea to start read removal with the host from which you are generating microbial sequence data.</p>
+<p>For example, let’s assume you are generating microbial sequence data from the rat host, <em>Rattus norvegicus</em>. You’d likely start with the removal of reads from the rat reference (pan)genome, and perhaps followed by filtering against the mouse, <em>Mus musculus</em> (pan)genome. This will better ensure that murine host reads are removed from the sequencing data. You can then continue with host removal the human (pan)genome as well, to ensure general read removal of mamalian reads from your data.</p>
+</section>
 <section id="removal-of-contaminating-reads">
 <h2>Removal of contaminating reads<a class="headerlink" href="#removal-of-contaminating-reads" title="Link to this heading">#</a></h2>
 <p>Removal of contaminating reads can generally be done by mapping the reads to a reference database and filtering out the reads
@@ -366,7 +372,7 @@ we need to construct the index of the reference database that will be used by Bo
 <span class="w">    </span><span class="o">--</span><span class="n">cache</span> <span class="o">./</span><span class="n">cache</span> \
     <span class="o">--</span><span class="n">key</span> <span class="n">reference_seqs</span> \
     <span class="o">--</span><span class="nb">type</span> <span class="s2">&quot;FeatureData[Sequence]&quot;</span> \
-    <span class="o">--</span><span class="nb">input</span><span class="o">-</span><span class="n">path</span> <span class="o">./</span><span class="n">reference_seeqs</span><span class="o">.</span><span class="n">fasta</span>
+    <span class="o">--</span><span class="nb">input</span><span class="o">-</span><span class="n">path</span> <span class="o">./</span><span class="n">reference_seqs</span><span class="o">.</span><span class="n">fasta</span>
 </pre></div>
 </div>
 </div>
@@ -483,6 +489,7 @@ index so that it can be used in any other experiments.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-host-read-removal">Multiple host read removal</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removal-of-contaminating-reads">Removal of contaminating reads</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#human-host-reads">Human host reads</a></li>
 </ul>

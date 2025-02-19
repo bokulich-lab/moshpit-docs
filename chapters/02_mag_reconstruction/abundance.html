@@ -409,10 +409,10 @@ of each MAG in the sample.</p>
 <p>This step estimates the abundance of each MAG in the sample based on the read mapping results.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code> : currently, we support RPKM and TPM</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min-mapq</span></code> : indicates the minimum required read mapping quality - for Bowtie2, 42 will allow only perfect matches to be retained
-<code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">min-base-quality</span></code> : only keep alignments with this minimal Phred quality score</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min-mapq</span></code> : indicates the minimum required read mapping quality - for Bowtie2, 42 will allow only perfect matches to be retained</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min-base-quality</span></code> : only keep alignments with this minimal Phred quality score</p></li>
 </ul>
-<p>For more options, see –help.</p>
+<p>For more options, see <code class="docutils literal notranslate"><span class="pre">--help</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">estimate</span><span class="o">-</span><span class="n">mag</span><span class="o">-</span><span class="n">abundance</span> \

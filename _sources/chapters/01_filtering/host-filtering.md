@@ -16,6 +16,11 @@ There are a few different options to perform host read removal in QIIME 2: a mor
 and a more specific one using the `filter-reads-pangenome` action. Below you can learn how to use both of them. In this tutorial we will 
 use the `filter-reads-pangenome` action to remove human reads from the dataset.
 
+### Multiple host read removal
+For cases in which a pangenome reference does not exist, or filtering reads from multiple hosts is warented, the example commands below can be "daisy-chained" (*i.e.* output from one filtering step is fed into the next) to remove reads from several host reference genomes. That is, you may want to remove all murine and human host reads from your samples prior to analyes. It's often a good idea to start read removal with the host from which you are generating microbial sequence data. 
+
+For example, let's assume you are generating microbial sequence data from the rat host, *Rattus norvegicus*. You'd likely start with the removal of reads from the rat reference (pan)genome, and perhaps followed by filtering against the mouse, *Mus musculus* (pan)genome. This will better ensure that murine host reads are removed from the sequencing data. You can then continue with host removal the human (pan)genome as well, to ensure general read removal of mamalian reads from your data. 
+
 ## Removal of contaminating reads
 Removal of contaminating reads can generally be done by mapping the reads to a reference database and filtering out the reads
 that map to it. In QIIME 2 this can be done by using the `filter-reads` action from the `quality-control` plugin. Before filtering
@@ -26,7 +31,7 @@ mosh tools cache-import \
     --cache ./cache \
     --key reference_seqs \
     --type "FeatureData[Sequence]" \
-    --input-path ./reference_seeqs.fasta
+    --input-path ./reference_seqs.fasta
 ```
 - build the Bowtie 2 index:
 ```{code-cell}
