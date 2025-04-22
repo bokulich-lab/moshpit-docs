@@ -11,6 +11,8 @@ sphinx:
       logo:
         image_light: images/logo_light.svg
         image_dark: images/logo_dark.svg
+    html_js_files:
+      - ['https://plausible.io/js/script.js', {'defer': 'defer', 'data-domain': 'moshpit.qiime2.org'}]
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
