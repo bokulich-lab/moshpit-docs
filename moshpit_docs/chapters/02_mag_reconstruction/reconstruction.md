@@ -35,7 +35,7 @@ sequences called contigs, providing valuable genetic information for the next st
 ```
 ```{code-cell}
 mosh assembly assemble-megahit \
-    --i-seqs ./cache:reads_filtered \
+    --i-reads ./cache:reads_filtered \
     --p-presets "meta-sensitive" \          
     --p-num-cpu-threads 24 \                      
     --p-min-contig-len 200 \ 
@@ -57,7 +57,7 @@ In addition to calculating generic statistics like N50 and L50, QUAST will try t
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
 ```{code-cell}
-mosh assembly evaluate-contigs \
+mosh assembly evaluate-quast \
     --i-contigs ./cache:contigs  \
     --p-threads 128 \
     --p-memory-efficient \
@@ -84,7 +84,7 @@ settings to ensure optimal mapping, including local alignment mode and sensitivi
 mosh assembly map-reads \
     --i-index ./cache:contigs_index \                         
     --i-reads ./cache:reads_filtered \                                                  
-    --o-alignment-map ./cache:reads_to_contigs \
+    --o-alignment-maps ./cache:reads_to_contigs \
     --verbose             
 ```
 
@@ -123,19 +123,19 @@ precompiled collections of orthologous genes, tailored to specific lineages such
 ```{code-cell}
 mosh annotate fetch-busco-db \
     --p-prok True \
-    --o-busco-db ./cache:busco_db
+    --o-db ./cache:busco_db
     --verbose
 ```
 
 Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.
 ```{code-cell}
 mosh annotate evaluate-busco \
-    --i-bins ./cache:mags \                             
-    --i-busco-db ./cache:busco_db \                     
+    --i-mags ./cache:mags \                             
+    --i-db ./cache:busco_db \                     
     --p-lineage-dataset bacteria_odb10 \             
     --p-cpu 16 \                                     
     --o-visualization ./results/mags.qzv \
-    --o-results-table ./cache:busco_results \
+    --o-results ./cache:busco_results \
     --verbose                 
 ```
 The `--p-lineage-dataset bacteria_odb10` parameter specifies the particular lineage dataset to use, in this case, 
