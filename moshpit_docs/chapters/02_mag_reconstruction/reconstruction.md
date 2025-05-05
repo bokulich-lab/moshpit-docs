@@ -118,11 +118,11 @@ First we will use `mosh annotate fetch-busco-db` to download a specific lineage'
 precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes 
 (bacteria and archaea), or eukaryotes.
 
-- The `--p-prok` True parameter specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).
+- The `--p-lineages` parameter set to `prokayota` specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).
 
 ```{code-cell}
 mosh annotate fetch-busco-db \
-    --p-prok True \
+    --p-lineages prokaryota \
     --o-db ./cache:busco_db
     --verbose
 ```
@@ -132,14 +132,14 @@ Once the appropriate BUSCO database is fetched, the next step is to evaluate the
 mosh annotate evaluate-busco \
     --i-mags ./cache:mags \                             
     --i-db ./cache:busco_db \                     
-    --p-lineage-dataset bacteria_odb10 \             
+    --p-lineage-dataset bacteria_odb12 \             
     --p-cpu 16 \                                     
     --o-visualization ./results/mags.qzv \
     --o-results ./cache:busco_results \
     --verbose                 
 ```
-The `--p-lineage-dataset bacteria_odb10` parameter specifies the particular lineage dataset to use, in this case, 
-the bacteria_odb10 dataset. This is a standard database for bacterial genomes.
+The `--p-lineage-dataset bacteria_odb12` parameter specifies the particular lineage dataset to use, in this case, 
+the bacteria_odb12 dataset. This is a standard database for bacterial genomes.
 
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/mags.qzv).
 

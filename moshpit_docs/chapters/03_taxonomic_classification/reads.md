@@ -48,8 +48,8 @@ the genome size the organisms from which each read originated. In order to use t
 
 ```{code-cell}
 mosh annotate estimate-bracken \
-    --i-kraken-reports ./cache:kraken_reports_reads \
-    --i-bracken-db ./cache:bracken_db \
+    --i-kraken2-reports ./cache:kraken_reports_reads \
+    --i-db ./cache:bracken_db \
     --p-threshold 5 \
     --p-read-len 150 \
     --o-taxonomy ./cache:bracken_taxonomy \
