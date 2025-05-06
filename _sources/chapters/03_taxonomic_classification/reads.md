@@ -23,21 +23,21 @@ human, UniVec_Core, protozoa and fungi.
 ```{code-cell}
 mosh annotate build-kraken-db \
     --p-collection pluspf \
-    --o-kraken2-database ./cache:kraken2_db \
-    --o-bracken-database ./cache:bracken_db \
+    --o-kraken2-db ./cache:kraken2_db \
+    --o-bracken-db ./cache:bracken_db \
 ```
 
 We can now use the `classify-kraken2` command to run Kraken2 using the paired-end reads as a query and the PlusPF database retrieved in the previous step:
 ```{code-cell}
 mosh annotate classify-kraken2 \
     --i-seqs ./cache:reads_filtered \
-    --i-kraken2-db ./cache:kraken2_db \
+    --i-db ./cache:kraken2_db \
     --p-threads 72 \
     --p-confidence 0.5 \
     --p-memory-mapping False \
     --p-report-minimizer-data \
     --o-reports ./cache:kraken_reports_reads \
-    --o-hits ./cache:kraken_hits_reads
+    --o-outputs ./cache:kraken_hits_reads
     --verbose
 ```
 
@@ -48,8 +48,8 @@ the genome size the organisms from which each read originated. In order to use t
 
 ```{code-cell}
 mosh annotate estimate-bracken \
-    --i-kraken-reports ./cache:kraken_reports_reads \
-    --i-bracken-db ./cache:bracken_db \
+    --i-kraken2-reports ./cache:kraken_reports_reads \
+    --i-db ./cache:bracken_db \
     --p-threshold 5 \
     --p-read-len 150 \
     --o-taxonomy ./cache:bracken_taxonomy \
@@ -73,7 +73,7 @@ prokaryotes and eukaryotes (more info on the taxa [here](https://github.com/bioi
 ```{code-cell}
 mosh annotate fetch-kaiju-db \
     --p-database-type nr_euk \
-    --o-database ./cache:kaiju_nr_euk
+    --o-db ./cache:kaiju_nr_euk
 ```
 
 We run Kaiju with the confidence of 0.1 using the paired-end reads as a query and the database artifact that was generated in the previous step:

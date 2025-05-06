@@ -14,10 +14,9 @@ kernelspec:
 (setup)=
 # Setup
 Before we dive into the tutorial, let's make sure we have all the necessary components in place. Make sure you have a 
-working MOSHPIT environment available - please follow the instructions from the developer 
-[QIIME 2 documentation](https://develop.qiime2.org/en/latest/plugins/how-to-guides/set-up-development-environment.html#moshpit-previously-known-as-the-metagenome-distribution) 
-to install all the required components. These installation instructions will also become available 
-through the official QIIME 2 user documentation in the 2025.4 release later this year.
+working MOSHPIT environment available - please follow the instructions from the 
+[QIIME 2 documentation](https://library.qiime2.org/quickstart/moshpit) 
+to install all the required components.
 
 In this tutorial we will be storing all the data in the QIIME 2 cache. To learn more about how the cache works, you can refer to the [*Using an Artifact Cache* tutorial](https://use.qiime2.org/en/latest/tutorials/use-the-artifact-cache.html). (Note that all calls to `qiime` in that document can be replaced by calls to `mosh`.) 
 You should create a single cache directory in the current working directory by running the following command:
@@ -51,7 +50,7 @@ cores_per_node = 24
 max_blocks = 14
 ```
 
-To learn more about how to configure parallelization in QIIME 2, please consult the [official documentation](https://develop.qiime2.org/en/latest/framework/how-to-guides/parallel-configuration.html#parallel-configuration).
+To learn more about how to configure parallelization in QIIME 2, please consult the [documentation](https://use.qiime2.org/en/latest/references/parallel-configuration.html).
 
 ```{note}
  To examine your generated QIIME 2 visualizations, you can use [QIIME 2 View](view.qiime2.org).

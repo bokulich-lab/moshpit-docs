@@ -374,7 +374,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">fetch</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> \
-    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
     <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
@@ -383,7 +383,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">fetch</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> \
-    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
     <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
@@ -401,12 +401,13 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">search</span><span class="o">-</span><span class="n">orthologs</span><span class="o">-</span><span class="n">diamond</span> \
-    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">sequences</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep</span> \
-    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">diamond</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">mags_derep</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">diamond_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">memory</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_hits</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">table</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_ft</span>  \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">loci</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_loci</span> \
     <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
@@ -421,7 +422,7 @@ and gene products present in the MAGs.</p>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="nb">map</span><span class="o">-</span><span class="n">eggnog</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_hits</span> \
-    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">eggnog</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">num</span><span class="o">-</span><span class="n">cpus</span> <span class="mi">16</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">memory</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">ortholog</span><span class="o">-</span><span class="n">annotations</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">eggnog_annotations</span> \
@@ -433,7 +434,7 @@ and gene products present in the MAGs.</p>
 </section>
 <section id="extract-annotations">
 <h2>Extract annotations<a class="headerlink" href="#extract-annotations" title="Link to this heading">#</a></h2>
-<p>This method extract a specific annotation from the table generated by EggNOG and calculates its frequencies across all MAGs.</p>
+<p>This method extracts a specific annotation from the table generated by EggNOG and calculates its frequencies across all MAGs.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">mosh</span> <span class="pre">annotate</span> <span class="pre">extract-annotations</span></code> method allows us to extract specific types of functional annotations, such as
@@ -456,7 +457,7 @@ all dereplicated MAGs.</p>
 </section>
 <section id="multiply-tables">
 <h2>Multiply tables<a class="headerlink" href="#multiply-tables" title="Link to this heading">#</a></h2>
-<p>This steps simply calculates the dot product of the <code class="docutils literal notranslate"><span class="pre">mags_derep_ft</span></code> and <code class="docutils literal notranslate"><span class="pre">caz_annot_ft</span></code> feature tables. This is useful for
+<p>This step simply calculates the dot product of the <code class="docutils literal notranslate"><span class="pre">mags_derep_ft</span></code> and <code class="docutils literal notranslate"><span class="pre">caz_annot_ft</span></code> feature tables. This is useful for
 combining the annotation data (e.g., <strong>CAZymes</strong>) with MAG abundance to determine how specific functional annotations
 are distributed across MAGs, and use this information to estimate the total frequency of each annotation in each sample.</p>
 <div class="cell docutils container">

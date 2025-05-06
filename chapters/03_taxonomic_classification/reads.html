@@ -376,8 +376,8 @@ human, UniVec_Core, protozoa and fungi.</p>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">build</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">collection</span> <span class="n">pluspf</span> \
-    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
-    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
 </pre></div>
 </div>
 </div>
@@ -387,13 +387,13 @@ human, UniVec_Core, protozoa and fungi.</p>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">classify</span><span class="o">-</span><span class="n">kraken2</span> \
     <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">seqs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">reads_filtered</span> \
-    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken2_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threads</span> <span class="mi">72</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">confidence</span> <span class="mf">0.5</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">mapping</span> <span class="kc">False</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">report</span><span class="o">-</span><span class="n">minimizer</span><span class="o">-</span><span class="n">data</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
-    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">hits</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_hits_reads</span>
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">outputs</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_hits_reads</span>
     <span class="o">--</span><span class="n">verbose</span>
 </pre></div>
 </div>
@@ -407,8 +407,8 @@ the genome size the organisms from which each read originated. In order to use t
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">estimate</span><span class="o">-</span><span class="n">bracken</span> \
-    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
-    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">bracken</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">kraken2</span><span class="o">-</span><span class="n">reports</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kraken_reports_reads</span> \
+    <span class="o">--</span><span class="n">i</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">threshold</span> <span class="mi">5</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="nb">len</span> <span class="mi">150</span> \
     <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">taxonomy</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">bracken_taxonomy</span> \
@@ -440,7 +440,7 @@ prokaryotes and eukaryotes (more info on the taxa <a class="reference external" 
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mosh</span> <span class="n">annotate</span> <span class="n">fetch</span><span class="o">-</span><span class="n">kaiju</span><span class="o">-</span><span class="n">db</span> \
     <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="nb">type</span> <span class="n">nr_euk</span> \
-    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">database</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span>
+    <span class="o">--</span><span class="n">o</span><span class="o">-</span><span class="n">db</span> <span class="o">./</span><span class="n">cache</span><span class="p">:</span><span class="n">kaiju_nr_euk</span>
 </pre></div>
 </div>
 </div>
