@@ -46,21 +46,21 @@ mosh assembly map-reads \
     --i-reads ./cache:reads_filtered \   
     --p-threads 8 \  
     --p-seed 100 \                  
-    --o-alignment-map ./cache:reads_to_derep_mags \
+    --o-alignment-maps ./cache:reads_to_derep_mags \
     --verbose            
 ```
 
 ## Estimate MAG abundance
 This step estimates the abundance of each MAG in the sample based on the read mapping results.
 - `metric` : currently, we support RPKM and TPM
-- `min-mapq` : indicates the minimum required read mapping quality - for Bowtie2, 42 will allow only perfect matches to be retained
+- `min-mapq` : indicates the minimum required read mapping quality — for Bowtie2, 42 will allow only perfect matches to be retained
 - `min-base-quality` : only keep alignments with this minimal Phred quality score
 
 For more options, see `--help`.
 ```{code-cell}
-mosh annotate estimate-mag-abundance \
-    --i-mag-lengths ./cache:mags_derep_length \
-    --i-maps ./cache:reads_to_derep_mags \
+mosh annotate estimate-abundance \
+    --i-feature-lengths ./cache:mags_derep_length \
+    --i-alignment-maps ./cache:reads_to_derep_mags \
     --p-threads 10 \
     --p-metric tpm \
     --p-min-mapq 42 \
@@ -69,7 +69,7 @@ mosh annotate estimate-mag-abundance \
 ```
 
 ## Let's have a look at our estimated MAG abundance!
-First we will use Kraken 2 to classify provided MAGs into taxonomic groups.
+First, we will use Kraken 2 to classify provided MAGs into taxonomic groups.
 ```{note}
 Refer to {ref}`kraken-reads` section for more details on taxonomic classification with Kraken 2.
 ```
@@ -78,20 +78,20 @@ The database used here is the `PlusPF` database, defined [here](https://benlangm
 ```{code-cell}
 mosh annotate classify-kraken2 \
     --i-seqs ./cache:mags_derep \
-    --i-kraken2-db ./cache:kraken2_db \
+    --i-db ./cache:kraken2_db \
     --p-threads 40 \
     --p-confidence 0.5 \
     --p-report-minimizer-data \
     --o-reports ./cache:kraken_reports_mags_derep \
-    --o-hits ./cache:kraken_hits_mags_derep \
+    --o-outputs ./cache:kraken_hits_mags_derep \
     --verbose
 ```
 
-Then we will convert a Kraken 2 report into a  generic taxonomy artifact for downstream analyses.
+Then we will convert a Kraken 2 report into a generic taxonomy artifact for downstream analyses.
 ```{code-cell}
 mosh annotate kraken2-to-mag-features \
     --i-reports ./cache:kraken_reports_mags_derep  \
-    --i-hits ./cache:kraken_hits_mags_derep  \
+    --i-outputs ./cache:kraken_hits_mags_derep  \
     --o-taxonomy ./cache:mags_derep_taxonomy \
     --verbose
 ```

@@ -43,7 +43,7 @@ mosh tools cache-import \
 mosh fondue get-all \
     --i-accession-ids ./cache:ids \
     --p-email YOUR.EMAIL@domain.com \
-    --p-n-jobs 5 \
+    --p-threads 5 \
     --p-retries 5 \
     --o-paired-reads ./cache:reads_paired \
     --o-metadata ./cache:metadata \

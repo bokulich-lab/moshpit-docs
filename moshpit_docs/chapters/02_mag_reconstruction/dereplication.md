@@ -48,6 +48,6 @@ mosh annotate dereplicate-mags \
     --i-distance-matrix ./cache:mags_dist_matrix_50 \       
     --p-threshold 0.99 \
     --o-dereplicated-mags ./cache:mags_derep_50 \   
-    --o-feature-table ./cache:mags_ft_50  \
+    --o-table ./cache:mags_ft_50  \
     --verbose              
 ```
