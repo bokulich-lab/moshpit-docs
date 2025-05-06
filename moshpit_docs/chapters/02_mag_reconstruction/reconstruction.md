@@ -116,13 +116,13 @@ single-copy orthologs. The evaluation helps ensure the quality of the recovered 
 
 First we will use `mosh annotate fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
 precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes 
-(bacteria and archaea), or eukaryotes.
+(bacteria and archaea), eukaryotes or more specific ones like bacteria_odb12.
 
-- The `--p-lineages` parameter set to `prokayota` specifies that we want to download the prokaryote dataset (for bacterial genomes, for example).
+- The `--p-lineages` parameter set to `bacteria_odb12` specifies that we want to download the bacterial dataset.
 
 ```{code-cell}
 mosh annotate fetch-busco-db \
-    --p-lineages prokaryota \
+    --p-lineages bacteria_odb12 \
     --o-db ./cache:busco_db
     --verbose
 ```
