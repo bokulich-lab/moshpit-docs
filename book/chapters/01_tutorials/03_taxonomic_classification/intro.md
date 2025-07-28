@@ -13,7 +13,7 @@ kernelspec:
 ---
 (taxonomic-classification)=
 # Taxonomic classification
-```{figure} ../../images/workflows-taxonomic.png
+```{figure} ../../_static/workflows-taxonomic.png
 ---
 name: workflows-taxonomy-fig
 width: 100%

@@ -1,18 +1,5 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
 (data-import)=
-# Importing data from other tools
+# How to import data from other tools
 The MOSHPIT pipeline allows you to start working directly with the NGS reads, which you can take through various analysis, 
 like contig assembly, binning, and annotation. However, if you have already performed some of these steps outside of QIIME 2, 
 you can import the results into an appropriate QIIME 2 artifact and continue from there. Below you can see some examples and 
