@@ -11,7 +11,7 @@ kernelspec:
   language: python
   name: python3
 ---
-# Functional annotation
+# Functional annotation of MAGs
 ## Required databases
 In order to perform the functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using MOSHPIT.
 
