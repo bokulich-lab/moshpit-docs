@@ -44,14 +44,19 @@ project:
     - title: How-To Guides
       children:
         - pattern: chapters/02_howtos/*.md
-    - title: Explanations
-      children:
+#    - title: Explanations
+#      children:
     - title: References
       children:
         - file: refs/plugins.md
           children:
             - pattern: refs/plugins/*.md
+        - title: Artifacts
+          children:
+            - pattern: refs/artifacts/*.md
 
+  bibliography:
+    - q2doc.bib
 
   downloads:
     - file: _static/environment.yml
