@@ -14,8 +14,8 @@ build:
         - mkdir -p $READTHEDOCS_OUTPUT
         - cp -a book/_build/* $READTHEDOCS_OUTPUT/
 
-  conda:
-    environment: environment-files/readthedocs.yml
+conda:
+  environment: environment-files/readthedocs.yml
 
 formats:
   - pdf
