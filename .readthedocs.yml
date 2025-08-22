@@ -13,6 +13,9 @@ build:
         - PATH=$(pwd)/.env/bin/:$PATH make html
         - mkdir -p $READTHEDOCS_OUTPUT
         - cp -a book/_build/* $READTHEDOCS_OUTPUT/
+        - echo $READTHEDOCS_OUTPUT
+        - ls $READTHEDOCS_OUTPUT
+        - ls $READTHEDOCS_OUTPUT/html
 
 conda:
   environment: environment-files/readthedocs.yml
