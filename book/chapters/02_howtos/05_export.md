@@ -1,18 +1,5 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
 (data-export)=
-# Exporting data and connecting with other tools
+# How to connect with other tools
 QIIME 2 offers various ways of visualizing and processing your data further, but sometimes you may want to use other tools 
 that are not (yet) available through QIIME 2. This is, of course, possible and very easy to do: you can export your data 
 from any QIIME 2 artifact and use it with any of your other favourite tools, as long as the underlying format is compatible. 

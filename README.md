@@ -1,19 +1,38 @@
 # moshpit-docs
-[![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)](https://bokulich-lab.github.io/moshpit-docs/)
+[![ReadTheDocs](https://app.readthedocs.org/projects/moshpit/badge/?version=latest)](https://moshpit.qiime2.org/)
 
 MOSHPIT plugin suite documentation
 
 
-## Build the book
-Create the conda environment:
+## Development instructions
+The following sub-sections illustrate how to develop this documentation.
+
+### Create the development environment
+
+To build this documentation locally for development purposes, first create your development environment.
+
 ```shell
-mamba create -n jupyter-book -c conda-forge jupyter-book
+conda env create -n moshpit-docs --file environment-files/readthedocs.yml
+conda activate moshpit-docs
+q2doc refresh-cache
 ```
-Activate:
+
+### Build the book
+Generate the artifact/type references:
 ```shell
-conda activate jupyter-book
+make autodoc
 ```
-Build the book:
+
+Next, build the book:
 ```shell
-jupyter-book build --all moshpit_docs
+make html
+```
+
+(Alternatively, `make preview` or `make fast-preview` can speed up test builds.)
+
+### Serve the book locally
+
+Finally, run the following to serve the built documentation locally:
+```shell
+make serve
 ```

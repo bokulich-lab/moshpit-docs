@@ -13,7 +13,7 @@ kernelspec:
 ---
 (mag-recovery)=
 # Recovery of Metagenome-assembled Genomes
-```{figure} ../../images/workflows-mags.png
+```{figure} ../../../_static/workflows-mags.png
 ---
 name: workflows-mag-fig
 width: 100%

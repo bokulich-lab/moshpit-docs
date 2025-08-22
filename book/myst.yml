@@ -1,0 +1,72 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: moshpit-docs
+  title: MOSHPIT docs
+  # description:
+  keywords: ["MOSHPIT", "microbiome", "metagenome", "shotgun metagenomics"]
+  # uncommenting "authors" will put the author list on every page
+  authors: ["Bokulich Lab"]
+  # github:
+  references:
+    q2doc-api-target: https://develop.qiime2.org/en/latest/
+    q2doc-usage-target: https://use.qiime2.org/en/latest/
+    q2doc-library-target: https://library.qiime2.org
+    q2doc-amplicon-target: https://amplicon-docs.readthedocs.io/en/latest/
+
+  plugins:
+    - type: executable
+      path: q2doc-plug.py
+
+  toc:
+    - file: intro.md
+    - title: Tutorials
+      children:
+        - file: chapters/01_tutorials/cocoa.intro.md
+          children:
+            - file: chapters/01_tutorials/00_data_retrieval.md
+            - file: chapters/01_tutorials/01_filtering/intro.md
+              children:
+                - file: chapters/01_tutorials/01_filtering/quality-filtering.md
+                - file: chapters/01_tutorials/01_filtering/host-filtering.md
+            - file: chapters/01_tutorials/02_mag_reconstruction/intro.md
+              children:
+                - file: chapters/01_tutorials/02_mag_reconstruction/reconstruction.md
+                - file: chapters/01_tutorials/02_mag_reconstruction/dereplication.md
+                - file: chapters/01_tutorials/02_mag_reconstruction/abundance.md
+            - file: chapters/01_tutorials/03_taxonomic_classification/intro.md
+              children:
+                - file: chapters/01_tutorials/03_taxonomic_classification/reads.md
+                - file: chapters/01_tutorials/03_taxonomic_classification/mags.md
+            - file: chapters/01_tutorials/04_functional_annotation/intro.md
+              children:
+                - file: chapters/01_tutorials/04_functional_annotation/mags.md
+    - title: How-To Guides
+      children:
+        - pattern: chapters/02_howtos/*.md
+#    - title: Explanations
+#      children:
+    - title: References
+      children:
+        - file: refs/plugins.md
+          children:
+            - pattern: refs/plugins/*.md
+        - title: Artifacts
+          children:
+            - pattern: refs/artifacts/*.md
+
+  bibliography:
+    - q2doc.bib
+
+  downloads:
+    - file: _static/environment.yml
+      title: Conda environment file
+
+site:
+  template: https://github.com/ebolyen/myst-book-theme-poc.git
+  options:
+      folders: true
+      favicon: _static/favicon.ico
+      logo: _static/logo_light.svg
+      logo_dark: _static/logo_dark.svg
+      pretty_urls: false
