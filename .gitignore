@@ -1,8 +1,8 @@
-book/references/plugin-reference
-book/references/q2doc.bib
-book/refs/artifacts
-book/refs/plugins
-book/_build/
-book/data/
+docs/references/plugin-reference
+docs/references/q2doc.bib
+docs/refs/artifacts
+docs/refs/plugins
+docs/_build/
+docs/data/
 .locks/
 .DS_Store
