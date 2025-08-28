@@ -25,10 +25,10 @@ ensure they can contact you in case of any issues.
 
 - download the files containing all the accession IDs and corresponding metadata:
 ```{code-cell}
-wget -O ./ids.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/ids.tsv
+wget -O ./ids.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/ids.tsv
 ```
 ```{code-cell}
-wget -O ./metadata.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/metadata.tsv
+wget -O ./metadata.tsv https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/metadata.tsv
 ```
 - import the file into a QIIME 2 artifact:
 ```{code-cell}
