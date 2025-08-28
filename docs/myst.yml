@@ -50,7 +50,9 @@ project:
       children:
         - file: refs/plugins.md
           children:
-            - pattern: refs/plugins/*.md
+            - file: refs/plugins/assembly.md
+            - file: refs/plugins/annotate.md
+            - file: refs/plugins/fondue.md
         - title: Artifacts
           children:
             - pattern: refs/artifacts/*.md
