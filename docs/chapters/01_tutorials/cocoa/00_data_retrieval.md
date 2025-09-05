@@ -1,20 +1,7 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
 (data-retrieval)=
 # Data retrieval
 The dataset used in this tutorial is available through the [NCBI Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra) (SRA). 
-To retrieve it we will use the [q2-fondue plugin](https://github.com/bokulich-lab/q2-fondue) for programmatic access to 
+To retrieve it, we will use the [q2-fondue plugin](https://doi.org/10.1093/bioinformatics/btac639) for programmatic access to 
 sequences and metadata from SRA; we only need to provide a list of accession IDs to download - q2-fondue will take care of 
 the rest.
 
@@ -50,7 +37,7 @@ ensure they can contact you in case of any issues.
     config could look like this (to run the action on an HPC):
 
     ```{code} bash
-    :filename: parsl.config
+    :filename: fondue.config.toml
     [parsl]
 
     [[parsl.executors]]
@@ -59,11 +46,11 @@ ensure they can contact you in case of any issues.
     
     [parsl.executors.provider]
     class = "SlurmProvider"
-    scheduler_options = "#SBATCH --mem-per-cpu=16G --tmp=500MB"
+    scheduler_options = "#SBATCH --mem-per-cpu=4G --tmp=5GB"
     worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
-    walltime = "12:00:00"
+    walltime = "6:00:00"
     nodes_per_block = 1
-    cores_per_node = 8
+    cores_per_node = 1
     max_blocks = 14
     ```
   
@@ -78,7 +65,7 @@ ensure they can contact you in case of any issues.
         --o-metadata ./cache:metadata \
         --o-single-reads ./cache:reads_single \
         --o-failed-runs ./cache:failed_runs \
-        --parallel-config ./parsl.config
+        --parallel-config ./fondue.config.toml
         --verbose
     ```
     :::
