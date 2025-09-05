@@ -22,25 +22,32 @@ project:
     - file: intro.md
     - title: Tutorials
       children:
-        - file: chapters/01_tutorials/cocoa.intro.md
+        - file: chapters/01_tutorials/end_to_end_short/01_intro.md
           children:
-            - file: chapters/01_tutorials/00_data_retrieval.md
-            - file: chapters/01_tutorials/01_filtering/intro.md
+            - file: chapters/01_tutorials/end_to_end_short/02_assembly.md
+            - file: chapters/01_tutorials/end_to_end_short/03_binning.md
+            - file: chapters/01_tutorials/end_to_end_short/04_dereplication.md
+            - file: chapters/01_tutorials/end_to_end_short/05_taxonomic_classification.md
+            - file: chapters/01_tutorials/end_to_end_short/06_abundance_estimation.md
+        - file: chapters/01_tutorials/cocoa/cocoa.intro.md
+          children:
+            - file: chapters/01_tutorials/cocoa/00_data_retrieval.md
+            - file: chapters/01_tutorials/cocoa/01_filtering/intro.md
               children:
-                - file: chapters/01_tutorials/01_filtering/quality-filtering.md
-                - file: chapters/01_tutorials/01_filtering/host-filtering.md
-            - file: chapters/01_tutorials/02_mag_reconstruction/intro.md
+                - file: chapters/01_tutorials/cocoa/01_filtering/quality-filtering.md
+                - file: chapters/01_tutorials/cocoa/01_filtering/host-filtering.md
+            - file: chapters/01_tutorials/cocoa/02_mag_reconstruction/intro.md
               children:
-                - file: chapters/01_tutorials/02_mag_reconstruction/reconstruction.md
-                - file: chapters/01_tutorials/02_mag_reconstruction/dereplication.md
-                - file: chapters/01_tutorials/02_mag_reconstruction/abundance.md
-            - file: chapters/01_tutorials/03_taxonomic_classification/intro.md
+                - file: chapters/01_tutorials/cocoa/02_mag_reconstruction/reconstruction.md
+                - file: chapters/01_tutorials/cocoa/02_mag_reconstruction/dereplication.md
+                - file: chapters/01_tutorials/cocoa/02_mag_reconstruction/abundance.md
+            - file: chapters/01_tutorials/cocoa/03_taxonomic_classification/intro.md
               children:
-                - file: chapters/01_tutorials/03_taxonomic_classification/reads.md
-                - file: chapters/01_tutorials/03_taxonomic_classification/mags.md
-            - file: chapters/01_tutorials/04_functional_annotation/intro.md
+                - file: chapters/01_tutorials/cocoa/03_taxonomic_classification/reads.md
+                - file: chapters/01_tutorials/cocoa/03_taxonomic_classification/mags.md
+            - file: chapters/01_tutorials/cocoa/04_functional_annotation/intro.md
               children:
-                - file: chapters/01_tutorials/04_functional_annotation/mags.md
+                - file: chapters/01_tutorials/cocoa/04_functional_annotation/mags.md
     - title: How-To Guides
       children:
         - pattern: chapters/02_howtos/*.md

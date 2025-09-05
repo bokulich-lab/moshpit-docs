@@ -1,16 +1,3 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
 (mag-recovery)=
 # Recovery of MAGs
 In this part of the tutorial we will go thorugh the steps required to recover metagenome-assembled genomes (MAGs) from 
@@ -33,16 +20,58 @@ sequences called contigs, providing valuable genetic information for the next st
 `--p-coassemble` parameter can be set to "True" if you wish to co-assemble reads into contigs from all samples. 
 **This parameter is still under development**: you will not be able to use the generated contigs for further analysis.
 ```
-```{code-cell}
+
+:::{hint} With parsl parallelization
+:class: dropdown
+:open: true
+You can speed up the assembly by taking advantage of the parsl parallelization support 
+(see [here](#parsl) to learn more). The config could look like this (to run the action 
+on an HPC):
+
+```{code} bash
+:filename: assembly.config.toml
+[parsl]
+
+[[parsl.executors]]
+class = "HighThroughputExecutor"
+label = "default"
+
+[parsl.executors.provider]
+class = "SlurmProvider"
+scheduler_options = "#SBATCH --mem-per-cpu=16G"
+worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+walltime = "12:00:00"
+nodes_per_block = 1
+cores_per_node = 8
+max_blocks = 14
+```
+
+You can then run the action in the following way:
+```{code} bash
 mosh assembly assemble-megahit \
     --i-reads ./cache:reads_filtered \
-    --p-presets "meta-sensitive" \          
-    --p-num-cpu-threads 24 \                      
-    --p-min-contig-len 200 \ 
-    --p-coassemble False \    # Co-assembly is disabled for this example
+    --p-presets meta-sensitive \
+    --p-cpu-threads 8 \
+    --p-min-contig-len 200 \
+    --o-contigs ./cache:contigs \
+    --parallel-config ./assembly.config.toml \
+    --verbose
+```
+:::
+
+:::{hint} Without parallelization (default)
+:class: dropdown
+```{code} bash
+mosh assembly assemble-megahit \
+    --i-reads ./cache:reads_filtered \
+    --p-presets meta-sensitive \
+    --p-cpu-threads 8 \
+    --p-min-contig-len 200 \
     --o-contigs ./cache:contigs \
     --verbose   
 ```
+:::
+
 - Alternatively, you can also use `mosh assembly assemble-spades` to assemble contigs with SPAdes.
 
 ## Contig QC with QUAST
@@ -56,10 +85,10 @@ metrics that can be used for that purpose but here we will focus on the two most
 In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
-```{code-cell}
+```{code} bash
 mosh assembly evaluate-quast \
     --i-contigs ./cache:contigs  \
-    --p-threads 128 \
+    --p-threads 7 \
     --p-memory-efficient \
     --o-visualization ./results/contigs.qzv \ 
     --verbose
@@ -69,29 +98,110 @@ Your visualization should look similar to [this one](https://view.qiime2.org/vis
 ## Index contigs
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs 
 later. Various parameters control the size and structure of the index, as well as resource usage.
-```{code-cell}
+
+:::{hint} With parsl parallelization
+:class: dropdown
+:open: true
+You can speed up the indexing by taking advantage of the parsl parallelization support 
+(see [here](#parsl) to learn more). The config could look like this (to run the action 
+on an HPC):
+
+```{code} bash
+:filename: indexing.config.toml
+[parsl]
+
+[[parsl.executors]]
+class = "HighThroughputExecutor"
+label = "default"
+
+[parsl.executors.provider]
+class = "SlurmProvider"
+scheduler_options = "#SBATCH --mem-per-cpu=4G"
+worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+walltime = "4:00:00"
+nodes_per_block = 1
+cores_per_node = 8
+max_blocks = 14
+```
+
+You can then run the action in the following way:
+```{code} bash
 mosh assembly index-contigs \
     --i-contigs ./cache:contigs \                       
     --p-threads 8 \                                  
     --o-index ./cache:contigs_index \
-    --verbose                             
+    --parallel-config ./indexing.config.toml
+    --verbose
 ```
+:::
+
+:::{hint} Without parallelization (default)
+:class: dropdown
+```{code} bash
+mosh assembly index-contigs \
+    --i-contigs ./cache:contigs \                       
+    --p-threads 8 \                                  
+    --o-index ./cache:contigs_index \ 
+    --o-contigs ./cache:contigs \
+    --verbose   
+```
+:::
 
 ## Map reads to contigs
 Here we map the input paired-end reads to the indexed contigs created in the previous step. We use various alignment 
 settings to ensure optimal mapping, including local alignment mode and sensitivity settings.
-```{code-cell}
+
+:::{hint} With parsl parallelization
+:class: dropdown
+:open: true
+You can speed up the mapping by taking advantage of the parsl parallelization support 
+(see [here](#parsl) to learn more). The config could look like this (to run the action 
+on an HPC):
+
+```{code} bash
+:filename: mapping.config.toml
+[parsl]
+
+[[parsl.executors]]
+class = "HighThroughputExecutor"
+label = "default"
+
+[parsl.executors.provider]
+class = "SlurmProvider"
+scheduler_options = "#SBATCH --mem-per-cpu=16G"
+worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+walltime = "12:00:00"
+nodes_per_block = 1
+cores_per_node = 8
+max_blocks = 14
+```
+
+You can then run the action in the following way:
+```{code} bash
 mosh assembly map-reads \
     --i-index ./cache:contigs_index \                         
     --i-reads ./cache:reads_filtered \                                                  
     --o-alignment-maps ./cache:reads_to_contigs \
-    --verbose             
+    --parallel-config ./mapping.config.toml
+    --verbose
 ```
+:::
+
+:::{hint} Without parallelization (default)
+:class: dropdown
+```{code} bash
+mosh assembly map-reads \
+    --i-index ./cache:contigs_index \                         
+    --i-reads ./cache:reads_filtered \                                                  
+    --o-alignment-maps ./cache:reads_to_contigs \
+    --verbose   
+```
+:::
 
 ## Bin contigs with MetaBAT
 Binning contigs involves grouping assembled contigs into MAGs. This step uses MetaBAT to assign contigs based on 
 co-abundance and other features, producing MAG files that represent putative genomes.
-```{code-cell}
+```{code} bash
 mosh annotate bin-contigs-metabat \
     --i-contigs ./cache:contigs \                       
     --i-alignment-maps ./cache:reads_to_contigs \         
@@ -120,7 +230,7 @@ precompiled collections of orthologous genes, tailored to specific lineages such
 
 - The `--p-lineages` parameter set to `bacteria_odb12` specifies that we want to download the bacterial dataset.
 
-```{code-cell}
+```{code} bash
 mosh annotate fetch-busco-db \
     --p-lineages bacteria_odb12 \
     --o-db ./cache:busco_db
@@ -128,7 +238,34 @@ mosh annotate fetch-busco-db \
 ```
 
 Once the appropriate BUSCO database is fetched, the next step is to evaluate the completeness and quality of the MAGs.
-```{code-cell}
+
+:::{hint} With parsl parallelization
+:class: dropdown
+:open: true
+You can speed up this QC step by taking advantage of the parsl parallelization support 
+(see [here](#parsl) to learn more). The config could look like this (to run the action 
+on an HPC):
+
+```{code} bash
+:filename: busco.config.toml
+[parsl]
+
+[[parsl.executors]]
+class = "HighThroughputExecutor"
+label = "default"
+
+[parsl.executors.provider]
+class = "SlurmProvider"
+scheduler_options = "#SBATCH --mem-per-cpu=4G"
+worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+walltime = "2:00:00"
+nodes_per_block = 1
+cores_per_node = 8
+max_blocks = 14
+```
+
+You can then run the action in the following way:
+```{code} bash
 mosh annotate evaluate-busco \
     --i-mags ./cache:mags \                             
     --i-db ./cache:busco_db \                     
@@ -136,8 +273,25 @@ mosh annotate evaluate-busco \
     --p-cpu 16 \                                     
     --o-visualization ./results/mags.qzv \
     --o-results ./cache:busco_results \
-    --verbose                 
+    --parallel-config ./busco.config.toml
+    --verbose
 ```
+:::
+
+:::{hint} Without parallelization (default)
+:class: dropdown
+```{code} bash
+mosh annotate evaluate-busco \
+    --i-mags ./cache:mags \                             
+    --i-db ./cache:busco_db \                     
+    --p-lineage-dataset bacteria_odb12 \             
+    --p-cpu 16 \                                     
+    --o-visualization ./results/mags.qzv \
+    --o-results ./cache:busco_results \
+    --verbose   
+```
+:::
+
 The `--p-lineage-dataset bacteria_odb12` parameter specifies the particular lineage dataset to use, in this case, 
 the bacteria_odb12 dataset. This is a standard database for bacterial genomes.
 
@@ -151,7 +305,7 @@ We recommed that this step is done before dereplication (as in this example). Al
 [dereplicated set](dereplication) and filter this one using `mosh annotate filter-derep-mags`.
 ```
 
-```{code-cell}
+```{code} bash
 mosh annotate filter-mags \
     --i-mags ./cache:mags \                             
     --m-metadata-file ./cache:busco_results \           

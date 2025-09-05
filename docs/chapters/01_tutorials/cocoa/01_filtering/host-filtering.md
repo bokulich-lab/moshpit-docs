@@ -26,7 +26,7 @@ Removal of contaminating reads can generally be done by mapping the reads to a r
 that map to it. In QIIME 2 this can be done by using the `filter-reads` action from the `quality-control` plugin. Before filtering
 we need to construct the index of the reference database that will be used by Bowtie 2:
 - start with the FASTA files containing the reference sequences - we will import them into a QIIME 2 artifact:
-```{code-cell}
+```{code} bash
 mosh tools cache-import \
     --cache ./cache \
     --key reference_seqs \
@@ -34,13 +34,13 @@ mosh tools cache-import \
     --input-path ./reference_seqs.fasta
 ```
 - build the Bowtie 2 index:
-```{code-cell}
+```{code} bash
 mosh quality-control bowtie2-build \
     --i-sequences ./cache:reference_seqs \
     --o-database ./cache:reference_index
 ```
 - filter out the reads that map to the reference database:
-```{code-cell}
+```{code} bash
 mosh quality-control filter-reads \
     --i-demultiplexed-sequences ./cache:reads_trimmed \
     --i-database ./cache:reference_index \
@@ -54,7 +54,7 @@ collection of genomes represented by the human pangenome (__CIT). We have built 
 which allows to first fetch the human pangenome sequence, combine it with the GRCh38 reference genome, build a combined 
 Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated 
 index so that it can be used in any other experiments.
-```{code-cell}
+```{code} bash
 mosh annotate filter-reads-pangenome \
     --i-reads ./cache:reads_trimmed \
     --o-filtered-reads ./cache:reads_filtered \
