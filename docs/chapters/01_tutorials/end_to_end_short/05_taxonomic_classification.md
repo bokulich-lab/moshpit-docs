@@ -5,18 +5,40 @@ taxa within, or we can classify the MAGs we recovered to get a more accurate pic
 the community members. Let's try both approaches. In this section we will use 
 [Kraken 2](https://doi.org/10.1186/s13059-019-1891-0) as the classifier of choice.
 
+:::{describe-usage}
+:scope: end-to-end
+:hidden:
+mags_derep = use.init_artifact_from_url(
+    'mags-derep', 
+    'https://polybox.ethz.ch/index.php/s/WMsLAzHtej8ERPG/download'
+)
+reads = use.init_artifact_from_url(
+    'reads', 
+    'https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download'
+)
+:::
+
 ## Database preparation
 Before we perform the classification, we need to get the reference database. For this 
 tutorial, we will use the "standard" Kraken 2 database with the smallest memory 
 footprint so that it's easier to run on a laptop.
 
-```{code} bash
-mosh annotate build-kraken-db \
-    --p-collection standard8 \
-    --o-kraken2-db ./kraken2-db.qza \
-    --o-bracken-db ./bracken-db.qza \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+kraken2_db, bracken_db = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='build_kraken_db'
+  ),
+  use.UsageInputs(
+    collection='standard8'
+  ),
+  use.UsageOutputNames(
+    kraken2_db='kraken2-db',
+    bracken_db='bracken-db'
+  )
+)
+:::
 
 ## Read-based classification
 Let's start with read-based classification. We can use the `classify-kraken2` action 
@@ -30,58 +52,85 @@ You can speed up this action by taking advantage of parsl parallelization suppor
 We will use the same config as for genome assembly.
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs ./reads.qza \
-    --i-db ./kraken2-db.qza \
+    --i-seqs reads.qza \
+    --i-db kraken2-db.qza \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports ./kraken2-reports-reads.qza \
-    --o-outputs ./kraken2-hits-reads.qza \
-    --parallel-config ./parallel.config.toml \
+    --o-reports kraken2-reports-reads.qza \
+    --o-outputs kraken2-hits-reads.qza \
+    --parallel-config parallel.config.toml \
     --verbose
 ```
 :::
 
-:::{note} Without parallelization
+::::{note} Without parallelization
 :class: dropdown
-```{code} bash
-mosh annotate classify-kraken2 \
-    --i-seqs ./reads.qza \
-    --i-db ./kraken2-db.qza \
-    --p-threads 4 \
-    --p-memory-mapping \
-    --o-reports ./kraken2-reports-reads.qza \
-    --o-outputs ./kraken2-hits-reads.qza \
-    --verbose
-```
+
+:::{describe-usage}
+:scope: end-to-end
+reports_reads, outputs_reads = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='classify_kraken2'
+  ),
+  use.UsageInputs(
+    seqs='reads',
+    db='kraken2-db',
+    threads=4,
+    memory_mapping=True,
+  ),
+  use.UsageOutputNames(
+    reports='reports-reads',
+    outputs='outputs-reads'
+  )
+)
 :::
+::::
 
 Before we can visualize the abundance of the identified taxa, we need to correct the 
 read counts slightly to take into account their genome sizes and database composition. 
-For this purpose, we can use the [Bracken](https://peerj.com/articles/cs-104/) tool 
+For this purpose, we can use the [Bracken](https://doi.org/10.7717/peerj-cs.104) tool 
 which uses statistical methods to re-estimate read counts to account for those factors. 
 Run the action below to perform that correction:
 
-```{code} bash
-mosh annotate annotate estimate-bracken \
-    --i-kraken2-reports ./kraken2-reports-reads.qza \
-    --i-db ./bracken-db.qza \
-    --p-read-len 150 \
-    --o-reports ./bracken-reports.qza \
-    --o-taxonomy ./bracken-taxonomy.qza \
-    --o-table ./bracken-table.qza \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+bracken_reports, bracken_taxonomy, bracken_table = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='estimate_bracken'
+  ),
+  use.UsageInputs(
+    kraken2_reports='reports-reads',
+    db='bracken-db',
+    read_len=150,
+  ),
+  use.UsageOutputNames(
+    reports='bracken-reports',
+    taxonomy='bracken-taxonomy',
+    table='bracken-table'
+  )
+)
+:::
+
 Now, we can use the familiar `barplot` action to plot the taxa abundance in our samples:
 
-```{code} bash
-mosh annotate taxa barplot \
-    --i-table ./bracken-table.qza \
-    --i-taxonomy ./bracken-taxonomy.qza \
-    --o-visualization ./bracken-barplot.qzv \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+taxa_barplot, = use.action(
+  use.UsageAction(
+    plugin_id='taxa',
+    action_id='barplot'
+  ),
+  use.UsageInputs(
+    table=bracken_table, 
+    taxonomy=bracken_taxonomy,
+  ),
+  use.UsageOutputNames(visualization='taxa-barplot')
+)
+:::
 
-Navigate to the [QIIME 2 View](https://view.qiime2.org) and upload the `bracken-barplot.qzv` file to see the visualization.
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/end-to-end/bracken-barplot.qzv).
 
 ## MAG-based classification
 It is also possible to classify the MAGs we recovered using Kraken 2. We can use the 
@@ -95,30 +144,40 @@ You can speed up this action by taking advantage of parsl parallelization suppor
 We will use the same config as for genome assembly.
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs ./mags-derep.qza \
-    --i-db ./kraken2-db.qza \
+    --i-seqs mags-derep.qza \
+    --i-db kraken2-db.qza \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports ./kraken2-reports-mags.qza \
-    --o-outputs ./kraken2-hits-mags.qza \
-    --parallel-config ./parallel.config.toml \
+    --o-reports kraken2-reports-mags.qza \
+    --o-outputs kraken2-hits-mags.qza \
+    --parallel-config parallel.config.toml \
     --verbose
 ```
 :::
 
-:::{note} Without parallelization
+::::{note} Without parallelization
 :class: dropdown
-```{code} bash
-mosh annotate classify-kraken2 \
-    --i-seqs ./mags-derep.qza \
-    --i-db ./kraken2-db.qza \
-    --p-threads 4 \
-    --p-memory-mapping \
-    --o-reports ./kraken2-reports-mags.qza \
-    --o-outputs ./kraken2-hits-mags.qza \
-    --verbose
-```
+
+:::{describe-usage}
+:scope: end-to-end
+reports_mags, outputs_mags = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='classify_kraken2'
+  ),
+  use.UsageInputs(
+    seqs=mags_derep,
+    db='kraken2-db',
+    threads=4,
+    memory_mapping=True,
+  ),
+  use.UsageOutputNames(
+    reports='reports-mags',
+    outputs='outputs-mags'
+  )
+)
 :::
+::::
 
 We got two new artifacts: `FeatureData[Kraken2Report % Properties('mags')]` and 
 `FeatureData[Kraken2Output % Properties('mags')]`. The first one contains the Kraken 2 
@@ -126,13 +185,22 @@ report: a tree-like representation of all the identified taxa. The second one is
 of all MAGs with their corresponding identified taxa. To convert those into a more 
 QIIME-like taxonomy, run the following action:
 
-```{code} bash
-mosh annotate kraken2-to-mag-features \
-    --i-reports ./kraken2-reports-mags.qza \
-    --i-outputs ./kraken2-hits-mags.qza \
-    --o-taxonomy ./mags-taxonomy.qza \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+taxonomy_mags, = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='kraken2_to_mag_features'
+  ),
+  use.UsageInputs(
+    reports=reports_mags,
+    outputs=outputs_mags,
+  ),
+  use.UsageOutputNames(
+    taxonomy='taxonomy-mags'
+  )
+)
+:::
 
 A natural next step would now be to estimate the relative frequencies of those taxa in 
 our samples. It is, however, a little bit more complicated in the case of MAGs, since 
