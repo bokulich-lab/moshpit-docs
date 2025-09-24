@@ -1,6 +1,6 @@
 # Whole metagenome analysis with MOSHPIT
 
-Welcome! 👋 __MOSHPIT__ (__MO__\dular __SH__\otgun metagenome __P__\ipelines with __I__\ntegrated provenance __T__\racking) is a toolkit of plugins for whole 
+Welcome! 👋 __MOSHPIT__ (**MO**dular **SH**otgun metagenome **P**ipelines with **I**ntegrated provenance **T**racking) is a toolkit of plugins for whole 
 metagenome assembly, annotation, and analysis built on the microbiome multi-omics data science framework [QIIME 2](https://qiime2.org/). 
 MOSHPIT enables flexible, modular, fully reproducible workflows for read-based or assembly-based analysis of 
 metagenome data.
