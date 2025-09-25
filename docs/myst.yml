@@ -1,12 +1,14 @@
 # See docs at: https://mystmd.org/guide/frontmatter
 version: 1
+extends:
+  - ./authors.yml
 project:
   id: moshpit-docs
-  title: MOSHPIT docs
+  title: MOSHPIT documentation
   # description:
   keywords: ["MOSHPIT", "microbiome", "metagenome", "shotgun metagenomics"]
-  # uncommenting "authors" will put the author list on every page
-  authors: ["Bokulich Lab"]
+  authors:
+    - mz
   # github:
   references:
     q2doc-api-target: https://develop.qiime2.org/en/latest/

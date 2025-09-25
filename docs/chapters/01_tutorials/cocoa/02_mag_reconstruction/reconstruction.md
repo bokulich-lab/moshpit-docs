@@ -51,7 +51,7 @@ You can then run the action in the following way:
 mosh assembly assemble-megahit \
     --i-reads ./cache:reads_filtered \
     --p-presets meta-sensitive \
-    --p-cpu-threads 8 \
+    --p-num-cpu-threads 8 \
     --p-min-contig-len 200 \
     --o-contigs ./cache:contigs \
     --parallel-config ./assembly.config.toml \
@@ -65,7 +65,7 @@ mosh assembly assemble-megahit \
 mosh assembly assemble-megahit \
     --i-reads ./cache:reads_filtered \
     --p-presets meta-sensitive \
-    --p-cpu-threads 8 \
+    --p-num-cpu-threads 8 \
     --p-min-contig-len 200 \
     --o-contigs ./cache:contigs \
     --verbose   

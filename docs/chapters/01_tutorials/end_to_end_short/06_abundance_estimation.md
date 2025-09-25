@@ -10,14 +10,38 @@ to genome lengths and present the results using one of the available metrics
 Similarly to how it was done for MAG recovery, we first need to index our dereplicated 
 MAGs. We can do it using the `index-derep-mags` action from the `q2-annotate` plugin:
 
-```{code} bash
-mosh annotate assembly index-derep-mags \
-    --i-mags ./mags-derep.qza \
-    --p-threads 4 \
-    --p-seed 100 \
-    --o-index ./mags-derep-index.qza \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+:hidden:
+mags_derep = use.init_artifact_from_url(
+    'mags-derep', 
+    'https://polybox.ethz.ch/index.php/s/WMsLAzHtej8ERPG/download'
+)
+reads = use.init_artifact_from_url(
+    'reads', 
+    'https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download'
+)
+taxonomy = use.init_artifact_from_url(
+    'taxonomy', 
+    'https://polybox.ethz.ch/index.php/s/kimCx8b2SSdsTSZ/download'
+)
+:::
+
+:::{describe-usage}
+:scope: end-to-end
+mags_index, = use.action(
+  use.UsageAction(
+    plugin_id='assembly',
+    action_id='index_derep_mags'
+  ),
+  use.UsageInputs(
+    mags=mags_derep, 
+    threads=4, 
+    seed=100,
+  ),
+  use.UsageOutputNames(index='mags-index')
+)
+:::
 
 ## Read mapping
 The next step is read mapping—this time we will map the original reads to the 
@@ -30,40 +54,55 @@ You can speed up this action by taking advantage of parsl parallelization suppor
 We will use the same config as for genome assembly.
 ```{code} bash
 mosh assembly map-reads \
-    --i-index ./mags-derep-index.qza \
-    --i-reads ./reads.qza \
+    --i-index mags-derep-index.qza \
+    --i-reads reads.qza \
     --p-threads 2 \
     --p-seed 100 \
-    --o-alignment-maps ./reads-to-mags-aln.qza \
-    --parallel-config ./parallel.config.toml \
+    --o-alignment-maps reads-to-mags-aln.qza \
+    --parallel-config parallel.config.toml \
     --verbose
 ```
 :::
 
-:::{note} Without parallelization
+::::{note} Without parallelization
 :class: dropdown
-```{code} bash
-mosh assembly map-reads \
-    --i-index ./mags-derep-index.qza \
-    --i-reads ./reads.qza \
-    --p-threads 4 \
-    --p-seed 100 \
-    --o-alignment-maps ./reads-to-mags-aln.qza \
-    --verbose
-```
+
+:::{describe-usage}
+:scope: end-to-end
+alignment_maps, = use.action(
+  use.UsageAction(
+    plugin_id='assembly',
+    action_id='map_reads'
+  ),
+  use.UsageInputs(
+    index=mags_index,
+    reads=reads,
+    threads=4,
+    seed=100,
+  ),
+  use.UsageOutputNames(alignment_maps='alignment-maps')
+)
 :::
+::::
 
 ## MAG length estimation
 To estimate MAG abundance, we need to find the length of each recovered genome so that 
 we can normalize counts of reads based on genome length. To achieve that, you can use 
 the `get-feature-lengths` action:
 
-```{code} bash
-mosh annotate annotate get-feature-lengths \
-    --i-features ./mags-derep.qza \
-    --o-lengths ./mags-derep-lengths.qza \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+lengths, = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='get_feature_lengths'
+  ),
+  use.UsageInputs(
+    features=mags_derep,
+  ),
+  use.UsageOutputNames(lengths='lengths')
+)
+:::
 
 ## Abundance estimation
 Finally, we are ready to estimate the abundance of our MAGs. The action we will use 
@@ -74,28 +113,41 @@ out [this post](https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/
 learn more about those. We will also set minimal mapping quality to 42 to ensure we are 
 taking into account only the reads which mapped to our MAGs perfectly.
 
-```{code} bash
-mosh annotate estimate-abundance \
-    --i-alignment-maps ./reads-to-mags-aln.qza \
-    --i-feature-lengths ./mags-derep-lengths.qza \
-    --p-metric "tpm" \
-    --p-min-mapq 42 \
-    --p-threads 4 \
-    --o-abundances ./mags-derep-ft.qza \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+abundances, = use.action(
+  use.UsageAction(
+    plugin_id='annotate',
+    action_id='estimate_abundance'
+  ),
+  use.UsageInputs(
+    alignment_maps=alignment_maps, 
+    feature_lengths=lengths, 
+    metric='tpm', 
+    min_mapq=42, 
+    threads=4,
+  ),
+  use.UsageOutputNames(abundances='abundances')
+)
+:::
 
 ## Taxonomic composition visualization
 Great! Finally, we can now combine our new feature table with the taxonomy obtained 
 previously to visualize the abundances of the dereplicated MAGs:
 
-```{code} bash
-mosh taxa barplot \
-    --i-table ./mags-derep-ft.qza \
-    --i-taxonomy ./mags-taxonomy.qza \
-    --o-visualization ./mags-derep-barplot.qzv \
-    --verbose
-```
+:::{describe-usage}
+:scope: end-to-end
+taxa_barplot, = use.action(
+  use.UsageAction(
+    plugin_id='taxa',
+    action_id='barplot'
+  ),
+  use.UsageInputs(
+    table=abundances, 
+    taxonomy=taxonomy,
+  ),
+  use.UsageOutputNames(visualization='taxa-barplot')
+)
+:::
 
-Navigate to the [QIIME 2 View](https://view.qiime2.org) and upload the `mags-derep-barplot.qzv` 
-file to see the visualization.
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/end-to-end/mags-taxa-barplot.qzv).

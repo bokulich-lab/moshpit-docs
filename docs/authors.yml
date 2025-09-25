@@ -1,0 +1,16 @@
+version: 1
+project:
+  contributors:
+    - id: mz
+      name: Michał Ziemski
+      orcid: 0000-0001-6285-8852
+      github: misialq
+      affiliations:
+        - id: bokulich_lab
+  affiliations:
+    - id: bokulich_lab
+      name: Bokulich Lab
+      department: Department of Health Sciences and Technology
+      country: Switzerland
+      url: https://www.fsb.ethz.ch
+      github: https://github.com/orgs/bokulich-lab

@@ -7,10 +7,3 @@ a mock community with known composition.
 We will start by assembling metagenomes using paired-end reads obtained for four samples from a mock community. 
 We have pre-selected some species and generated reads from their genomes - it will be your task to assemble genomes from 
 those reads and identify which microorganisms they belong to.
-
-## Data retrieval
-
-The reads generated for this tutorial can be downloaded using the following command:
-```{code} bash
-curl -sL https://polybox.ethz.ch/index.php/s/ZLXk7XgzHaiWXFz/download > reads.qza
-```
