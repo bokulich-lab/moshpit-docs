@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 # 🛠️ End-to-end MAG reconstruction
 
 Analysis of real-world shotgun metagenome data is usually time-consuming and very resource-intensive. For this reason, 

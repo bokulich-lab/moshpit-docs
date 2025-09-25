@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 # Taxonomic classification
 Let's now find out what the taxonomic composition of our samples is. There are at least 
 two ways to do this. We can classify the reads directly to get an early glimpse into the 

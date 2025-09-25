@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 # Genome assembly
 The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome 
 assemblers available, two of which you can use through our MOSHPIT plugin - here, we will use [MEGAHIT](https://doi.org/10.1093/bioinformatics/btv033). 

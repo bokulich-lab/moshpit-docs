@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 # MAG abundance estimation
 At this point we still have no information about how much of each MAG was present in 
 the original samples—this is something we will try to do in this section. To estimate 
