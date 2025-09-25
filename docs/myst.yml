@@ -57,10 +57,12 @@ project:
       children:
         - file: refs/plugins.md
           children:
-            - pattern: refs/plugins/*.md
-#            - file: refs/plugins/assembly.md
-#            - file: refs/plugins/annotate.md
-#            - file: refs/plugins/fondue.md
+#            - pattern: refs/plugins/*.md
+            - file: refs/plugins/assembly.md
+            - file: refs/plugins/annotate.md
+            - file: refs/plugins/fastp.md
+            - file: refs/plugins/fondue.md
+            - file: refs/plugins/sourmash.md
         - title: Artifacts
           children:
             - pattern: refs/artifacts/*.md
