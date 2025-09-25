@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 # MAG binning
 ## Read mapping
 Before we continue to assemble MAGs, we need to index the contigs obtained in the assembly step and map the original 

@@ -1,15 +1,6 @@
 ---
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
+authors:
+- mz
 ---
 # MAG abundance estimation
 Once we recover MAGs from metagenomic data, we may be interested in estimating their abundance in the samples. We can do 
@@ -19,34 +10,34 @@ There are a couple of ways to estimate MAG abundance, such as RPKM (Reads Per Ki
 
 ## Get MAG lengths
 This step calculates the lengths of each dereplicated MAG, which will be used in the next step to estimate abundance.
-```{code-cell}
+```{code} bash
 mosh annotate get-feature-lengths \
-    --i-features ./cache:mags_derep \              
-    --o-lengths ./cache:mags_derep_length \ 
+    --i-features cache:mags_derep \              
+    --o-lengths cache:mags_derep_length \ 
     --verbose                         
 ```
 
 ## Index dereplicated MAGs
 This step indexes the dereplicated MAGs for read mapping. The index is necessary to efficiently map the input reads back to the MAGs.
-```{code-cell}
+```{code} bash
 mosh assembly index-derep-mags \
-    --i-mags ./cache:mags_derep \                  
+    --i-mags cache:mags_derep \                  
     --p-threads 8 \  
     --p-seed 100 \                                   
-    --o-index ./cache:mags_derep_index \
+    --o-index cache:mags_derep_index \
     --verbose                            
 ```
 
 ## Map reads to dereplicated MAGs
 In this step, we map the input paired-end reads back to the dereplicated MAGs. This helps in calculating the abundance 
 of each MAG in the sample.
-```{code-cell}
+```{code} bash
 mosh assembly map-reads \
-    --i-index ./cache:mags_derep_index \                            
-    --i-reads ./cache:reads_filtered \   
+    --i-index cache:mags_derep_index \                            
+    --i-reads cache:reads_filtered \   
     --p-threads 8 \  
     --p-seed 100 \                  
-    --o-alignment-maps ./cache:reads_to_derep_mags \
+    --o-alignment-maps cache:reads_to_derep_mags \
     --verbose            
 ```
 
@@ -57,52 +48,55 @@ This step estimates the abundance of each MAG in the sample based on the read ma
 - `min-base-quality` : only keep alignments with this minimal Phred quality score
 
 For more options, see `--help`.
-```{code-cell}
+```{code} bash
 mosh annotate estimate-abundance \
-    --i-feature-lengths ./cache:mags_derep_length \
-    --i-alignment-maps ./cache:reads_to_derep_mags \
+    --i-feature-lengths cache:mags_derep_length \
+    --i-alignment-maps cache:reads_to_derep_mags \
     --p-threads 10 \
     --p-metric tpm \
     --p-min-mapq 42 \
-    --o-abundances ./cache:mags_derep_ft \
+    --o-abundances cache:mags_derep_ft \
     --verbose
 ```
 
 ## Let's have a look at our estimated MAG abundance!
 First, we will use Kraken 2 to classify provided MAGs into taxonomic groups.
+
+::::{aside}
 ```{note}
 Refer to {ref}`kraken-reads` section for more details on taxonomic classification with Kraken 2.
 ```
+::::
 
 The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
-```{code-cell}
+```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs ./cache:mags_derep \
-    --i-db ./cache:kraken2_db \
+    --i-seqs cache:mags_derep \
+    --i-db cache:kraken2_db \
     --p-threads 40 \
     --p-confidence 0.5 \
     --p-report-minimizer-data \
-    --o-reports ./cache:kraken_reports_mags_derep \
-    --o-outputs ./cache:kraken_hits_mags_derep \
+    --o-reports cache:kraken_reports_mags_derep \
+    --o-outputs cache:kraken_hits_mags_derep \
     --verbose
 ```
 
 Then we will convert a Kraken 2 report into a generic taxonomy artifact for downstream analyses.
-```{code-cell}
+```{code} bash
 mosh annotate kraken2-to-mag-features \
-    --i-reports ./cache:kraken_reports_mags_derep  \
-    --i-outputs ./cache:kraken_hits_mags_derep  \
-    --o-taxonomy ./cache:mags_derep_taxonomy \
+    --i-reports cache:kraken_reports_mags_derep  \
+    --i-outputs cache:kraken_hits_mags_derep  \
+    --o-taxonomy cache:mags_derep_taxonomy \
     --verbose
 ```
 
 Now we are ready to generate a taxa bar plot.
-```{code-cell}
+```{code} bash
 mosh taxa barplot \
-    --i-table ./cache:mags_derep_ft \
-    --i-taxonomy ./cache:mags_derep_taxonomy \
-    --m-metadata-file ./cocoa-metadata.tsv \
-    --o-visualization ./results/mags-derep-taxa-bar-plot.qzv \
+    --i-table cache:mags_derep_ft \
+    --i-taxonomy cache:mags_derep_taxonomy \
+    --m-metadata-file cocoa-metadata.tsv \
+    --o-visualization results/mags-derep-taxa-bar-plot.qzv \
     --verbose
 ```
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/mags-derep-taxa-bar-plot.qzv).

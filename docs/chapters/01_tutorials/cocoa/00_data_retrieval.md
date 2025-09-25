@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 (data-retrieval)=
 # Data retrieval
 The dataset used in this tutorial is available through the [NCBI Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra) (SRA). 
@@ -12,19 +16,19 @@ ensure they can contact you in case of any issues.
 
 - download the files containing all the accession IDs and corresponding metadata:
     ```{code} bash
-    wget -O ./ids.tsv \
+    wget -O ids.tsv \
         https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/ids.tsv
     ```
     ```{code} bash
-    wget -O ./metadata.tsv \ 
+    wget -O metadata.tsv \ 
         https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/metadata.tsv
     ```
 - import the file into a QIIME 2 artifact:
     ```{code} bash
     mosh tools cache-import \
         --type 'NCBIAccessionIDs' \
-        --input-path ./ids.tsv \
-        --cache ./cache \
+        --input-path ids.tsv \
+        --cache cache \
         --key ids
     ```
 - run the `get-all` action from the `fondue` plugin:
@@ -57,31 +61,31 @@ ensure they can contact you in case of any issues.
     You can then run the action in the following way:
     ```{code} bash
     mosh fondue get-all \
-        --i-accession-ids ./cache:ids \
+        --i-accession-ids cache:ids \
         --p-email YOUR.EMAIL@domain.com \
         --p-threads 5 \
         --p-retries 5 \
-        --o-paired-reads ./cache:reads_paired \
-        --o-metadata ./cache:metadata \
-        --o-single-reads ./cache:reads_single \
-        --o-failed-runs ./cache:failed_runs \
-        --parallel-config ./fondue.config.toml
+        --o-paired-reads cache:reads_paired \
+        --o-metadata cache:metadata \
+        --o-single-reads cache:reads_single \
+        --o-failed-runs cache:failed_runs \
+        --parallel-config fondue.config.toml
         --verbose
     ```
     :::
 
-    :::{hint} Without parallelization (default)
+    :::{note} Without parallelization
     :class: dropdown
     ```{code} bash
     mosh fondue get-all \
-        --i-accession-ids ./cache:ids \
+        --i-accession-ids cache:ids \
         --p-email YOUR.EMAIL@domain.com \
         --p-threads 5 \
         --p-retries 5 \
-        --o-paired-reads ./cache:reads_paired \
-        --o-metadata ./cache:metadata \
-        --o-single-reads ./cache:reads_single \
-        --o-failed-runs ./cache:failed_runs \
+        --o-paired-reads cache:reads_paired \
+        --o-metadata cache:metadata \
+        --o-single-reads cache:reads_single \
+        --o-failed-runs cache:failed_runs \
         --verbose
     ```
     :::

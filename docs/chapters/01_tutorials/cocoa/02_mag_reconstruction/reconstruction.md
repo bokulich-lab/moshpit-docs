@@ -1,11 +1,20 @@
+---
+authors:
+- pmc
+- mz
+---
 (mag-recovery)=
 # Recovery of MAGs
-In this part of the tutorial we will go thorugh the steps required to recover metagenome-assembled genomes (MAGs) from 
+In this part of the tutorial we will go through the steps required to recover metagenome-assembled genomes (MAGs) from 
 metagenomic data. The workflow is divided into several steps, from contig assembly to binning and quality control.
+
+::::{aside}
 ```{warning}
 Genome assembly and contig binning can be highly resource-intensive. Ensure that your system has sufficient CPU and 
 memory resources before running these commands.
 ```
+::::
+
 ## Assemble contigs with MEGAHIT
 The first step in recovering MAGs is genome assembly itself. There are many genome assemblers available, two of which 
 you can use through the q2-assembly plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, 
@@ -13,13 +22,8 @@ constructs a simplified [De Bruijn graph](https://en.wikipedia.org/wiki/De_Bruij
 sequences called contigs, providing valuable genetic information for the next steps of our analysis.
 
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
-- The `--p-cpu-threads` specifies the number of CPU threads to use during assembly.
+- The `--p-num-cpu-threads` specifies the number of CPU threads to use during assembly.
 - The `--p-min-contig-len` specifies the minimum length of contigs to keep.
-
-```{warning}
-`--p-coassemble` parameter can be set to "True" if you wish to co-assemble reads into contigs from all samples. 
-**This parameter is still under development**: you will not be able to use the generated contigs for further analysis.
-```
 
 :::{hint} With parsl parallelization
 :class: dropdown
@@ -49,25 +53,25 @@ max_blocks = 14
 You can then run the action in the following way:
 ```{code} bash
 mosh assembly assemble-megahit \
-    --i-reads ./cache:reads_filtered \
+    --i-reads cache:reads_filtered \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 8 \
     --p-min-contig-len 200 \
-    --o-contigs ./cache:contigs \
-    --parallel-config ./assembly.config.toml \
+    --o-contigs cache:contigs \
+    --parallel-config assembly.config.toml \
     --verbose
 ```
 :::
 
-:::{hint} Without parallelization (default)
+:::{note} Without parallelization
 :class: dropdown
 ```{code} bash
 mosh assembly assemble-megahit \
-    --i-reads ./cache:reads_filtered \
+    --i-reads cache:reads_filtered \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 8 \
     --p-min-contig-len 200 \
-    --o-contigs ./cache:contigs \
+    --o-contigs cache:contigs \
     --verbose   
 ```
 :::
@@ -76,21 +80,16 @@ mosh assembly assemble-megahit \
 
 ## Contig QC with QUAST
 Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many 
-metrics that can be used for that purpose but here we will focus on the two most popular metrics:
-- **N50**: represents the contiguity of a genome assembly. It's defined as the length of the contig (or scaffold) at 
-    which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.
-- **L50**: represents the number of contigs required to cover 50% of the genome's total length - the smaller this number, 
-    the better.
-
+metrics that can be used for that purpose but here we will focus on the two most popular metrics: {term}`N50` and {term}`L50`.  
 In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
 ```{code} bash
 mosh assembly evaluate-quast \
-    --i-contigs ./cache:contigs  \
+    --i-contigs cache:contigs  \
     --p-threads 7 \
     --p-memory-efficient \
-    --o-visualization ./results/contigs.qzv \ 
+    --o-visualization results/contigs.qzv \ 
     --verbose
 ```
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/contigs.qzv).
@@ -127,22 +126,22 @@ max_blocks = 14
 You can then run the action in the following way:
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs ./cache:contigs \                       
+    --i-contigs cache:contigs \                       
     --p-threads 8 \                                  
-    --o-index ./cache:contigs_index \
-    --parallel-config ./indexing.config.toml
+    --o-index cache:contigs_index \
+    --parallel-config indexing.config.toml
     --verbose
 ```
 :::
 
-:::{hint} Without parallelization (default)
+:::{note} Without parallelization
 :class: dropdown
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs ./cache:contigs \                       
+    --i-contigs cache:contigs \                       
     --p-threads 8 \                                  
-    --o-index ./cache:contigs_index \ 
-    --o-contigs ./cache:contigs \
+    --o-index cache:contigs_index \ 
+    --o-contigs cache:contigs \
     --verbose   
 ```
 :::
@@ -179,21 +178,21 @@ max_blocks = 14
 You can then run the action in the following way:
 ```{code} bash
 mosh assembly map-reads \
-    --i-index ./cache:contigs_index \                         
-    --i-reads ./cache:reads_filtered \                                                  
-    --o-alignment-maps ./cache:reads_to_contigs \
-    --parallel-config ./mapping.config.toml
+    --i-index cache:contigs_index \                         
+    --i-reads cache:reads_filtered \                                                  
+    --o-alignment-maps cache:reads_to_contigs \
+    --parallel-config mapping.config.toml
     --verbose
 ```
 :::
 
-:::{hint} Without parallelization (default)
+:::{note} Without parallelization
 :class: dropdown
 ```{code} bash
 mosh assembly map-reads \
-    --i-index ./cache:contigs_index \                         
-    --i-reads ./cache:reads_filtered \                                                  
-    --o-alignment-maps ./cache:reads_to_contigs \
+    --i-index cache:contigs_index \                         
+    --i-reads cache:reads_filtered \                                                  
+    --o-alignment-maps cache:reads_to_contigs \
     --verbose   
 ```
 :::
@@ -203,14 +202,14 @@ Binning contigs involves grouping assembled contigs into MAGs. This step uses Me
 co-abundance and other features, producing MAG files that represent putative genomes.
 ```{code} bash
 mosh annotate bin-contigs-metabat \
-    --i-contigs ./cache:contigs \                       
-    --i-alignment-maps ./cache:reads_to_contigs \         
+    --i-contigs cache:contigs \                       
+    --i-alignment-maps cache:reads_to_contigs \         
     --p-num-threads 64 \                              
     --p-seed 100 \                                   
     --p-verbose \                                    
-    --o-mags ./cache:mags \                             
-    --o-contig-map ./cache:contig_map \                   
-    --o-unbinned-contigs ./cache:unbinned_contigs \
+    --o-mags cache:mags \                             
+    --o-contig-map cache:contig_map \                   
+    --o-unbinned-contigs cache:unbinned_contigs \
     --verbose          
 ```
 This step generated several artifacts:
@@ -233,7 +232,7 @@ precompiled collections of orthologous genes, tailored to specific lineages such
 ```{code} bash
 mosh annotate fetch-busco-db \
     --p-lineages bacteria_odb12 \
-    --o-db ./cache:busco_db
+    --o-db cache:busco_db
     --verbose
 ```
 
@@ -267,27 +266,27 @@ max_blocks = 14
 You can then run the action in the following way:
 ```{code} bash
 mosh annotate evaluate-busco \
-    --i-mags ./cache:mags \                             
-    --i-db ./cache:busco_db \                     
+    --i-mags cache:mags \                             
+    --i-db cache:busco_db \                     
     --p-lineage-dataset bacteria_odb12 \             
     --p-cpu 16 \                                     
-    --o-visualization ./results/mags.qzv \
-    --o-results ./cache:busco_results \
-    --parallel-config ./busco.config.toml
+    --o-visualization results/mags.qzv \
+    --o-results cache:busco_results \
+    --parallel-config busco.config.toml
     --verbose
 ```
 :::
 
-:::{hint} Without parallelization (default)
+:::{note} Without parallelization
 :class: dropdown
 ```{code} bash
 mosh annotate evaluate-busco \
-    --i-mags ./cache:mags \                             
-    --i-db ./cache:busco_db \                     
+    --i-mags cache:mags \                             
+    --i-db cache:busco_db \                     
     --p-lineage-dataset bacteria_odb12 \             
     --p-cpu 16 \                                     
-    --o-visualization ./results/mags.qzv \
-    --o-results ./cache:busco_results \
+    --o-visualization results/mags.qzv \
+    --o-results cache:busco_results \
     --verbose   
 ```
 :::
@@ -300,18 +299,21 @@ Your visualization should look similar to [this one](https://view.qiime2.org/vis
 ## Filter MAGs
 This step filters MAGs based on completeness. In this example, we filter out any MAGs with completeness below 50%. 
 The filtering process ensures only high-quality genomes are kept for downstream analysis.
+
+::::{aside}
 ```{tip}
 We recommed that this step is done before dereplication (as in this example). Alternatively, we can also use the 
 [dereplicated set](dereplication) and filter this one using `mosh annotate filter-derep-mags`.
 ```
+::::
 
 ```{code} bash
 mosh annotate filter-mags \
-    --i-mags ./cache:mags \                             
-    --m-metadata-file ./cache:busco_results \           
+    --i-mags cache:mags \                             
+    --m-metadata-file cache:busco_results \           
     --p-where 'complete>50' \                        
     --p-no-exclude-ids \                              
     --p-on mag \                                     
-    --o-filtered-mags ./cache:mags_filtered_50 \
+    --o-filtered-mags cache:mags_filtered_50 \
     --verbose           
 ```

@@ -70,7 +70,9 @@ mosh tools cache-import \
     --input-path ./<directory with Kraken 2 reports>
 ```
 
+::::{aside}
 ```{note}
 Remember: you can import any existing data into QIIME 2 artifacts, as long as it matches the format required by the respective 
 QIIME 2 semantic type.
 ```
+::::

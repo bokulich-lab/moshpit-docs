@@ -28,7 +28,7 @@ the above values:
 | runtime      | walltime               | 24h   |
 
 The final config file would then look like this:
-```{code-cell} 
+```{code} bash 
 [parsl]
 
 [[parsl.executors]]
@@ -48,7 +48,7 @@ max_blocks = 25
 Some HPCs may not allow passing certain flags to the batch system, e.g., sometimes it is not 
 possible to set the total amount of memory per node but rather per CPU. In those cases you can 
 use the `scheduler_options` directive to pass any flag that your HPC supports, e.g.:
-```{code-cell} 
+```{code} bash 
 [parsl]
 
 [[parsl.executors]]

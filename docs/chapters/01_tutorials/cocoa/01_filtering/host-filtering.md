@@ -1,15 +1,6 @@
 ---
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
+authors:
+- mz
 ---
 # Host read removal
 There are a few different options to perform host read removal in QIIME 2: a more generic one using the `filter-reads` action
@@ -28,35 +19,35 @@ we need to construct the index of the reference database that will be used by Bo
 - start with the FASTA files containing the reference sequences - we will import them into a QIIME 2 artifact:
 ```{code} bash
 mosh tools cache-import \
-    --cache ./cache \
+    --cache cache \
     --key reference_seqs \
     --type "FeatureData[Sequence]" \
-    --input-path ./reference_seqs.fasta
+    --input-path reference_seqs.fasta
 ```
 - build the Bowtie 2 index:
 ```{code} bash
 mosh quality-control bowtie2-build \
-    --i-sequences ./cache:reference_seqs \
-    --o-database ./cache:reference_index
+    --i-sequences cache:reference_seqs \
+    --o-database cache:reference_index
 ```
 - filter out the reads that map to the reference database:
 ```{code} bash
 mosh quality-control filter-reads \
-    --i-demultiplexed-sequences ./cache:reads_trimmed \
-    --i-database ./cache:reference_index \
-    --o-filtered-sequences ./cache:reads_filtered
+    --i-demultiplexed-sequences cache:reads_trimmed \
+    --i-database cache:reference_index \
+    --o-filtered-sequences cache:reads_filtered
 ```
 
 ## Human host reads
 Contaminating human reads can also be filtered out using the approach shown above by providing a human reference genome.
 Since a single human reference genome is not enough to cover all the human genetic diversity, it is recommended to use a
-collection of genomes represented by the human pangenome (__CIT). We have built a new QIIME 2 action `filter-reads-pangenome`
+collection of genomes represented by the human pangenome (https://doi.org/10.1038/s41467-025-56077-5). We have built a new QIIME 2 action `filter-reads-pangenome`
 which allows to first fetch the human pangenome sequence, combine it with the GRCh38 reference genome, build a combined 
 Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated 
 index so that it can be used in any other experiments.
 ```{code} bash
 mosh annotate filter-reads-pangenome \
-    --i-reads ./cache:reads_trimmed \
-    --o-filtered-reads ./cache:reads_filtered \
-    --o-reference-index ./cache:human_reference_index
+    --i-reads cache:reads_trimmed \
+    --o-filtered-reads cache:reads_filtered \
+    --o-reference-index cache:human_reference_index
 ```

@@ -7,6 +7,18 @@ project:
       github: misialq
       affiliations:
         - id: bokulich_lab
+    - id: rhv
+      name: Rodrigo Hernández Velázquez
+      orcid: 0009-0009-3048-8573
+      github: rhernandvel
+      affiliations:
+        - id: bokulich_lab
+    - id: pmc
+      name: Paula Momo Cabrera
+      orcid: 0000-0002-6450-3075
+      github: pmomocabr
+      affiliations:
+        - id: bokulich_lab
   affiliations:
     - id: bokulich_lab
       name: Bokulich Lab

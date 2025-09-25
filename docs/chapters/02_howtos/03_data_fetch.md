@@ -19,7 +19,7 @@ artifact (see [here](https://github.com/bokulich-lab/q2-fondue#import-accession-
 You will first need to construct a parsl config matching your resource requirements:
 
 ## Scenario 1: you are fetching on a local machine
-```{code-cell} 
+```{code} bash 
 [parsl]
 
 [[parsl.executors]]
@@ -32,7 +32,7 @@ max_blocks = 5
 ```
 
 ## Scenario 2: you are fetching on an HPC
-```{code-cell} 
+```{code} bash 
 [parsl]
 
 [[parsl.executors]]
@@ -48,11 +48,13 @@ cores_per_node = 1
 mem_per_node = 4
 max_blocks = 5
 ```
+::::{aside}
 :::{caution}
 :class: caution:
 Do not request more than one CPU per parsl worker — each worker will only process one run 
 at a time, so requesting more than one CPU will not speed up the process.
 :::
+::::
 
 Both of the above configurations will result in a pool of five workers, one CPU each. 
 You can then run the `get-sequences` action in the following way:
@@ -65,12 +67,14 @@ mosh fondue get-sequences \
     --output-dir <path to the results directory>
 ```
 
+::::{aside}
 :::{tip}
 :class: tip:
 You can set the `--p-threads` parameter to a small number, like 3–5. This is used by the 
 `prefetch` tool to fetch the data using multiple threads and is _independent_ of the parsl 
 parallelization.
 :::
+::::
 
 :::{attention}
 :class: attention:

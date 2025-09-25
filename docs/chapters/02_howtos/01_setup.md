@@ -10,8 +10,8 @@ Below you will find a quick installation guide for different operating systems:
 These instructions are for users running on Linux or the Windows Subsystem for Linux (WSL v2).
 ```bash
 conda env create \
-  --name qiime2-moshpit-2025.7 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.7/moshpit/released/qiime2-moshpit-ubuntu-latest-conda.yml
+  --name qiime2-moshpit-2025.10 \
+  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.10/moshpit/released/qiime2-moshpit-ubuntu-latest-conda.yml
 ```
 ````
 
@@ -19,9 +19,9 @@ conda env create \
 These instructions are for users with Apple Silicon chips (M1, M2, etc), and configures the installation of QIIME 2 in Rosetta 2 emulation mode.
 ```bash
 CONDA_SUBDIR=osx-64 conda env create \
-  --name qiime2-moshpit-2025.7 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.7/moshpit/released/qiime2-moshpit-macos-latest-conda.yml
-conda activate qiime2-moshpit-2025.7
+  --name qiime2-moshpit-2025.10 \
+  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.10/moshpit/released/qiime2-moshpit-macos-latest-conda.yml
+conda activate qiime2-moshpit-2025.10
 conda config --env --set subdir osx-64
 ```
 ````
@@ -30,8 +30,8 @@ conda config --env --set subdir osx-64
 These instructions are for users older Intel-based Apple hardware (NOT M1, M2, etc).
 ```bash
 conda env create \
-  --name qiime2-moshpit-2025.7 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.7/moshpit/released/qiime2-moshpit-macos-latest-conda.yml
+  --name qiime2-moshpit-2025.10 \
+  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.10/moshpit/released/qiime2-moshpit-macos-latest-conda.yml
 ```
 ````
 `````
