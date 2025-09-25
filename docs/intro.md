@@ -1,3 +1,9 @@
+---
+authors:
+  - name: Bokulich Lab, ETH Zürich
+    github: bokulich-lab
+    url: https://fsb.ethz.ch
+---
 # Whole metagenome analysis with MOSHPIT
 
 Welcome! 👋 __MOSHPIT__ (**MO**dular **SH**otgun metagenome **P**ipelines with **I**ntegrated provenance **T**racking) is a toolkit of plugins for whole 

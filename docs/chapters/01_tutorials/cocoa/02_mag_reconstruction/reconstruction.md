@@ -1,3 +1,8 @@
+---
+authors:
+- pmc
+- mz
+---
 (mag-recovery)=
 # Recovery of MAGs
 In this part of the tutorial we will go thorugh the steps required to recover metagenome-assembled genomes (MAGs) from 

@@ -1,3 +1,7 @@
+---
+authors:
+- mz
+---
 (data-retrieval)=
 # Data retrieval
 The dataset used in this tutorial is available through the [NCBI Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra) (SRA). 

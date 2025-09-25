@@ -1,3 +1,9 @@
+---
+authors:
+- mz
+- pmc
+- rhv
+---
 # 🍫 Cocoa fermentation
 
 This tutorial will guide you through the process of analyzing metagenomic data using QIIME 2 framework and MOSHPIT. 
