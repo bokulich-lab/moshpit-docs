@@ -5,7 +5,7 @@ authors:
 ---
 (mag-recovery)=
 # Recovery of Metagenome-assembled Genomes
-```{figure} ../../../_static/workflows-mags.png
+```{figure} ../../../../_static/workflows-mags.png
 ---
 name: workflows-mag-fig
 width: 100%

@@ -5,7 +5,7 @@ authors:
 ---
 (functional-annotation)=
 # Functional annotation
-```{figure} ../../../_static/workflows-functional.png
+```{figure} ../../../../_static/workflows-functional.png
 ---
 name: workflows-function-fig
 width: 100%

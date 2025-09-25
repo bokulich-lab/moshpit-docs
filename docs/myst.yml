@@ -7,8 +7,6 @@ project:
   title: MOSHPIT documentation
   # description:
   keywords: ["MOSHPIT", "microbiome", "metagenome", "shotgun metagenomics"]
-  authors:
-    - mz
   # github:
   references:
     q2doc-api-target: https://develop.qiime2.org/en/latest/
@@ -59,12 +57,15 @@ project:
       children:
         - file: refs/plugins.md
           children:
-            - file: refs/plugins/assembly.md
-            - file: refs/plugins/annotate.md
-            - file: refs/plugins/fondue.md
+            - pattern: refs/plugins/*.md
+#            - file: refs/plugins/assembly.md
+#            - file: refs/plugins/annotate.md
+#            - file: refs/plugins/fondue.md
         - title: Artifacts
           children:
             - pattern: refs/artifacts/*.md
+        - title: Glossary
+          file: refs/glossary.md
 
   bibliography:
     - q2doc.bib

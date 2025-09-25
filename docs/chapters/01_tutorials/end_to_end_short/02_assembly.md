@@ -6,7 +6,7 @@ authors:
 The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome 
 assemblers available, two of which you can use through our MOSHPIT plugin - here, we will use [MEGAHIT](https://doi.org/10.1093/bioinformatics/btv033). 
 MEGAHIT takes short DNA sequencing reads, constructs a simplified [De Bruijn graph](https://en.wikipedia.org/wiki/De_Bruijn_graph), and generates longer contiguous 
-sequences called **contigs**, providing valuable genetic information for the next steps of our analysis.
+sequences called {term}`contig`s, providing valuable genetic information for the next steps of our analysis.
 
 The reads generated for this tutorial can be downloaded using the following command:
 :::{describe-usage}

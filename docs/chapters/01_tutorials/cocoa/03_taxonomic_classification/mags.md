@@ -7,24 +7,24 @@ authors:
 Kraken 2 can also be used to taxonomically classify metagenome-assembled genomes (MAGs). In this tutorial we use this
 tool to classify a subset of dereplicated MAGs but the same approach can be used for the entire set of MAGs contained in 
 the `SampleData[MAGs]` or `SampleData[Contigs]` artifacts.
-```{code-cell}
+```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs ./cache:mags_derep_50 \
-    --i-db ./cache:kraken2_db \
+    --i-seqs cache:mags_derep_50 \
+    --i-db cache:kraken2_db \
     --p-threads 72 \
     --p-confidence 0.5 \
     --p-memory-mapping False \
     --p-report-minimizer-data \
-    --o-reports ./cache:kraken_reports_mags_derep_50 \
-    --o-outputs ./cache:kraken_hits_derep_50 \
+    --o-reports cache:kraken_reports_mags_derep_50 \
+    --o-outputs cache:kraken_hits_derep_50 \
     --verbose
 ```
 
 We can now extract the taxonomy from the Kraken 2 reports using the `kraken2-to-mag-features` command:
-```{code-cell}
+```{code} bash
 mosh annotate kraken2-to-mag-features \
-    --i-reports ./cache:kraken_reports_mags_derep_50 \
-    --i-outputs ./cache:kraken_hits_derep_50 \
+    --i-reports cache:kraken_reports_mags_derep_50 \
+    --i-outputs cache:kraken_hits_derep_50 \
     --p-coverage-threshold 0.1 \
-    --o-taxonomy ./cache:mags_derep_taxonomy_50
+    --o-taxonomy cache:mags_derep_taxonomy_50
  ```

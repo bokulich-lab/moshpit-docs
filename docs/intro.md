@@ -24,25 +24,25 @@ This plugin contains actions for (meta)genome assembly and quality control, geno
 :header: q2-annotate
 :link: https://github.com/bokulich-lab/q2-annotate
 This plugin provides actions for contig binning and quality control, taxonomic and functional annotations 
-of contigs and MAGs, human host removal.
+of contigs and {term}`MAG`s, human host removal.
 :::
 
 ::::
 
-Additionally, you may want to check out these other QIIME 2 plugins for antimicrobial resistance gene (ARG) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-annotate:
+Additionally, you may want to check out these other QIIME 2 plugins for antimicrobial resistance gene ({term}`ARG`) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-annotate:
 
 ::::{grid} 1 1 2 3
 
 :::{card}
 :header: q2-rgi
 :link: https://github.com/bokulich-lab/q2-rgi
-Antimicrobial resistance gene annotation of MAGs and metagenomic reads with RGI and CARD.
+Antimicrobial resistance gene annotation of {term}`MAG`s and metagenomic reads with RGI and CARD.
 :::
 
 :::{card}
 :header: q2-amrfinderplus
 :link: https://github.com/bokulich-lab/q2-amrfinderplus
-ARG detection using the AMRFinderPlus tool.
+{term}`ARG` detection using the AMRFinderPlus tool.
 :::
 
 :::{card}
