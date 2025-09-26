@@ -14,6 +14,14 @@ You need to provide an e-mail address when running this command - this is requir
 ensure they can contact you in case of any issues.
 ```
 
+::::{aside}
+:::{warning}
+If this is the first time you are using q2-fondue, please make sure to have a look at the 
+[q2-fondue documentation](https://github.com/bokulich-lab/q2-fondue#q2-fondue), particularly the section on configuring 
+the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configuration-for-all-three-options).
+:::
+::::
+
 - download the files containing all the accession IDs and corresponding metadata:
     ```{code} bash
     wget -O ids.tsv \
@@ -22,6 +30,10 @@ ensure they can contact you in case of any issues.
     ```{code} bash
     wget -O metadata.tsv \ 
         https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/metadata.tsv
+    ```
+- create QIIME 2 cache in the current working directory:
+    ```{code} bash
+    mosh tools cache-create --cache cache
     ```
 - import the file into a QIIME 2 artifact:
     ```{code} bash
