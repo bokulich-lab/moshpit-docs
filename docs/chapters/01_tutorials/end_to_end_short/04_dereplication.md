@@ -13,6 +13,7 @@ much smaller space):
 
 :::{describe-usage}
 :scope: end-to-end
+:hide:
 mags_filtered = use.init_artifact_from_url(
     'mags-filtered', 
     'https://polybox.ethz.ch/index.php/s/ybYprmXwrFLSfBC/download'

@@ -11,6 +11,7 @@ reads to the generated index:
 
 :::{describe-usage}
 :scope: end-to-end
+:hide:
 contigs = use.init_artifact_from_url(
     'contigs', 
     'https://polybox.ethz.ch/index.php/s/SLHzx2ewfJjkiWJ/download'

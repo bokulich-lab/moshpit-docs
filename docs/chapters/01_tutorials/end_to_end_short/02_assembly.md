@@ -11,6 +11,7 @@ sequences called {term}`contig`s, providing valuable genetic information for the
 The reads generated for this tutorial can be downloaded using the following command:
 :::{describe-usage}
 :scope: end-to-end
+:hide:
 reads = use.init_artifact_from_url(
     'reads', 
     'https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download'
@@ -71,11 +72,8 @@ contigs, = use.action(
 ::::
 
 Once the reads are assembled into contigs, we can use [QUAST](https://doi.org/10.1093/bioinformatics/btt086) to evaluate the quality of our assembly. There are many metrics  
-that can be used for that purpose, but here we will focus on the two most popular [metrics](https://en.wikipedia.org/wiki/N50,_L50,_and_related_statistics):
-- **N50**: represents the contiguity of a genome assembly. It's defined as the length of the contig (or scaffold) at which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.
-- **L50**: represents the number of contigs required to cover 50% of the genome's total length - the smaller this number, the better.
-
-In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
+that can be used for that purpose, but here we will focus on the two most popular [metrics](https://en.wikipedia.org/wiki/N50,_L50,_and_related_statistics): 
+{term}`N50` and {term}`L50`. In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against. Since we generated the reads from an "artificial" mock community, we will provide the 
 reference sequences for those genomes—this will save us a bit of work and time. Run the following cell to assess the 
@@ -83,6 +81,7 @@ quality of contigs assembled in the previous step:
 
 :::{describe-usage}
 :scope: end-to-end
+:hide:
 reference_genomes = use.init_artifact_from_url(
     'reference_genomes', 
     'https://polybox.ethz.ch/index.php/s/dRdDSZJcxH4LRgk/download'
