@@ -19,6 +19,12 @@ project:
       github: pmomocabr
       affiliations:
         - id: bokulich_lab
+    - id: vr
+      name: Vinzent Risch
+      orcid: 0009-0002-3904-9218
+      github: VinzentRisch
+      affiliations:
+        - id: bokulich_lab
   affiliations:
     - id: bokulich_lab
       name: Bokulich Lab
