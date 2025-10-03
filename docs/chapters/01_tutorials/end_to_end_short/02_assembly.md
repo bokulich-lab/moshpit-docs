@@ -14,18 +14,9 @@ wget -O reads.qza \
     https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download
 ```
 
-:::{describe-usage}
-:scope: end-to-end
-:hide:
-reads = use.init_artifact_from_url(
-    'reads', 
-    'https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download'
-)
-:::
-
-::::{hint} With parsl parallelization
-:class: dropdown
-:open: true
+You can run the assembly using the following command:
+`````{tab-set}
+````{tab-item} With parsl parallelization
 You can speed up the assembly by taking advantage of parsl parallelization support. The config for local execution could 
 look like this:
 
@@ -47,36 +38,28 @@ You can then run the action in the following way:
 mosh assembly assemble-megahit \
     --i-reads reads.qza \
     --p-presets meta-sensitive \
-    --p-cpu-threads 2 \
+    --p-num-cpu-threads 2 \
     --p-min-contig 500 \
     --o-contigs contigs.qza \
     --parallel-config parallel.config.toml \
     --verbose
 ```
-::::
+````
 
-::::{note} Without parallelization
-:class: dropdown
+````{tab-item} Without parallelization
+```{code} bash
+mosh assembly assemble-megahit \
+    --i-reads reads.qza \
+    --p-presets meta-sensitive \
+    --p-num-cpu-threads 2 \
+    --p-min-contig 500 \
+    --o-contigs contigs.qza \
+    --verbose
+```
+````
+`````
 
-:::{describe-usage}
-:scope: end-to-end
-contigs, = use.action(
-  use.UsageAction(
-    plugin_id='assembly',
-    action_id='assemble_megahit'
-  ),
-  use.UsageInputs(
-    reads=reads, 
-    presets='meta-sensitive', 
-    num_cpu_threads=2, 
-    min_contig_len=500,
-  ),
-  use.UsageOutputNames(contigs='contigs')
-)
-:::
-::::
-
-Once the reads are assembled into contigs, we can use [QUAST](https://doi.org/10.1093/bioinformatics/btt086) to evaluate the quality of our assembly. There are many metrics  
+Once the reads are assembled into contigs, we can use [QUAST](https://doi.org/10.1093/bioinformatics/btt086) to evaluate the quality of our assembly. There are many metrics 
 that can be used for that purpose, but here we will focus on the two most popular [metrics](https://en.wikipedia.org/wiki/N50,_L50,_and_related_statistics): 
 {term}`N50` and {term}`L50`. In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
@@ -85,40 +68,23 @@ reference sequences for those genomes—this will save us a bit of work and time
 
 First, fetch the reference genomes that QUAST will use to compare our contigs against:
 ```{code} bash
-wget -O reference_genomes.qza \
+wget -O reference-genomes.qza \
     https://polybox.ethz.ch/index.php/s/dRdDSZJcxH4LRgk/download
 ```
 
 Then, run the following command to assess the quality of contigs assembled in the previous step:
-:::{describe-usage}
-:scope: end-to-end
-:hide:
-reference_genomes = use.init_artifact_from_url(
-    'reference_genomes', 
-    'https://polybox.ethz.ch/index.php/s/dRdDSZJcxH4LRgk/download'
-)
-:::
 
-:::{describe-usage}
-:scope: end-to-end
-ref_genomes, contigs_qc, quast_results = use.action(
-  use.UsageAction(
-    plugin_id='assembly',
-    action_id='evaluate_quast'
-  ),
-  use.UsageInputs(
-    contigs=contigs,
-    references=reference_genomes,
-    min_contig=500,
-    threads=4,
-  ),
-  use.UsageOutputNames(
-    reference_genomes='ref_genomes',
-    visualization='contigs_qc',
-    results_table='quast_results'
-  )
-)
-:::
+```{code} bash
+mosh assembly evaluate-quast \
+    --i-contigs contigs.qza \
+    --i-references reference-genomes.qza \
+    --p-threads 4 \
+    --p-min-contig 500 \
+    --o-ref-genomes ref-genomes.qza \
+    --o-results-table quast-results.qza \
+    --o-visualization contigs-qc.qzv \
+    --verbose
+```
 
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/end-to-end/contigs.qzv).
 
