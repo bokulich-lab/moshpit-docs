@@ -9,6 +9,11 @@ MEGAHIT takes short DNA sequencing reads, constructs a simplified [De Bruijn gra
 sequences called {term}`contig`s, providing valuable genetic information for the next steps of our analysis.
 
 The reads generated for this tutorial can be downloaded using the following command:
+```{code} bash
+wget -O reads.qza \
+    https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download
+```
+
 :::{describe-usage}
 :scope: end-to-end
 :hide:
@@ -76,9 +81,15 @@ that can be used for that purpose, but here we will focus on the two most popula
 {term}`N50` and {term}`L50`. In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against. Since we generated the reads from an "artificial" mock community, we will provide the 
-reference sequences for those genomes—this will save us a bit of work and time. Run the following cell to assess the 
-quality of contigs assembled in the previous step:
+reference sequences for those genomes—this will save us a bit of work and time. 
 
+First, fetch the reference genomes that QUAST will use to compare our contigs against:
+```{code} bash
+wget -O reference_genomes.qza \
+    https://polybox.ethz.ch/index.php/s/dRdDSZJcxH4LRgk/download
+```
+
+Then, run the following command to assess the quality of contigs assembled in the previous step:
 :::{describe-usage}
 :scope: end-to-end
 :hide:
