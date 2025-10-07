@@ -65,7 +65,7 @@ qiime metadata tabulate \
   --o-visualization reads_gene_kmer_analysis_tabulated.qzv
 ```
 
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/reads_gene_kmer_analysis.qzv).
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/reads_gene_kmer_analysis_tabulated.qzv).
 
 ## MAGs
 
@@ -110,7 +110,7 @@ qiime metadata tabulate \
   --o-visualization mags_kmer_analysis_tabulated.qzv
 ```
 
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amr_gene_annotations_reads_tabulated.qzv).
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/mags_kmer_analysis_tabulated.qzv).
 
 ## Build a custom k-mer database
 

@@ -58,3 +58,4 @@ qiime metadata tabulate \
   --o-visualization amr_annotations_rgi_mags_tabulated.qzv
 ```
 
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amr_annotations_tabulated.qzv).
