@@ -2,29 +2,29 @@
 authors:
 - vr
 ---
-# AMR gene annotation of assembled sequences
+# AMR gene annotation of assembled sequences with q2-amrfinderplus
 
-In this section we will focus on AMR gene annotation of assembled sequences using two 
-different 
-tools: 
-AMRFinderPlus and RGI. 
+In this section we will focus on AMR gene annotation of assembled sequences using 
+the plugin q2-amrfinderplus.
 
-## Approach 1: AMRFinderPlus
+## Fetch database
 
 First we need to download the AMRFinderPlus database with the `fetch-amrfinderplus-db` 
 action. It automatically downloads the newest version of the database.
 
-```{code-cell}
+```{code} bash
 qiime amrfinderplus fetch-amrfinderplus-database \
     --o-amrfinderplus-db amrfinderplus-db \
     --verbose
 ```
 
+## Predict genes
+
 To annotate assembled sequences with AMR genes, we first have to perform gene 
 prediction. This can be done with the action `predict-prodigal` from the package 
 q2-annotate. 
 
-```{code-cell}
+```{code} bash
 mosh annotate predict-genes-prodigal \
   --i-sequences contigs.qza \
   --o-loci loci_contigs.qza \
@@ -32,6 +32,8 @@ mosh annotate predict-genes-prodigal \
   --o-proteins proteins_contigs.qza \
   --verbose
 ```
+
+## Annotate contigs
 
 The database and the predicted proteins and loci can now be used to annotate the 
 contigs, 
@@ -48,7 +50,7 @@ be empty. For more information on the outputs or parameters please run `qiime
 amrfinderplus annotate --help` and consult the 
 [AMRFinderPlus documentations](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus).
 
-```{code-cell}
+```{code} bash
 qiime amrfinderplus annotate \
   --i-amrfinderplus-db amrfinderplus-db \
   --i-sequences contigs.qza \

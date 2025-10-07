@@ -6,7 +6,8 @@ project:
   id: moshpit-docs
   title: MOSHPIT documentation
   # description:
-  keywords: ["MOSHPIT", "microbiome", "metagenome", "shotgun metagenomics"]
+  keywords: ["MOSHPIT", "microbiome", "metagenome", "shotgun metagenomics", 
+             "antimicrobial resistance", "AMR"]
   # github:
   references:
     q2doc-api-target: https://develop.qiime2.org/en/latest/
@@ -48,6 +49,12 @@ project:
             - file: chapters/01_tutorials/cocoa/04_functional_annotation/intro.md
               children:
                 - file: chapters/01_tutorials/cocoa/04_functional_annotation/mags.md
+        - file: chapters/01_tutorials/amr_gene_annotation/01_intro.md
+          children:
+            - file: chapters/01_tutorials/amr_gene_annotation/02_reads_rgi.md
+            - file: chapters/01_tutorials/amr_gene_annotation/03_mags_rgi.md
+            - file: chapters/01_tutorials/amr_gene_annotation/04_pathogen_of_origin_prediction_rgi.md
+            - file: chapters/01_tutorials/amr_gene_annotation/05_assembled_sequences_amrfinderplus.md
     - title: How-To Guides
       children:
         - pattern: chapters/02_howtos/*.md

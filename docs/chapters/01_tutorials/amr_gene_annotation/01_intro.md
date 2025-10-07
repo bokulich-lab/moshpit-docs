@@ -2,7 +2,7 @@
 authors:
 - vr
 ---
-# AMR gene annotation
+# 🦠 AMR gene annotation
 Antimicrobial resistance (AMR) gene annotation describes the identification of known 
 resistance genes and mutations in microbial genomes. Detecting these resistance markers 
 helps researchers track the spread of AMR and assess potential public health risks.
