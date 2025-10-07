@@ -9,9 +9,9 @@ helps researchers track the spread of AMR and assess potential public health ris
 
 In QIIME2 there are two plugins that facilitate AMR gene annotation. 
 [q2-amrfinderplus](https://github.com/bokulich-lab/q2-amrfinderplus) that wraps the 
-functionalities of [AMRFinderPlus](https://github.com/ncbi/amr) and 
+functionalities of [AMRFinderPlus](https://www.nature.com/articles/s41598-021-91456-0) and 
 [q2-rgi](https://github.com/bokulich-lab/q2-rgi) that uses the 
-[RGI](https://github.com/arpcard/rgi) tool.
+[RGI](https://pubmed.ncbi.nlm.nih.gov/36263822/) tool.
 
 ## Data
 

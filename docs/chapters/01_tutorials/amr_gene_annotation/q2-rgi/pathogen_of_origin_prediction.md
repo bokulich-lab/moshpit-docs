@@ -12,13 +12,15 @@ pathogens and plasmids. CARD's k-mer classifiers sub-sample these sequences to i
 k-mers that are uniquely found within AMR alleles of individual pathogen species, 
 pathogen genera, pathogen-restricted plasmids, or promiscuous plasmids. CARD's k-mer 
 classifiers can then be used to predict the pathogen of origin for matches found by RGI 
-for MAGs or reads. The k-mer classifiers are available as precomputed databases for 
+for MAGs or reads. The k-mer classifiers are available as 
+precomputed databases for 
 15-mers and 61-mers. Pathogen classification accuracy plateaus at under 80% 
 above a k-mer size of 15, while the k-mer size of 15 represents a reliable minimum 
 k-mer size. Classification accuracy increases with increasing k-mer size, but so 
 does the 
-run time and memory usage. For more information please check 
-[this paper](https://www.biorxiv.org/content/10.1101/2025.09.15.676352v1). For this 
+run time and memory usage. For more information please refer to the
+[RGI documentation](https://github.com/arpcard/rgi/blob/master/docs/rgi_kmer.rst) 
+and the [CARD k-mer paper](https://www.biorxiv.org/content/10.1101/2025.09.15.676352v1). For this 
 tutorial we use the 15-mer database because it is faster and requires less memory.
 
 ## Metagenomic reads

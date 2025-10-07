@@ -9,7 +9,7 @@ the plugin q2-amrfinderplus.
 
 ## Fetch database
 
-First we need to download the AMRFinderPlus database with the `fetch-amrfinderplus-db` 
+First we need to fetch the AMRFinderPlus database with the `fetch-amrfinderplus-db` 
 action. It automatically downloads the newest version of the database.
 
 ```{code} bash
@@ -45,10 +45,11 @@ most sensitive.
 The outputs are the amr annotations in form of a TXT file and the detected AMR gene and 
 protein sequences in FASTA format. Also provided are annotations called "all mutations", 
 they contain the genotypes at all locations screened for point mutations if an organism 
-is specified with the `organism` parameter. For this run the all mutations output will 
-be empty. For more information on the outputs or parameters please run `qiime 
-amrfinderplus annotate --help` and consult the 
-[AMRFinderPlus documentations](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus).
+is specified with the 
+[`organism` parameter](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option). 
+For this run the all mutations output will be empty. For more information about how to 
+run AMRFinderPlus and interpret the results please consult the 
+[AMRFinderPlus documentation](https://github.com/ncbi/amr/wiki).
 
 ```{code} bash
 qiime amrfinderplus annotate \
@@ -62,3 +63,16 @@ qiime amrfinderplus annotate \
   --o-amr-proteins amr_proteins_amrfinderplus.qza \
   --verbose
 ```
+
+## Tabulate annotations
+
+With the `tabulate` visualizer of the q2-metadata plugin it is possible to generate a 
+tabular combined view of the AMR annotations.  
+
+```{code} bash
+qiime metadata tabulate \
+  --m-input-file amr_annotations_amrfinderplus.qza \
+  --o-visualization amr_annotations_amrfinderplus_tabulated.qzv
+```
+
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amr_annotations_amrfinderplus_tabulated.qzv).

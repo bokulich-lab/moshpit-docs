@@ -4,7 +4,7 @@ authors:
 ---
 # q2-amrfinderplus
 
-q2-amrfinderplus wraps the functionalities of the AMRFinderPlus software. 
+q2-amrfinderplus wraps the functionalities of the [AMRFinderPlus](https://www.nature.com/articles/s41598-021-91456-0) software. 
 AMRFinderPlus is a tool developed by NCBI, together with the accompanying database it
 identifies acquired antimicrobial resistance genes in bacterial protein and/or 
 assembled 

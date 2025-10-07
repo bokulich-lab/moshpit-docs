@@ -4,7 +4,7 @@ authors:
 ---
 # q2-rgi
 
-q2-rgi wraps the functionalities of the RGI tool, it is used to predict antibiotic 
+q2-rgi wraps the functionalities of the [RGI](https://pubmed.ncbi.nlm.nih.gov/36263822/) tool, it is used to predict antibiotic 
 resistomes from MAGs or reads based on 
 homology and SNP models. The application uses reference data from the 
 [Comprehensive Antibiotic Resistance Database (CARD)](https://card.mcmaster.ca/).

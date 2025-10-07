@@ -2,20 +2,20 @@
 authors:
 - vr
 ---
-# Read mapping
+# Read analysis
 
 In this section we will focus on mapping metagenomic reads to AMR genes using q2-rgi.
 
 ## Fetch databases
 
-To annotate sequences with q2-rgi, we first have to download the CARD databases
+To run any analysis with q2-rgi, we first have to download the CARD databases
 with the `fetch-card-db` action. The action downloads and preprocesses the latest 
 versions of the CARD, 
 WildCARD, and kmer databases, where CARD contains curated antibiotic resistance genes,
 WildCARD includes predicted resistance genes from environmental genomes, and the 
-k-mer databases provide precomputed unique k-mers for pathogen of origin predictions. 
+k-mer databases provide precomputed unique k-mers for pathogen-of-origin predictions. 
 The CARD and WildCARD databases are combined into a single 
-artifact, while the K-mer databases are stored in separate artifacts. The CARD and 
+artifact, while the k-mer databases are stored in separate artifacts. The CARD and 
 WildCARD databases are used to annotate sequences with ARGs, while the k-mer 
 database is used to predict the taxonomic origin of ARGs.
 
@@ -33,20 +33,23 @@ To annotate reads with ARGs from CARD we can use the `annotate-reads-card`
 action. You can choose from three different alignment tools. The 
 default and recommended aligner is 
 [KMA](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2336-6) 
-but [Bowtie2](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml) 
-and [BWA](https://bio-bwa.sourceforge.net/) are also supported. 
+but [Bowtie2](https://www.nature.com/articles/nmeth.1923) 
+and [BWA](https://pubmed.ncbi.nlm.nih.gov/19451168/) are also supported. 
 Per default the action maps reads to the ARG sequences on CARD, but they can be 
 additionally mapped to the WildCARD database and/or to three further detection models 
-in CARD. Please refer to the 
+in CARD. CARD includes only curated sequences with clear experimental 
+evidence of AMR in a peer-reviewed journal. WildCARD additionally includes in silico 
+predicted allelic variants. It is highly recommended to use WildCARD for non-clinical 
+samples as the allelic diversity for AMR genes is greatly unrepresented in the 
+published literature. Please refer to the 
 [RGI](https://github.com/arpcard/rgi/blob/master/docs/rgi_bwt.rst) documentation for 
-more information on WildCARD, the detection models and RGI. The outputs provide 
+more information on WildCARD and RGI. The outputs provide 
 annotations for the allele mapping and also summarized at the AMR gene level (i.e. 
 summing allele level results by gene). Also provided are feature tables for allele and 
 gene mapping.
 
-For this tutorial we will map reads to CARD and without the WildCARD and the three 
-further detection models. The data used here is the same as in the end to end short 
-tutorial. 
+For this tutorial we will map reads to CARD and without the WildCARD. 
+The reads used here are the same as in the end to end short tutorial. 
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization

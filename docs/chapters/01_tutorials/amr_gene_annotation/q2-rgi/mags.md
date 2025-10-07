@@ -13,10 +13,10 @@ choose from two different alignment tools. While
 [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) is more sensitive. By default, 
 annotations include perfect matches (100% sequence identity) and strict matches (>95% 
 sequence identity). loose matches (>95% sequence identity) are optional and can be 
-added if preferred. Please run `qiime rgi annotate --help` and refer to the 
-[RGI](https://github.com/arpcard/rgi) documentation for more information about the 
-parameters. The outputs include the annotations in form of a TXT file and as a feature 
-table.
+added if preferred. Please refer to the 
+[RGI documentation](https://github.com/arpcard/rgi/blob/master/docs/rgi_main.rst) for 
+more information about RGI and the perfect/strict/loose matches. The outputs include 
+the annotations in form of TXT files and as a feature table.
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
