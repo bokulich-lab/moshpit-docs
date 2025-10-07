@@ -2,11 +2,9 @@
 authors:
 - vr
 ---
-# Analyzing metagenomic reads
+# Read mapping
 
 In this section we will focus on mapping metagenomic reads to AMR genes using q2-rgi.
-The qiime plugin wraps the functionalities of the 
-[RGI](https://pubmed.ncbi.nlm.nih.gov/36263822/) software. 
 
 ## Fetch databases
 

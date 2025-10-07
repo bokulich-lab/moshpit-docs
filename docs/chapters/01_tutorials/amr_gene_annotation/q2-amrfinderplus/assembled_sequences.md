@@ -2,7 +2,7 @@
 authors:
 - vr
 ---
-# AMR gene annotation of assembled sequences with q2-amrfinderplus
+# MAG annotation
 
 In this section we will focus on AMR gene annotation of assembled sequences using 
 the plugin q2-amrfinderplus.

@@ -49,12 +49,16 @@ project:
             - file: chapters/01_tutorials/cocoa/04_functional_annotation/intro.md
               children:
                 - file: chapters/01_tutorials/cocoa/04_functional_annotation/mags.md
-        - file: chapters/01_tutorials/amr_gene_annotation/01_intro.md
+        - file: chapters/01_tutorials/amr_gene_annotation/intro.md
           children:
-            - file: chapters/01_tutorials/amr_gene_annotation/02_reads_rgi.md
-            - file: chapters/01_tutorials/amr_gene_annotation/03_mags_rgi.md
-            - file: chapters/01_tutorials/amr_gene_annotation/04_pathogen_of_origin_prediction_rgi.md
-            - file: chapters/01_tutorials/amr_gene_annotation/05_assembled_sequences_amrfinderplus.md
+            - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/intro.md
+              children:
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/reads.md
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/mags.md
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/pathogen_of_origin_prediction.md
+            - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/intro.md
+              children:
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/assembled_sequences.md
     - title: How-To Guides
       children:
         - pattern: chapters/02_howtos/*.md

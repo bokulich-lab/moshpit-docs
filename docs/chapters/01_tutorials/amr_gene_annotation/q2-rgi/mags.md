@@ -2,7 +2,7 @@
 authors:
 - vr
 ---
-# AMR gene annotation of MAGs
+# MAG annotation
 
 In this section we will focus on AMR gene annotation of assembled sequences using 
 q2-rgi.
