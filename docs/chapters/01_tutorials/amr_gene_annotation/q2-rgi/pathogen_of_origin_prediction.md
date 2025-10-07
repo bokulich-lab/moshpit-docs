@@ -34,7 +34,7 @@ We will use the same config as for analyzing reads with q2-rgi.
 
 ```{code} bash
 qiime rgi kmer-query-reads-card \
-    --i-amr-annotations amr_allele_annotations_reads.qza \
+    --i-amr-annotations rgi_allele_annotations_reads.qza \
     --i-card-db card_db.qza \
     --i-kmer-db 15mer_db.qza \
     --o-reads-allele-kmer-analysis reads_allele_kmer_analysis.qza \
@@ -47,7 +47,7 @@ qiime rgi kmer-query-reads-card \
 ````{tab-item} Without parsl parallelization
 ```{code} bash
 qiime rgi kmer-query-reads-card \
-    --i-amr-annotations amr_allele_annotations_reads.qza \
+    --i-amr-annotations rgi_allele_annotations_reads.qza \
     --i-card-db card_db.qza \
     --i-kmer-db 15mer_db.qza \
     --o-reads-allele-kmer-analysis reads_allele_kmer_analysis.qza \
@@ -80,7 +80,7 @@ We will use the same config as for analyzing reads with q2-rgi.
 
 ```{code} bash
 qiime rgi kmer-query-mags-card \
-    --i-amr-annotations amr_annotations_rgi_mags.qza \
+    --i-amr-annotations rgi_annotations_mags.qza \
     --i-card-db card_db.qza \
     --i-kmer-db 15mer_db.qza \
     --o-mags-kmer-analysis mags_kmer_analysis.qza \
@@ -93,7 +93,7 @@ qiime rgi kmer-query-mags-card \
 
 ```{code} bash
 qiime rgi kmer-query-mags-card \
-    --i-amr-annotations amr_annotations_rgi_mags.qza \
+    --i-amr-annotations rgi_annotations_mags.qza \
     --i-card-db card_db.qza \
     --i-kmer-db 15mer_db.qza \
     --o-mags-kmer-analysis mags_kmer_analysis.qza \

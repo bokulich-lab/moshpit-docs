@@ -26,11 +26,11 @@ q2-annotate.
 
 ```{code} bash
 mosh annotate predict-genes-prodigal \
-  --i-sequences contigs.qza \
-  --o-loci loci_contigs.qza \
-  --o-genes genes_contigs.qza \
-  --o-proteins proteins_contigs.qza \
-  --verbose
+    --i-sequences contigs.qza \
+    --o-loci loci_contigs.qza \
+    --o-genes genes_contigs.qza \
+    --o-proteins proteins_contigs.qza \
+    --verbose
 ```
 
 ## Annotate contigs
@@ -53,15 +53,15 @@ run AMRFinderPlus and interpret the results please consult the
 
 ```{code} bash
 qiime amrfinderplus annotate \
-  --i-amrfinderplus-db amrfinderplus-db \
-  --i-sequences contigs.qza \
-  --i-proteins proteins_contigs.qza \
-  --i-loci loci_contigs.qza \
-  --o-amr-annotations amr_annotations_amrfinderplus.qza \
-  --o-amr-all-mutations amr_all_mutations_amrfinderplus.qza \
-  --o-amr-genes amr_genes_amrfinderplus.qza \
-  --o-amr-proteins amr_proteins_amrfinderplus.qza \
-  --verbose
+    --i-amrfinderplus-db amrfinderplus-db \
+    --i-sequences contigs.qza \
+    --i-proteins proteins_contigs.qza \
+    --i-loci loci_contigs.qza \
+    --o-amr-annotations amr_annotations_amrfinderplus.qza \
+    --o-amr-all-mutations amr_all_mutations_amrfinderplus.qza \
+    --o-amr-genes amr_genes_amrfinderplus.qza \
+    --o-amr-proteins amr_proteins_amrfinderplus.qza \
+    --verbose
 ```
 
 ## Tabulate annotations
@@ -71,8 +71,8 @@ tabular combined view of the AMR annotations.
 
 ```{code} bash
 qiime metadata tabulate \
-  --m-input-file amr_annotations_amrfinderplus.qza \
-  --o-visualization amr_annotations_amrfinderplus_tabulated.qzv
+    --m-input-file amr_annotations_amrfinderplus.qza \
+    --o-visualization amr_annotations_amrfinderplus_tabulated.qzv
 ```
 
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amr_annotations_amrfinderplus_tabulated.qzv).

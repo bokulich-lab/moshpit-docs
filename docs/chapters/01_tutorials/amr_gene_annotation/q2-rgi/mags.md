@@ -28,8 +28,8 @@ qiime rgi annotate-mags-card \
     --i-mags mags.qza \
     --i-card-db card_db.qza \
     --p-alignment-tool DIAMOND \
-    --o-amr_annotations amr_annotations_rgi_mags.qza \
-    --o-feature_table feature_table_rgi_mags.qza \
+    --o-amr_annotations rgi_annotations_rgi_mags.qza \
+    --o-feature_table rgi_feature_table_mags.qza \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -38,12 +38,12 @@ qiime rgi annotate-mags-card \
 
 ```{code} bash
 qiime rgi annotate-mags-card \
-  --i-mags mags.qza \
-  --i-card-db card_db.qza \
-  --p-alignment-tool DIAMOND \
-  --o-amr_annotations amr_annotations_rgi_mags.qza \
-  --o-feature_table feature_table_rgi_mags.qza \
-  --verbose
+    --i-mags mags.qza \
+    --i-card-db card_db.qza \
+    --p-alignment-tool DIAMOND \
+    --o-amr_annotations rgi_annotations_mags.qza \
+    --o-feature_table rgi_feature_table_mags.qza \
+    --verbose
 ```
 ````
 `````
@@ -54,8 +54,8 @@ tabular combined view of the AMR annotations.
 
 ```{code} bash
 qiime metadata tabulate \
-  --m-input-file amr_annotations_rgi_mags.qza \
-  --o-visualization amr_annotations_rgi_mags_tabulated.qzv
+  --m-input-file rgi_annotations_mags.qza \
+  --o-visualization rgi_annotations_mags_tabulated.qzv
 ```
 
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amr_annotations_tabulated.qzv).

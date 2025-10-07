@@ -21,10 +21,10 @@ database is used to predict the taxonomic origin of ARGs.
 
 ```{code} bash
 qiime rgi fetch-card-database \
-  --o-card-db card_db.qza \
-  --o-61-mer-db 61mer_db.qza \
-  --o-15-mer-db 15mer_db.qza \
-  --verbose
+    --o-card-db card_db.qza \
+    --o-61-mer-db 61mer_db.qza \
+    --o-15-mer-db 15mer_db.qza \
+    --verbose
 ```
 
 ## Analyze reads 
@@ -75,10 +75,10 @@ qiime rgi annotate-reads-card \
     --i-card-db card_db.qza \
     --p-aligner kma \
     --p-threads 2 \
-    --o-amr-allele-annotation amr_allele_annotations.qza \
-    --o-amr-gene-annotation amr_gene_annotations.qza \
-    --o-allele-feature-table amr_allele_feature_table.qza \
-    --o-gene-feature-table amr_gene_feature_table.qza \
+    --o-amr-allele-annotation rgi_allele_annotations_reads.qza \
+    --o-amr-gene-annotation rgi_gene_annotations_reads.qza \
+    --o-allele-feature-table rgi_allele_feature_table_reads.qza \
+    --o-gene-feature-table rgi_gene_feature_table_reads.qza \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -86,15 +86,15 @@ qiime rgi annotate-reads-card \
 ````{tab-item} Without parsl parallelization
 ```{code} bash
 qiime rgi annotate-reads-card \
-  --i-reads reads.qza \
-  --i-card-db card_db.qza \
-  --p-aligner kma \
-  --p-threads 2 \
-  --o-amr-allele-annotation amr_allele_annotations.qza \
-  --o-amr-gene-annotation amr_gene_annotations.qza \
-  --o-allele-feature-table amr_allele_feature_table.qza \
-  --o-gene-feature-table amr_gene_feature_table.qza \
-  --verbose
+    --i-reads reads.qza \
+    --i-card-db card_db.qza \
+    --p-aligner kma \
+    --p-threads 2 \
+    --o-amr-allele-annotation rgi_allele_annotations_reads.qza \
+    --o-amr-gene-annotation rgi_gene_annotations_reads.qza \
+    --o-allele-feature-table rgi_allele_feature_table_reads.qza \
+    --o-gene-feature-table rgi_gene_feature_table_reads.qza \
+    --verbose
 ```
 ````
 `````
@@ -108,8 +108,8 @@ q2-amrfinderplus and q2-rgi are supported to be used with the tabulate action.
 
 ```{code} bash
 qiime metadata tabulate \
-  --m-input-file amr_gene_annotations_reads.qza \
-  --o-visualization amr_gene_annotations_reads_tabulated.qzv
+    --m-input-file rgi_gene_annotations_reads_reads.qza \
+    --o-visualization rgi_gene_annotations_reads_tabulated.qzv
 ```
 
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amr_gene_annotations_reads_tabulated.qzv).
@@ -134,6 +134,6 @@ yet implemented.
 ```{code} bash
 feature-table normalize \
     --p-method cpm \
-    --i-table gene_feature_table.qza \
-    --o-normalized-table gene_feature_table_cpm.qza
+    --i-table rgi_gene_feature_table_reads.qza \
+    --o-normalized-table rgi_gene_feature_table_readscpm.qza
 ```
