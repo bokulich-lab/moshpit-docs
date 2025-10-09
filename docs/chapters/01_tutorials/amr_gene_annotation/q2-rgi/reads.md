@@ -20,7 +20,7 @@ WildCARD databases are used to annotate sequences with ARGs, while the k-mer
 database is used to predict the taxonomic origin of ARGs.
 
 ```{code} bash
-qiime rgi fetch-card-database \
+qiime rgi fetch-card-db \
     --o-card-db card_db.qza \
     --o-61-mer-db 61mer_db.qza \
     --o-15-mer-db 15mer_db.qza \
@@ -33,8 +33,8 @@ To annotate reads with ARGs from CARD we can use the `annotate-reads-card`
 action. You can choose from three different alignment tools. The 
 default and recommended aligner is 
 [KMA](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2336-6) 
-but [Bowtie2](https://www.nature.com/articles/nmeth.1923) 
-and [BWA](https://pubmed.ncbi.nlm.nih.gov/19451168/) are also supported. 
+but [Bowtie2](https://doi.org/10.1038/nmeth.1923) 
+and [BWA](https://doi.org/10.1093/bioinformatics/btp324) are also supported. 
 Per default the action maps reads to the ARG sequences on CARD, but they can be 
 additionally mapped to the WildCARD database and/or to three further detection models 
 in CARD. CARD includes only curated sequences with clear experimental 
@@ -108,7 +108,7 @@ q2-amrfinderplus and q2-rgi are supported to be used with the tabulate action.
 
 ```{code} bash
 qiime metadata tabulate \
-    --m-input-file rgi_gene_annotations_reads_reads.qza \
+    --m-input-file rgi_gene_annotations_reads.qza \
     --o-visualization rgi_gene_annotations_reads_tabulated.qzv
 ```
 
@@ -117,7 +117,7 @@ Your visualization should look similar to [this one](https://view.qiime2.org/vis
 
 The annotations include information like the gene names their gene family, drug 
 class and resistance mechanism. If you want to know more about a specific gene you 
-can look up the gene in the [CARD](https://card.mcmaster.ca/).
+can look up the gene in the [CARD database](https://card.mcmaster.ca/).
 
 ## Normalize feature table
 
@@ -132,7 +132,7 @@ sample because of different gene lengths. The normalisation for gene length is n
 yet implemented.
 
 ```{code} bash
-feature-table normalize \
+qiime feature-table normalize \
     --p-method cpm \
     --i-table rgi_gene_feature_table_reads.qza \
     --o-normalized-table rgi_gene_feature_table_readscpm.qza

@@ -121,8 +121,8 @@ also
 possible to build custom k-mer databases. This action can be computationally 
 expensive and take a long time to complete, depending on the chosen k-mer size. 
 Because of this it is not feasible to run this action on a personal computer. To see 
-benchmarks released by the developers of RGI please check 
-[this paper](https://www.biorxiv.org/content/10.1101/2025.09.15.676352v1). 
+benchmarks released by the developers of RGI please check the 
+[CARD k-mer paper](https://www.biorxiv.org/content/10.1101/2025.09.15.676352v1). 
 The action `kmer-build-card` can be used to build a custom k-mer database.
 
 ```{code} bash
