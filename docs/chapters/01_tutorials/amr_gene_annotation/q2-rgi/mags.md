@@ -18,35 +18,16 @@ added if preferred. Please refer to the
 more information about RGI and the perfect/strict/loose matches. The outputs include 
 the annotations in form of TXT files and as a feature table.
 
-`````{tab-set}
-````{tab-item} With parsl parallelization
-You can speed up this action by taking advantage of parsl parallelization support. 
-We will use the same config as for analyzing reads with q2-rgi.
-
 ```{code} bash
 qiime rgi annotate-mags-card \
-    --i-mags mags.qza \
-    --i-card-db card_db.qza \
-    --p-alignment-tool DIAMOND \
-    --o-amr-annotations rgi_annotations_rgi_mags.qza \
-    --o-feature-table rgi_feature_table_mags.qza \
-    --parallel-config parallel.config.toml \
-    --verbose
-```
-````
-````{tab-item} Without parsl parallelization
-
-```{code} bash
-qiime rgi annotate-mags-card \
-    --i-mags mags.qza \
+    --i-mag mags.qza \
     --i-card-db card_db.qza \
     --p-alignment-tool DIAMOND \
     --o-amr-annotations rgi_annotations_mags.qza \
     --o-feature-table rgi_feature_table_mags.qza \
     --verbose
 ```
-````
-`````
+
 ## Tabulate annotations
 
 With the `tabulate` visualizer of the q2-metadata plugin it is possible to generate a 
