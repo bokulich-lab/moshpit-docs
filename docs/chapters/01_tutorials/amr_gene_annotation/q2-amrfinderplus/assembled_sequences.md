@@ -13,7 +13,7 @@ First we need to fetch the AMRFinderPlus database with the `fetch-amrfinderplus-
 action. It automatically downloads the newest version of the database.
 
 ```{code} bash
-qiime amrfinderplus fetch-amrfinderplus-database \
+qiime amrfinderplus fetch-amrfinderplus-db \
     --o-amrfinderplus-db amrfinderplus-db \
     --verbose
 ```
@@ -26,7 +26,7 @@ q2-annotate.
 
 ```{code} bash
 mosh annotate predict-genes-prodigal \
-    --i-sequences contigs.qza \
+    --i-seqs contigs.qza \
     --o-loci loci_contigs.qza \
     --o-genes genes_contigs.qza \
     --o-proteins proteins_contigs.qza \
@@ -53,7 +53,7 @@ run AMRFinderPlus and interpret the results please consult the
 
 ```{code} bash
 qiime amrfinderplus annotate \
-    --i-amrfinderplus-db amrfinderplus-db \
+    --i-amrfinderplus-db amrfinderplus-db.qza \
     --i-sequences contigs.qza \
     --i-proteins proteins_contigs.qza \
     --i-loci loci_contigs.qza \
