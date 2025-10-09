@@ -15,5 +15,7 @@ functionalities of [AMRFinderPlus](https://doi.org/10.1038/s41598-021-91456-0) a
 
 ## Data
 
-To run this tutorial you will need the reads, contigs and MAGs created in the 
+To run this tutorial you will need the [reads, contigs](assembly) and [MAGs](binning) 
+created in 
+the 
 end-to-end MAG reconstruction tutorial.
