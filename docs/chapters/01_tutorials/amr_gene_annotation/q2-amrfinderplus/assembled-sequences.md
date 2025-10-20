@@ -14,7 +14,7 @@ action. It automatically downloads the newest version of the database.
 
 ```{code} bash
 qiime amrfinderplus fetch-amrfinderplus-db \
-    --o-amrfinderplus-db amrfinderplus-db \
+    --o-amrfinderplus-db amrfinderplus-db.qza \
     --verbose
 ```
 

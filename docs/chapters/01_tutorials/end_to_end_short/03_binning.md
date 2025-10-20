@@ -4,6 +4,7 @@ authors:
 ---
 (binning)=
 # MAG binning
+(read-mapping)=
 ## Read mapping
 Before we continue to assemble MAGs, we need to index the contigs obtained in the assembly step and map the original 
 reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which 

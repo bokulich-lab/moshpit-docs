@@ -1,25 +1,29 @@
 ---
 authors:
-- pmomocabr
+- pmc
 ---
-# AMR abundance in contigs
+# Contig-based AMR abundance estimation
 
-In this section we focus on estimating **per-sample abundances of AMR features** detected on assembled contigs. We will (i) derive contig abundances from read→contig mappings, (ii) annotate contigs with AMRFinderPlus, and (iii) combine both into a single AMR abundance table.
+In this section we focus on estimating **per-sample abundances of AMR features** detected in assembled contigs. We will :
+- derive contig abundances from read-to-contig mappings
+- annotate contigs with AMRFinderPlus
+- combine both into a single AMR abundance table.
 
-> This workflow assumes contigs have already been assembled and reads have been mapped to those contigs in a previous step.
+```{attention}
+This workflow assumes contigs have already been assembled and reads have been mapped to those contigs in a previous step.
+```
 
 ## Fetch database
-
-First fetch the AMRFinderPlus database. This downloads the newest available version.
+First, fetch the AMRFinderPlus database. This downloads the newest available version:
 
 ```{code} bash
 qiime amrfinderplus fetch-amrfinderplus-db \
-  --o-amrfinderplus-db amrfinderplus-db \
+  --o-amrfinderplus-db amrfinderplus-db.qza \
   --verbose
 ```
 ## Predict genes
-
-To annotate assembled sequences with AMR genes, we recommend performing **gene prediction** so AMRFinderPlus can use protein evidence (more sensitive than translated DNA alone). Use Prodigal via `q2-annotate`.
+To annotate assembled sequences with AMR genes, we recommend performing **gene prediction** so AMRFinderPlus can use protein evidence (more sensitive than translated DNA alone). 
+Use the `predict-genes-prodigal` action from the `q2-annotate` plugin:
 
 ```{code} bash
 mosh annotate predict-genes-prodigal \
@@ -29,9 +33,9 @@ mosh annotate predict-genes-prodigal \
   --o-proteins proteins_contigs.qza \
   --verbose
 ```
-## Contig length estimation
 
-Compute contig lengths for normalization.
+## Estimate contig lengths
+Compute contig lengths required for normalization:
 
 ```{code} bash
 mosh annotate get-feature-lengths \
@@ -40,9 +44,8 @@ mosh annotate get-feature-lengths \
   --verbose
 ```
 
-## Contig abundance estimation
-
-Estimate contig abundances per sample from read→contig alignment maps, normalized by contig length.
+## Estimate contig abundances
+Estimate contig abundances per sample from [read-to-contig alignment maps](read-mapping), normalized by contig length:
 
 ```{code} bash
 mosh annotate estimate-abundance \
@@ -51,11 +54,13 @@ mosh annotate estimate-abundance \
   --o-abundances contig_abundances.qza \
   --verbose
 ```
-The output is a `FeatureTable[Frequency]` with samples as rows and contigs as features.
+
+```{tip} Outputs
+A `FeatureTable[Frequency]` with samples as rows and contigs as features.
+```
 
 ## Annotate contigs
-
-Use the database and predicted proteins/loci to annotate contigs with AMRFinderPlus. Supplying sequences **plus** predicted proteins **plus** loci uses the most sensitive combined mode.
+Use the fetched database and predicted proteins/loci to annotate contigs with AMRFinderPlus. Supplying sequences **plus** predicted proteins **plus** loci uses the most sensitive combined mode:
 
 ```{code} bash
 qiime amrfinderplus annotate \
@@ -69,11 +74,13 @@ qiime amrfinderplus annotate \
   --o-amr-proteins amrfinderplus_proteins.qza \
   --verbose
 ```
-**Outputs.** A tabular AMR annotation file and FASTA files for detected AMR genes/proteins. “All mutations” lists genotypes at screened mutation sites when an organism is specified (otherwise empty).
 
-## Build an AMR feature table
+```{tip} Outputs
+A tabular AMR annotation file and FASTA files for detected AMR genes/proteins. “All mutations” lists genotypes at screened mutation sites when an organism is specified (otherwise empty).
+```
 
-Convert the AMR annotations into a feature table keyed by contig.
+## Build the AMR feature table
+Convert the AMR annotations into a feature table indexed by contig:
 
 ```{code} bash
 qiime amrfinderplus create-feature-table \
@@ -82,8 +89,8 @@ qiime amrfinderplus create-feature-table \
   --verbose
 ```
 ## Filter contig abundances to AMR-linked contigs
-
-Retain only contigs carrying AMR annotations so abundance and annotation refer to the same set of features.
+The contig abundance table contains all contigs, but we are only interested in those carrying AMR annotations. 
+You can use the `filter-features` action to filter the contig abundance table to only include contigs with AMR annotations:
 
 ```{code} bash
 mosh feature-table filter-features \
@@ -94,8 +101,8 @@ mosh feature-table filter-features \
 ```
 
 ## Compute AMR abundance (per sample)
-
-Multiply (per sample) the filtered contig abundances by the AMR feature table to obtain **per-feature AMR abundance**.
+To compute AMR abundance, we need to multiply the filtered contig abundances by the AMR feature table using the `multiply-tables` action. 
+This will result in a `FeatureTable[Frequency]` where rows are samples, columns are AMR features, and values are abundances:
 
 ```{code} bash
 mosh annotate multiply-tables \
@@ -104,9 +111,14 @@ mosh annotate multiply-tables \
   --o-result-table amr_contigs_amr_abundance_ft.qza \
   --verbose
 ```
-**Output.** `amr_contigs_amr_abundance_ft.qza`: a `FeatureTable[Frequency]` where rows are AMR features, columns are samples, and values are abundances.
+
+```{tip} Outputs
+A `FeatureTable[Frequency]` where rows are AMR features, columns are samples, and values are abundances.
+```
 
 ## Tabulate annotations and results
+With the `tabulate` and `summarize` visualizers from the q2-metadata and q2-feature-table plugin, respectively, 
+it is possible to generate a tabular view of the AMR annotations and their abundances:
 
 ```{code} bash
 qiime metadata tabulate \
@@ -121,13 +133,11 @@ mosh feature-table summarize \
   --verbose
 ```
 
-Your visualization ... (TBD)
-
-## Tips :bulb:
-
+```{tip} Tips
 - **No AMR hits?** Ensure the AMRFinderPlus database artifact is current and that predicted proteins were provided.
 - **Empty after filtering?** Verify contig IDs match between abundance and annotation artifacts.
 - **Performance.** Adjust `--p-threads` / parallelism to your environment; consider batching for large assemblies.
+```
 
 ## References
 
