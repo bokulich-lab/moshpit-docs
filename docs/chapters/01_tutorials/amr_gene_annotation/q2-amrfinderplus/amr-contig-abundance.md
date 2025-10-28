@@ -1,146 +1,115 @@
 ---
 authors:
 - pmc
+- vr
 ---
 # Contig-based AMR abundance estimation
 
-In this section we focus on estimating **per-sample abundances of AMR features** detected in assembled contigs. We will :
-- derive contig abundances from read-to-contig mappings
-- annotate contigs with AMRFinderPlus
-- combine both into a single AMR abundance table.
+In this section we focus on estimating **per-sample abundances of AMR features** 
+detected in assembled contigs. For this we will 
+This section uses plugins included in 
+the MOSHPIT 
+distribution of QIIME 2. You can find detailed installation instructions 
+on the [QIIME 2 Library](https://library.qiime2.org/).
 
-```{attention}
-This workflow assumes contigs have already been assembled and reads have been mapped to those contigs in a previous step.
+```{note}
+Code blocks starting with `qiime` have to be run with the pathogenome distribution 
+and code blocks starting with `mosh` have to be run with the MOSHPIT distribution.
 ```
 
-## Fetch database
-First, fetch the AMRFinderPlus database. This downloads the newest available version:
+## Get contig lengths
 
-```{code} bash
-qiime amrfinderplus fetch-amrfinderplus-db \
-  --o-amrfinderplus-db amrfinderplus-db.qza \
-  --verbose
-```
-## Predict genes
-To annotate assembled sequences with AMR genes, we recommend performing **gene prediction** so AMRFinderPlus can use protein evidence (more sensitive than translated DNA alone). 
-Use the `predict-genes-prodigal` action from the `q2-annotate` plugin:
-
-```{code} bash
-mosh annotate predict-genes-prodigal \
-  --i-sequences contigs.qza \
-  --o-loci loci_contigs.qza \
-  --o-genes genes_contigs.qza \
-  --o-proteins proteins_contigs.qza \
-  --verbose
-```
-
-## Estimate contig lengths
-Compute contig lengths required for normalization:
+Before we can estimate contig abundances, we first need to determine the length of each 
+contig in the assembly. These lengths are used later to normalize the read counts.
 
 ```{code} bash
 mosh annotate get-feature-lengths \
-  --i-features contigs.qza \
-  --o-lengths contigs_lengths.qza \
-  --verbose
+    --i-features contigs.qza \
+    --o-lengths contigs_lengths.qza \
+    --verbose
 ```
 
 ## Estimate contig abundances
-Estimate contig abundances per sample from [read-to-contig alignment maps](read-mapping), normalized by contig length:
+
+Next, we estimate how abundant each contig is in every sample. To do this, we map reads 
+back to the contigs and normalize the counts by contig length.
+This produces a per-sample abundance table with samples as rows and contigs as features.
 
 ```{code} bash
 mosh annotate estimate-abundance \
-  --i-alignment-maps reads_to_contigs.qza \
-  --i-feature-lengths contigs_lengths.qza \
-  --o-abundances contig_abundances.qza \
-  --verbose
+    --i-alignment-maps reads-to-contigs-aln.qza \
+    --i-feature-lengths contigs_lengths.qza \
+    --o-abundances contig_abundances.qza \
+    --verbose
 ```
 
-```{tip} Outputs
-A `FeatureTable[Frequency]` with samples as rows and contigs as features.
-```
+## Build AMR feature table
 
-## Annotate contigs
-Use the fetched database and predicted proteins/loci to annotate contigs with AMRFinderPlus. Supplying sequences **plus** predicted proteins **plus** loci uses the most sensitive combined mode:
-
-```{code} bash
-qiime amrfinderplus annotate \
-  --i-amrfinderplus-db amrfinderplus-db.qza \
-  --i-sequences contigs.qza \
-  --i-proteins proteins_contigs.qza \
-  --i-loci loci_contigs.qza \
-  --o-amr-annotations amrfinderplus_annotations.qza \
-  --o-amr-all-mutations amrfinderplus_all_mutations.qza \
-  --o-amr-genes amrfinderplus_genes.qza \
-  --o-amr-proteins amrfinderplus_proteins.qza \
-  --verbose
-```
-
-```{tip} Outputs
-A tabular AMR annotation file and FASTA files for detected AMR genes/proteins. “All mutations” lists genotypes at screened mutation sites when an organism is specified (otherwise empty).
-```
-
-## Build the AMR feature table
-Convert the AMR annotations into a feature table indexed by contig:
+Now we convert the AMRFinderPlus annotation results into a feature table, that is 
+indexed by contigs.
 
 ```{code} bash
 qiime amrfinderplus create-feature-table \
-  --i-annotations amrfinderplus_annotations.qza \
-  --o-table amrfinderplus_annotations_ft.qza \
-  --verbose
+    --i-annotations amrfinderplus_annotations.qza \
+    --o-table amrfinderplus_annotations_ft.qza \
+    --verbose
 ```
-## Filter contig abundances to AMR-linked contigs
-The contig abundance table contains all contigs, but we are only interested in those carrying AMR annotations. 
-You can use the `filter-features` action to filter the contig abundance table to only include contigs with AMR annotations:
+
+## Filter contig abundances by AMR annotations
+
+At this point, the contig abundance table contains all contigs, but we are only 
+interested in those carrying AMR annotations. Because of this we have to filter the 
+contig abundance table to only include contigs with AMR annotations.
 
 ```{code} bash
-mosh feature-table filter-features \
-  --i-table contig_abundances.qza \
-  --m-metadata-file amrfinderplus_annotations_ft.qza \
-  --o-filtered-table contig_abundances_filt.qza \
-  --verbose
+qiime feature-table filter-features \
+    --i-table contig_abundances.qza \
+    --m-metadata-file amrfinderplus_annotations_ft.qza \
+    --o-filtered-table contig_abundances_filtered.qza \
+    --verbose
 ```
 
-## Compute AMR abundance (per sample)
-To compute AMR abundance, we need to multiply the filtered contig abundances by the AMR feature table using the `multiply-tables` action. 
-This will result in a `FeatureTable[Frequency]` where rows are samples, columns are AMR features, and values are abundances:
+## Compute per sample AMR abundances
+Now that we have contig abundances and AMR annotations, we combine both to estimate the 
+abundance of each AMR feature per sample. By multiplying the filtered contig 
+abundance table with the AMR feature table, we obtain a new table where rows are 
+samples, columns are AMR features, and values are abundances.
 
 ```{code} bash
 mosh annotate multiply-tables \
-  --i-table1 contig_abundances_filt.qza \
-  --i-table2 amrfinderplus_annotations_ft.qza \
-  --o-result-table amr_contigs_amr_abundance_ft.qza \
-  --verbose
+    --i-table1 contig_abundances_filtered.qza \
+    --i-table2 amrfinderplus_annotations_ft.qza \
+    --o-result-table amrfinderplus_abundances_ft.qza \
+    --verbose
 ```
 
-```{tip} Outputs
-A `FeatureTable[Frequency]` where rows are AMR features, columns are samples, and values are abundances.
-```
-
-## Tabulate annotations and results
-With the `tabulate` and `summarize` visualizers from the q2-metadata and q2-feature-table plugin, respectively, 
-it is possible to generate a tabular view of the AMR annotations and their abundances:
+## Create Heatmap
+To visualize these results, we can generate a heatmap that displays AMR gene abundances 
+across samples. For better visualization, the abundances are log transformed.
 
 ```{code} bash
-qiime metadata tabulate \
-  --m-input-file amrfinderplus_annotations.qza \
-  --o-visualization amrfinderplus_annotations_tabulated.qzv
+qiime feature-table heatmap \
+    --i-table amrfinderplus_abundances_ft.qza \
+    --o-visualization amrfinderplus_heatmap.qzv
 ```
 
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amrfinderplus_heatmap.qzv).
+
+## Summarize abundances
+Lastly we can generate a summarization of the AMR gene abundances.
+
 ```{code} bash
-mosh feature-table summarize \
-  --i-table amr_contigs_amr_abundance_ft.qza \
-  --o-visualization amr_contigs_amr_abundance_summary.qzv \
-  --verbose
+qiime feature-table summarize \
+  --i-table amrfinderplus_abundances_ft.qza \
+  --o-visualization amrfinderplus_abundances_summary.qzv
 ```
+
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/amr_annotation/amrfinderplus_abundances_summary.qzv).
 
 ```{tip} Tips
-- **No AMR hits?** Ensure the AMRFinderPlus database artifact is current and that predicted proteins were provided.
+- **No AMR hits?** Ensure the AMRFinderPlus database artifact is current and that 
+predicted proteins were provided.
 - **Empty after filtering?** Verify contig IDs match between abundance and annotation artifacts.
-- **Performance.** Adjust `--p-threads` / parallelism to your environment; consider batching for large assemblies.
+- **Performance.** Adjust `--p-threads` to your environment; consider batching for large assemblies.
 ```
 
-## References
-
-- Feldgarden M, *et al.* (2021) Validating the AMRFinderPlus tool and resistance gene database. *Sci Rep* 11:14207. https://doi.org/10.1038/s41598-021-91456-0
-- AMRFinderPlus documentation & wiki: https://github.com/ncbi/amr/wiki
-- NCBI AMRFinderPlus overview: https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/
