@@ -110,6 +110,6 @@ Your visualization should look similar to [this one](https://view.qiime2.org/vis
 - **No AMR hits?** Ensure the AMRFinderPlus database artifact is current and that 
 predicted proteins were provided.
 - **Empty after filtering?** Verify contig IDs match between abundance and annotation artifacts.
-- **Performance.** Adjust `--p-threads` to your environment; consider batching for large assemblies.
+- **Performance.** Adjust `--p-threads`; consider batching for large assemblies.
 ```
 
