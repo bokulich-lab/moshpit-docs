@@ -6,11 +6,11 @@ authors:
 # Contig-based AMR abundance estimation
 
 In this section we focus on estimating **per-sample abundances of AMR features** 
-detected in assembled contigs. For this we will 
-This section uses plugins included in 
-the MOSHPIT 
-distribution of QIIME 2. You can find detailed installation instructions 
-on the [QIIME 2 Library](https://library.qiime2.org/).
+detected in assembled contigs. For this, we will estimate contig abundances from 
+read mappings, normalize them by contig length and link them to AMR annotations to 
+obtain an abundance table of AMR features across samples. This section uses plugins 
+included in the MOSHPIT distribution of QIIME 2. You can find detailed installation 
+instructions on the [QIIME 2 Library](https://library.qiime2.org/quickstart/moshpit#id-3-install-the-base-distributions-conda-environment).
 
 ```{note}
 Code blocks starting with `qiime` have to be run with the pathogenome distribution 
@@ -20,7 +20,7 @@ and code blocks starting with `mosh` have to be run with the MOSHPIT distributio
 ## Get contig lengths
 
 Before we can estimate contig abundances, we first need to determine the length of each 
-contig in the assembly. These lengths are used later to normalize the read counts.
+contig in the assembly. These lengths are used later to normalize the abundances.
 
 ```{code} bash
 mosh annotate get-feature-lengths \
@@ -33,7 +33,7 @@ mosh annotate get-feature-lengths \
 
 Next, we estimate how abundant each contig is in every sample. To do this, we map reads 
 back to the contigs and normalize the counts by contig length.
-This produces a per-sample abundance table with samples as rows and contigs as features.
+This produces a per-sample abundance table with samples as rows and contigs as columns.
 
 ```{code} bash
 mosh annotate estimate-abundance \
@@ -46,7 +46,7 @@ mosh annotate estimate-abundance \
 ## Build AMR feature table
 
 Now we convert the AMRFinderPlus annotation results into a feature table, that is 
-indexed by contigs.
+indexed by contig IDs.
 
 ```{code} bash
 qiime amrfinderplus create-feature-table \
@@ -59,7 +59,7 @@ qiime amrfinderplus create-feature-table \
 
 At this point, the contig abundance table contains all contigs, but we are only 
 interested in those carrying AMR annotations. Because of this we have to filter the 
-contig abundance table to only include contigs with AMR annotations.
+contig abundance table to only retain contigs with AMR annotations.
 
 ```{code} bash
 qiime feature-table filter-features \
