@@ -55,10 +55,11 @@ project:
               children:
                 - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/reads.md
                 - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/mags.md
-                - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/pathogen_of_origin_prediction.md
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-rgi/path-oo-prediction.md
             - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/intro.md
               children:
-                - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/assembled_sequences.md
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/assembled-sequences.md
+                - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/amr-contig-abundance.md
     - title: How-To Guides
       children:
         - pattern: chapters/02_howtos/*.md
