@@ -10,10 +10,10 @@ project:
              "antimicrobial resistance", "AMR"]
   # github:
   references:
-    q2doc-api-target: https://develop.qiime2.org/en/latest/
-    q2doc-usage-target: https://use.qiime2.org/en/latest/
+    q2doc-api-target: https://develop.qiime2.org/en/stable/
+    q2doc-usage-target: https://use.qiime2.org/en/stable/
     q2doc-library-target: https://library.qiime2.org
-    q2doc-amplicon-target: https://amplicon-docs.readthedocs.io/en/latest/
+    q2doc-amplicon-target: https://amplicon-docs.readthedocs.io/en/stable/
 
   plugins:
     - type: executable
