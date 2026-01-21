@@ -5,8 +5,8 @@ called **partitions**. To make use of parallelization, you will need a [parsl](h
 will define the resources available to the parallel execution. You can read more about how parallelization 
 works in QIIME 2 by heading to one of the following resources:
 
-- [parallel pipeline execution](https://use.qiime2.org/en/latest/tutorials/parallel-pipeline.html)
-- [pipeline configuration](https://use.qiime2.org/en/latest/references/parallel-configuration.html)
+- [parallel pipeline execution](https://use.qiime2.org/en/stable/tutorials/parallel-pipeline.html)
+- [pipeline configuration](https://use.qiime2.org/en/stable/references/parallel-configuration.html)
 
 :::{tip} Example
 :class: tip:
