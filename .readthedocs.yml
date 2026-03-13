@@ -6,7 +6,7 @@ build:
     python: "miniforge3-latest"
   jobs:
     create_environment:
-      - mamba env create -p .env/ --file environment-files/readthedocs.yml
+      - micromamba env create -p .env/ --file environment-files/readthedocs.yml
     build:
       html:
         - PATH=$(pwd)/.env/bin/:$PATH q2doc refresh-cache
