@@ -69,22 +69,7 @@ project:
       children:
         - file: refs/plugins.md
           children:
-#            - pattern: refs/plugins/*.md
-            - file: refs/plugins/assembly.md
-            - file: refs/plugins/annotate.md
-            - file: refs/plugins/cutadapt.md
-            - file: refs/plugins/demux.md
-            - file: refs/plugins/fastp.md
-            - file: refs/plugins/feature-table.md
-            - file: refs/plugins/fondue.md
-            - file: refs/plugins/metadata.md
-            - file: refs/plugins/quality-control.md
-            - file: refs/plugins/sapienns.md
-            - file: refs/plugins/sourmash.md
-            - file: refs/plugins/taxa.md
-            - file: refs/plugins/types.md
-            - file: refs/plugins/vizard.md
-            - file: refs/plugins/rescript.md
+            - pattern: refs/plugins/*.md
         - title: Artifacts
           children:
             - pattern: refs/artifacts/*.md
