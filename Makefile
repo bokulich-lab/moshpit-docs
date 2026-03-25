@@ -19,15 +19,18 @@ _build-fast-preview:
 _build-preview:
 	cd docs && Q2DOC_PREVIEW= jupyter book build --html
 
+_postprocess-html:
+	bash scripts/postprocess-html.sh docs/_build/html
+
 # main targets
 autodoc:
 	q2doc autodoc --singlepage --output refs docs
 
-html: _copy-env-file _build-html _copy-data
+html: _copy-env-file _build-html _copy-data _postprocess-html
 
-fast-preview: _copy-env-file _build-fast-preview _copy-data
+fast-preview: _copy-env-file _build-fast-preview _copy-data _postprocess-html
 
-preview: _copy-env-file _build-preview _copy-data
+preview: _copy-env-file _build-preview _copy-data _postprocess-html
 
 serve:
 	npx serve docs/_build/html/ -p 4000

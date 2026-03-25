@@ -36,3 +36,11 @@ Finally, run the following to serve the built documentation locally:
 ```shell
 make serve
 ```
+
+### Chatbot integration
+The documentation pages currently embed Cloudflare's hosted
+`chat-bubble-snippet` during HTML post-processing in
+[`scripts/postprocess-html.sh`](scripts/postprocess-html.sh).
+
+Set `MOSHPIT_CHATBOT_URL` before building. This may be either the base
+Cloudflare chatbot URL or the full `search-snippet.es.js` asset URL.

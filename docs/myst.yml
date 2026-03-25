@@ -86,8 +86,8 @@ project:
 site:
   template: https://github.com/ebolyen/myst-book-theme-poc.git
   options:
-      folders: true
-      favicon: _static/favicon.ico
-      logo: _static/logo_light.svg
-      logo_dark: _static/logo_dark.svg
-      pretty_urls: false
+    folders: true
+    favicon: _static/favicon.ico
+    logo: _static/logo_light.svg
+    logo_dark: _static/logo_dark.svg
+    pretty_urls: false
