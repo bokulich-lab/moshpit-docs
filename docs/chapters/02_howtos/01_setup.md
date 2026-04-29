@@ -4,34 +4,35 @@ MOSHPIT is available as a QIIME 2 distribution. You can find detailed installati
 on the [QIIME 2 Library](https://library.qiime2.org/) page. 
 
 ## Quick start
+```{attention}
+As of the 2026.4 release the MOSHPIT distribution will only be vailable for Linux-based operating systems. 
+For more details please see [this](https://forum.qiime2.org/t/qiime-2-2026-4-is-now-available/34140) forum post. 
+It is possible to run MOSHPIT on macOS using a container-based approach - see below for details.
+```
+
 Below you will find a quick installation guide for different operating systems:
 `````{tab-set}
 ````{tab-item} Linux (Ubuntu)
 These instructions are for users running on Linux or the Windows Subsystem for Linux (WSL v2).
 ```bash
 conda env create \
-  --name qiime2-moshpit-2025.10 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.10/moshpit/released/qiime2-moshpit-ubuntu-latest-conda.yml
+  --name rachis-moshpit-2026.4 \
+  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2026.4/moshpit/released/rachis-moshpit-linux-64-conda.yml
 ```
 ````
 
 ````{tab-item} macOS (Apple Silicon)
-These instructions are for users with Apple Silicon chips (M1, M2, etc), and configures the installation of QIIME 2 in Rosetta 2 emulation mode.
+These instructions are for users with Apple Silicon chips (M1, M2, etc) using Docker.
+Run the following command to pull the selected image:
 ```bash
-CONDA_SUBDIR=osx-64 conda env create \
-  --name qiime2-moshpit-2025.10 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.10/moshpit/released/qiime2-moshpit-macos-latest-conda.yml
-conda activate qiime2-moshpit-2025.10
-conda config --env --set subdir osx-64
+docker pull quay.io/qiime2/moshpit:2026.4
 ```
-````
-
-````{tab-item} macOS (Intel)
-These instructions are for users older Intel-based Apple hardware (NOT M1, M2, etc).
+Verify things are working by running:
 ```bash
-conda env create \
-  --name qiime2-moshpit-2025.10 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2025.10/moshpit/released/qiime2-moshpit-macos-latest-conda.yml
+docker run \
+  -v $(pwd):/data \
+  -it quay.io/qiime2/moshpit:2026.4 \
+  qiime info
 ```
 ````
 `````
@@ -42,33 +43,12 @@ This version is provided without any guarantee on the new features - these are u
 some bugs are possible. If you uncover any unexpected behaviour, feel free to report in on our GitHub issue 
 tracker of the respective plugin repository. 
 ```
-`````{tab-set}
-````{tab-item} Linux (Ubuntu)
+
+````{note} Linux (Ubuntu)
 These instructions are for users running on Linux or the Windows Subsystem for Linux (WSL v2).
 ```bash
 conda env create \
-  --name qiime2-moshpit-dev \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/latest/passed/qiime2-moshpit-ubuntu-latest-conda.yml
+  --name rachis-moshpit-dev \
+  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/latest/passed/rachis-moshpit-linux-64-conda.yml
 ```
 ````
-
-````{tab-item} macOS (Apple Silicon)
-These instructions are for users with Apple Silicon chips (M1, M2, etc), and configures the installation of QIIME 2 in Rosetta 2 emulation mode.
-```bash
-CONDA_SUBDIR=osx-64 conda env create \
-  --name qiime2-moshpit-dev \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/latest/passed/qiime2-moshpit-macos-latest-conda.yml
-conda activate qiime2-moshpit-dev
-conda config --env --set subdir osx-64
-```
-````
-
-````{tab-item} macOS (Intel)
-These instructions are for users older Intel-based Apple hardware (NOT M1, M2, etc).
-```bash
-conda env create \
-  --name qiime2-moshpit-dev \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/latest/passed/qiime2-moshpit-macos-latest-conda.yml
-```
-````
-`````
