@@ -12,7 +12,7 @@ sequences called {term}`contig`s, providing valuable genetic information for the
 The reads generated for this tutorial can be downloaded using the following command:
 ```{code} bash
 wget -O reads.qza \
-    https://polybox.ethz.ch/index.php/s/rgXpDtCMgRgyeKB/download
+    https://polybox.ethz.ch/index.php/s/Yw34y55TDX98BA9/download
 ```
 
 You can run the assembly using the following command:
@@ -40,7 +40,7 @@ mosh assembly assemble-megahit \
     --i-reads reads.qza \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 2 \
-    --p-min-contig 500 \
+    --p-min-contig-len 500 \
     --o-contigs contigs.qza \
     --parallel-config parallel.config.toml \
     --verbose
@@ -53,7 +53,7 @@ mosh assembly assemble-megahit \
     --i-reads reads.qza \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 2 \
-    --p-min-contig 500 \
+    --p-min-contig-len 500 \
     --o-contigs contigs.qza \
     --verbose
 ```
@@ -70,7 +70,7 @@ reference sequences for those genomes—this will save us a bit of work and time
 First, fetch the reference genomes that QUAST will use to compare our contigs against:
 ```{code} bash
 wget -O reference-genomes.qza \
-    https://polybox.ethz.ch/index.php/s/dRdDSZJcxH4LRgk/download
+    https://polybox.ethz.ch/index.php/s/jA9FB8EF4YjP82x/download
 ```
 
 Then, run the following command to assess the quality of contigs assembled in the previous step:
@@ -81,17 +81,38 @@ mosh assembly evaluate-quast \
     --i-references reference-genomes.qza \
     --p-threads 4 \
     --p-min-contig 500 \
-    --o-ref-genomes ref-genomes.qza \
+    --o-reference-genomes ref-genomes.qza \
     --o-results-table quast-results.qza \
-    --o-visualization contigs-qc.qzv \
+    --o-visualization contigs-qc-quast.qzv \
     --verbose
 ```
 
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/end-to-end/contigs.qzv).
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/end-to-end/contigs-qc-quast.qzv).
 
 There are many things to look at here! Don't worry, it is not our goal to try to understand all of that information, 
 though. Let's focus on the metrics we mentioned above - you will find them on the "QC report" tab, in the colorful table 
 right above the plot. Click on the "Extended report" and use the values you find there to answer the checkpoint questions below.
+
+:::{seealso} **Alternative approach**
+:class: dropdown
+
+As of MOSHPIT 2026.4, we also support a simplified assembly QC assessment. You can use the `evaluate-contigs` action to get all the 
+basic statistics like Nx and GC content plots in a fraction of the time that the `evaluate-quast` action needs. The new action does 
+not support comparing the assembled contigs to supplied references so if you need that kind of assessment you should still go for the 
+`evaluate-quast` action. You can run the simplified evaluation using the following command:
+
+```{code} bash
+mosh assembly evaluate-contigs \
+    --i-contigs contigs.qza \
+    --p-n-cpus 4 \
+    --o-results contig-qc-results.qza \
+    --o-visualization contigs-qc.qzv \
+    --verbose
+```
+
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/end-to-end/contigs-qc.qzv).
+
+:::
 
 :::{exercise}
 :label: question1
@@ -110,7 +131,7 @@ Which of the samples has the highest L50 value?
 :::{solution} question2
 :label: solution2
 :class: dropdown
-__sample1__: L50 = ~2758
+__sample1__: L50 = ~2753
 :::
 
 :::{exercise}
@@ -120,7 +141,7 @@ Which of the samples has the highest number of mismatches per 100 kbp?
 :::{solution} question3
 :label: solution3
 :class: dropdown
-__sample1__: ~308
+__sample1__: ~311
 :::
 
 :::{exercise}
