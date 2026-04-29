@@ -1,0 +1,29 @@
+# Required if you want documentation retrieval inside the Worker.
+AI_SEARCH_INSTANCE=moshpit-docs
+
+# Optional. This model supports function calling on Workers AI.
+WORKERS_AI_MODEL=@cf/meta/llama-3.3-70b-instruct-fp8-fast
+
+# Optional retrieval tuning.
+AI_SEARCH_MAX_RESULTS=6
+AI_SEARCH_SCORE_THRESHOLD=0.2
+
+# Optional. Restrict browser origins in production. Comma-separated.
+# Leave empty during early testing to allow any origin.
+ALLOWED_ORIGINS=http://localhost:8000,https://moshpit.qiime2.org
+
+# Optional. Override the shared agent instance name.
+CHAT_INSTANCE_NAME=public-docs
+
+# Optional MCP server configuration.
+MCP_SERVER_URL=
+MCP_SERVER_NAME=tools
+
+# Optional authentication headers for the MCP server.
+MCP_BEARER_TOKEN=
+MCP_ACCESS_CLIENT_ID=
+MCP_ACCESS_CLIENT_SECRET=
+
+# Optional comma-separated allowlist of namespaced MCP tool names.
+# Check GET /status after deployment to see the exact tool names exposed.
+MCP_ALLOWED_TOOLS=
