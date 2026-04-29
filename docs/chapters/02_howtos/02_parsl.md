@@ -5,8 +5,8 @@ called **partitions**. To make use of parallelization, you will need a [parsl](h
 will define the resources available to the parallel execution. You can read more about how parallelization 
 works in QIIME 2 by heading to one of the following resources:
 
-- [parallel pipeline execution](https://use.qiime2.org/en/stable/tutorials/parallel-pipeline.html)
-- [pipeline configuration](https://use.qiime2.org/en/stable/references/parallel-configuration.html)
+- [parallel pipeline execution](https://use.qiime2.org/en/stable/tutorials/parallel-pipeline/)
+- [pipeline configuration](https://use.qiime2.org/en/stable/references/parallel-configuration/)
 
 :::{tip} Example
 :class: tip:
@@ -37,7 +37,7 @@ label = "default"
 
 [parsl.executors.provider]
 class = "SlurmProvider"
-worker_init = "source ~/.bashrc && conda activate q2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "24:00:00"
 nodes_per_block = 1
 cores_per_node = 12
@@ -58,7 +58,7 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=8G"
-worker_init = "source ~/.bashrc && conda activate q2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "24:00:00"
 nodes_per_block = 1
 cores_per_node = 12

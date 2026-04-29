@@ -11,7 +11,7 @@ read mappings, normalize them by contig length and link them to AMR annotations 
 obtain an abundance table of AMR features across samples. This section uses plugins 
 included in the pathogenome and the MOSHPIT distribution of QIIME 2. You can find 
 detailed installation instructions on the 
-[QIIME 2 Library](https://library.qiime2.org/quickstart).
+[QIIME 2 Library](https://library.qiime2.org/quickstart/).
 
 
 ## Build AMR feature table

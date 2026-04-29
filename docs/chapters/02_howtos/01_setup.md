@@ -1,7 +1,7 @@
 (setup)=
 # How to install MOSHPIT
 MOSHPIT is available as a QIIME 2 distribution. You can find detailed installation instructions 
-on the [QIIME 2 Library](https://library.qiime2.org/) page. 
+on the [QIIME 2 Library](https://library.qiime2.org/quickstart/moshpit) page. 
 
 ## Quick start
 ```{attention}
