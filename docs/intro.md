@@ -11,6 +11,14 @@ metagenome assembly, annotation, and analysis built on the microbiome multi-omic
 MOSHPIT enables flexible, modular, fully reproducible workflows for read-based or assembly-based analysis of 
 metagenome data.
 
+```{figure} ./_static/fig1-main.png
+---
+name: overview-fig
+width: 100%
+---
+Schematic of current analysis workflows available in MOSHPIT.
+```
+
 The following main plugins comprise the core of the MOSHPIT toolkit and are included in the [MOSHPIT distribution](https://library.qiime2.org/quickstart/moshpit):
 ::::{grid} 1 1 2 3
 
