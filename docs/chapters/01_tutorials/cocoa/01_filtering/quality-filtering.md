@@ -16,12 +16,10 @@ To see an example of the visualization you can go [here](https://view.qiime2.org
 
 
 ## Option 1: Quality control with fastp.
-The MOSHPIT plugin for `fastp` (https://doi.org/10.1093/bioinformatics/bty560) provides a variety of quality control operations in a single pass (*e.g.* quality filtering, adapter trimming, per-read quality pruning, and other operations). We'll use all of the default settings for these operations, while adding the options `--p-max-len1` & `--p-mac-len2` to truncate the the forward and reverse reads to 90 bases, respectively. This is similar to the cutadapt `--p-minumim-length` example shown under Option 2 below.
+The MOSHPIT plugin for `fastp` (https://doi.org/10.1093/bioinformatics/bty560) provides a variety of quality control operations in a single pass (*e.g.* quality filtering, adapter trimming, per-read quality pruning, and other operations).
 ```
 mosh fastp process-seqs \
     --i-sequences cache:reads_paired \
-    --p-max-len1 90 \
-    --p-max-len2 90 \
     --p-threads 8 \
     --o-processed-sequences cache:reads_trimmed \
     --o-reports cache:fastp_reports
