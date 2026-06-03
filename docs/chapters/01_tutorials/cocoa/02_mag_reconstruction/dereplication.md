@@ -16,9 +16,9 @@ In this step, Sourmash is used to compute MinHash signatures for the filtered MA
 large datasets efficiently by creating compressed representations of genomes.
 ```{code} bash
 mosh sourmash compute \
-    --i-sequence-file cache:mags_filtered_50 \           
-    --p-ksizes 35 \                                  
-    --p-scaled 10 \                                                             
+    --i-sequence-file cache:mags_filtered_50 \
+    --p-ksizes 35 \
+    --p-scaled 10 \
     --o-min-hash-signature cache:mags_minhash_50 \
     --verbose
 ```
@@ -27,20 +27,20 @@ Here we compare the computed MinHash signatures to evaluate the similarity betwe
 dereplication by identifying highly similar genomes.
 ```{code} bash
 mosh sourmash compare \
-    --i-min-hash-signature cache:mags_minhash_50 \ 
-    --p-ksize 35 \                                                          
+    --i-min-hash-signature cache:mags_minhash_50 \
+    --p-ksize 35 \
     --o-compare-output cache:mags_dist_matrix_50 \
-    --verbose         
+    --verbose
 ```
 ## Dereplicate MAGs
 This step dereplicates the filtered MAGs, ensuring that only unique MAGs are retained. Dereplication reduces redundancy 
 by merging similar genomes based on a similarity threshold.
 ```{code} bash
 mosh annotate dereplicate-mags \
-    --i-mags cache:mags_filtered_50 \                    
-    --i-distance-matrix cache:mags_dist_matrix_50 \       
+    --i-mags cache:mags_filtered_50 \
+    --i-distance-matrix cache:mags_dist_matrix_50 \
     --p-threshold 0.99 \
-    --o-dereplicated-mags cache:mags_derep_50 \   
-    --o-table cache:mags_ft_50  \
-    --verbose              
+    --o-dereplicated-mags cache:mags_derep_50 \
+    --o-table cache:mags_ft_50 \
+    --verbose
 ```

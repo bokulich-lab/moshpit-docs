@@ -17,6 +17,7 @@ mosh annotate build-kraken-db \
     --p-collection pluspf \
     --o-kraken2-db cache:kraken2_db \
     --o-bracken-db cache:bracken_db \
+    --verbose
 ```
 
 We can now use the `classify-kraken2` command to run Kraken2 using the paired-end reads as a query and the PlusPF database retrieved in the previous step:
@@ -29,7 +30,7 @@ mosh annotate classify-kraken2 \
     --p-memory-mapping False \
     --p-report-minimizer-data \
     --o-reports cache:kraken_reports_reads \
-    --o-outputs cache:kraken_hits_reads
+    --o-outputs cache:kraken_hits_reads \
     --verbose
 ```
 
@@ -48,7 +49,8 @@ mosh annotate estimate-bracken \
     --p-read-len 150 \
     --o-taxonomy cache:bracken_taxonomy \
     --o-table cache:bracken_ft \
-    --o-reports cache:bracken_reports
+    --o-reports cache:bracken_reports \
+    --verbose
 ```
 
 To remove the unclassified read fraction we can use the `filter-table` action from the `q2-taxa` QIIME 2 plugin:
@@ -67,7 +69,8 @@ prokaryotes and eukaryotes (more info on the taxa [here](https://github.com/bioi
 ```{code} bash
 mosh annotate fetch-kaiju-db \
     --p-database-type nr_euk \
-    --o-db cache:kaiju_nr_euk
+    --o-db cache:kaiju_nr_euk \
+    --verbose
 ```
 
 We run Kaiju with the confidence of 0.1 using the paired-end reads as a query and the database artifact that was generated in the previous step:
@@ -78,7 +81,8 @@ mosh annotate classify-kaiju \
     --p-z 16 \
     --p-c 0.1 \
     --o-taxonomy cache:kaiju_taxonomy \
-    --o-abundances cache:kaiju_ft
+    --o-abundances cache:kaiju_ft \
+    --verbose
 ```
 
 Finally, we filter the table to remove the unclassified reads:
@@ -87,7 +91,8 @@ mosh taxa filter-table \
     --i-table cache:kaiju_ft \
     --i-taxonomy cache:kaiju_taxonomy \
     --p-exclude unclassified,belong,cannot \
-    --o-filtered-table cache:kaiju_ft_filtered
+    --o-filtered-table cache:kaiju_ft_filtered \
+    --verbose
 ```
 
 ## Visualization

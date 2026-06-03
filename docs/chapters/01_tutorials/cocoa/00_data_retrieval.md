@@ -28,7 +28,7 @@ the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configurat
         https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/ids.tsv
     ```
     ```{code} bash
-    wget -O metadata.tsv \ 
+    wget -O metadata.tsv \
         https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/metadata.tsv
     ```
 - create QIIME 2 cache in the current working directory:
@@ -68,6 +68,7 @@ the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configurat
     nodes_per_block = 1
     cores_per_node = 1
     max_blocks = 14
+    exclusive = false
     ```
   
     You can then run the action in the following way:
@@ -81,7 +82,7 @@ the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configurat
         --o-metadata cache:metadata \
         --o-single-reads cache:reads_single \
         --o-failed-runs cache:failed_runs \
-        --parallel-config fondue.config.toml
+        --parallel-config fondue.config.toml \
         --verbose
     ```
     :::
