@@ -43,17 +43,18 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=16G"
-worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "12:00:00"
 nodes_per_block = 1
 cores_per_node = 8
 max_blocks = 14
+exclusive = false
 ```
 
 You can then run the action in the following way:
 ```{code} bash
 mosh assembly assemble-megahit \
-    --i-reads cache:reads_filtered \
+    --i-reads cache:reads_paired_fastp \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 8 \
     --p-min-contig-len 200 \
@@ -67,7 +68,7 @@ mosh assembly assemble-megahit \
 :class: dropdown
 ```{code} bash
 mosh assembly assemble-megahit \
-    --i-reads cache:reads_filtered \
+    --i-reads cache:reads_paired_fastp \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 8 \
     --p-min-contig-len 200 \
@@ -78,9 +79,28 @@ mosh assembly assemble-megahit \
 
 - Alternatively, you can also use `mosh assembly assemble-spades` to assemble contigs with SPAdes.
 
-## Contig QC with QUAST
-Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many 
-metrics that can be used for that purpose but here we will focus on the two most popular metrics: {term}`N50` and {term}`L50`.  
+## Contig QC
+Once the reads are assembled into contigs we want to evaluate their quality. There are many 
+metrics that can be used for that purpose but here we will focus on the two most popular metrics: 
+{term}`N50` and {term}`L50`. MOSHPIT provides you with two options for assesing the assembly quality:
+a simpler `evaluate-contigs` action (calculates only the basic metrics like N50, L50, contig counts) 
+and a more comprehensive `evaluate-quast` action.
+
+### Basic quality metrics
+To get the basic quality control metrics we can use the `evaluate-contigs` action:
+```{code} bash
+mosh assembly evaluate-contigs \
+    --i-contigs cache:contigs  \
+    --m-metadata-file metadata.tsv \
+    --p-n-cpus 4 \
+    --o-results results/contigs-qc.qza \
+    --o-visualization results/contigs.qzv \
+    --verbose
+```
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/contigs.qzv).
+
+### QC using QUAST
+More a more comprehensive assesment you can use QUAST through the `evaluate-quast` action from q2-assembly.
 In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
@@ -92,7 +112,7 @@ mosh assembly evaluate-quast \
     --o-visualization results/contigs.qzv \ 
     --verbose
 ```
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/contigs.qzv).
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/contigs-quast.qzv).
 
 ## Index contigs
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs 
@@ -116,20 +136,21 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=4G"
-worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "4:00:00"
 nodes_per_block = 1
 cores_per_node = 8
 max_blocks = 14
+exclusive = false
 ```
 
 You can then run the action in the following way:
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs cache:contigs \                       
-    --p-threads 8 \                                  
+    --i-contigs cache:contigs \
+    --p-threads 8 \
     --o-index cache:contigs_index \
-    --parallel-config indexing.config.toml
+    --parallel-config indexing.config.toml \
     --verbose
 ```
 :::
@@ -138,11 +159,11 @@ mosh assembly index-contigs \
 :class: dropdown
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs cache:contigs \                       
-    --p-threads 8 \                                  
-    --o-index cache:contigs_index \ 
+    --i-contigs cache:contigs \
+    --p-threads 8 \
+    --o-index cache:contigs_index \
     --o-contigs cache:contigs \
-    --verbose   
+    --verbose
 ```
 :::
 
@@ -168,20 +189,23 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=16G"
-worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "12:00:00"
 nodes_per_block = 1
 cores_per_node = 8
 max_blocks = 14
+exclusive = false
 ```
 
 You can then run the action in the following way:
 ```{code} bash
 mosh assembly map-reads \
-    --i-index cache:contigs_index \                         
-    --i-reads cache:reads_filtered \                                                  
+    --i-index cache:contigs_index \
+    --i-reads cache:reads_paired_fastp \
+    --p-seed 100 \
+    --p-threads 8 \
     --o-alignment-maps cache:reads_to_contigs \
-    --parallel-config mapping.config.toml
+    --parallel-config mapping.config.toml \
     --verbose
 ```
 :::
@@ -190,10 +214,12 @@ mosh assembly map-reads \
 :class: dropdown
 ```{code} bash
 mosh assembly map-reads \
-    --i-index cache:contigs_index \                         
-    --i-reads cache:reads_filtered \                                                  
+    --i-index cache:contigs_index \
+    --i-reads cache:reads_paired_fastp \
+    --p-seed 100 \
+    --p-threads 8 \
     --o-alignment-maps cache:reads_to_contigs \
-    --verbose   
+    --verbose
 ```
 :::
 
@@ -202,15 +228,15 @@ Binning contigs involves grouping assembled contigs into MAGs. This step uses Me
 co-abundance and other features, producing MAG files that represent putative genomes.
 ```{code} bash
 mosh annotate bin-contigs-metabat \
-    --i-contigs cache:contigs \                       
-    --i-alignment-maps cache:reads_to_contigs \         
-    --p-num-threads 64 \                              
-    --p-seed 100 \                                   
-    --p-verbose \                                    
-    --o-mags cache:mags \                             
-    --o-contig-map cache:contig_map \                   
+    --i-contigs cache:contigs \
+    --i-alignment-maps cache:reads_to_contigs \
+    --p-num-threads 8 \
+    --p-seed 100 \
+    --p-verbose \
+    --o-mags cache:mags \
+    --o-contig-map cache:contig_map \
     --o-unbinned-contigs cache:unbinned_contigs \
-    --verbose          
+    --verbose
 ```
 This step generated several artifacts:
 
@@ -232,7 +258,7 @@ precompiled collections of orthologous genes, tailored to specific lineages such
 ```{code} bash
 mosh annotate fetch-busco-db \
     --p-lineages bacteria_odb12 \
-    --o-db cache:busco_db
+    --o-db cache:busco_db \
     --verbose
 ```
 
@@ -256,23 +282,25 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=4G"
-worker_init = "source ~/.bashrc && conda activate qiime2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "2:00:00"
 nodes_per_block = 1
 cores_per_node = 8
 max_blocks = 14
+exclusive = false
 ```
 
 You can then run the action in the following way:
 ```{code} bash
 mosh annotate evaluate-busco \
-    --i-mags cache:mags \                             
-    --i-db cache:busco_db \                     
-    --p-lineage-dataset bacteria_odb12 \             
-    --p-cpu 16 \                                     
+    --i-mags cache:mags \
+    --i-unbinned-contigs cache:unbinned_contigs \
+    --i-db cache:busco_db \
+    --p-lineage-dataset bacteria_odb12 \
+    --p-cpu 16 \
     --o-visualization results/mags.qzv \
     --o-results cache:busco_results \
-    --parallel-config busco.config.toml
+    --parallel-config busco.config.toml \
     --verbose
 ```
 :::
@@ -281,13 +309,14 @@ mosh annotate evaluate-busco \
 :class: dropdown
 ```{code} bash
 mosh annotate evaluate-busco \
-    --i-mags cache:mags \                             
-    --i-db cache:busco_db \                     
-    --p-lineage-dataset bacteria_odb12 \             
-    --p-cpu 16 \                                     
+    --i-mags cache:mags \
+    --i-unbinned-contigs cache:unbinned_contigs \
+    --i-db cache:busco_db \
+    --p-lineage-dataset bacteria_odb12 \
+    --p-cpu 16 \
     --o-visualization results/mags.qzv \
     --o-results cache:busco_results \
-    --verbose   
+    --verbose
 ```
 :::
 
@@ -309,11 +338,11 @@ We recommed that this step is done before dereplication (as in this example). Al
 
 ```{code} bash
 mosh annotate filter-mags \
-    --i-mags cache:mags \                             
-    --m-metadata-file cache:busco_results \           
-    --p-where 'complete>50' \                        
-    --p-no-exclude-ids \                              
-    --p-on mag \                                     
+    --i-mags cache:mags \
+    --m-metadata-file cache:busco_results \
+    --p-where 'complete>50' \
+    --p-no-exclude-ids \
+    --p-on mag \
     --o-filtered-mags cache:mags_filtered_50 \
-    --verbose           
+    --verbose
 ```

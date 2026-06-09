@@ -84,7 +84,6 @@ mosh annotate bin-contigs-metabat \
     --o-mags mags.qza \
     --o-contig-map contig-map.qza \
     --o-unbinned-contigs unbinned-contigs.qza \
-    --parallel-config parallel.config.toml \
     --verbose
 ```
 
@@ -114,6 +113,7 @@ You can speed up this action by taking advantage of parsl parallelization suppor
 mosh annotate evaluate-busco \
     --i-mags mags.qza \
     --i-db busco-db-bacteria.qza \
+    --i-unbinned-contigs unbinned-contigs.qza \
     --p-lineage-dataset bacteria_odb12 \
     --p-cpu 2 \
     --o-results busco-results.qza \
@@ -128,6 +128,7 @@ mosh annotate evaluate-busco \
 mosh annotate evaluate-busco \
     --i-mags mags.qza \
     --i-db busco-db-bacteria.qza \
+    --i-unbinned-contigs unbinned-contigs.qza \
     --p-lineage-dataset bacteria_odb12 \
     --p-cpu 2 \
     --o-results busco-results.qza \

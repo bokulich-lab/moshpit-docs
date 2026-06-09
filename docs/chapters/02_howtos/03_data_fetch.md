@@ -41,7 +41,7 @@ label = "default"
 
 [parsl.executors.provider]
 class = "SlurmProvider"
-worker_init = "source ~/.bashrc && conda activate q2-moshpit-2025.10"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
 walltime = "6:00:00"
 nodes_per_block = 1
 cores_per_node = 1
