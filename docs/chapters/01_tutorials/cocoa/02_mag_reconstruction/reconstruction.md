@@ -97,10 +97,10 @@ mosh assembly evaluate-contigs \
     --o-visualization results/contigs.qzv \
     --verbose
 ```
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/contigs.qzv).
+Your visualization should look similar to [this one](https://polybox.ethz.ch/index.php/s/dqx5i4prCZNYYEE/download). Due to its size you will need to download it and open using [QIIME 2 View](https://view.qiime2.org).
 
 ### QC using QUAST
-More a more comprehensive assesment you can use QUAST through the `evaluate-quast` action from q2-assembly.
+More a more comprehensive assessment you can use QUAST through the `evaluate-quast` action from q2-assembly.
 In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
@@ -109,10 +109,12 @@ mosh assembly evaluate-quast \
     --i-contigs cache:contigs  \
     --p-threads 7 \
     --p-memory-efficient \
-    --o-visualization results/contigs.qzv \ 
+    --o-results-table cache:quast_results \
+    --o-reference-genomes cache:quast_ref_genomes \
+    --o-visualization results/contigs-quast.qzv \
     --verbose
 ```
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/contigs-quast.qzv).
+Your visualization should look similar to [this one](https://polybox.ethz.ch/index.php/s/ZePWwrYgtgxmYyF/download). Due to its size you will need to download it and open using [QIIME 2 View](https://view.qiime2.org).
 
 ## Index contigs
 In this step, we generate an index for the assembled contigs. This index is required for mapping reads to the contigs 
@@ -323,7 +325,7 @@ mosh annotate evaluate-busco \
 The `--p-lineage-dataset bacteria_odb12` parameter specifies the particular lineage dataset to use, in this case, 
 the bacteria_odb12 dataset. This is a standard database for bacterial genomes.
 
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/mags.qzv).
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/cocoa/mags.qzv).
 
 ## Filter MAGs
 This step filters MAGs based on completeness. In this example, we filter out any MAGs with completeness below 50%. 

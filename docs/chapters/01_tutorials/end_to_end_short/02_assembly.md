@@ -12,7 +12,7 @@ sequences called {term}`contig`s, providing valuable genetic information for the
 The reads generated for this tutorial can be downloaded using the following command:
 ```{code} bash
 wget -O reads.qza \
-    https://polybox.ethz.ch/index.php/s/Yw34y55TDX98BA9/download
+    https://polybox.ethz.ch/index.php/s/pNZbKcaKrwSiFMH/download
 ```
 
 You can run the assembly using the following command:
@@ -70,7 +70,7 @@ reference sequences for those genomes—this will save us a bit of work and time
 First, fetch the reference genomes that QUAST will use to compare our contigs against:
 ```{code} bash
 wget -O reference-genomes.qza \
-    https://polybox.ethz.ch/index.php/s/jA9FB8EF4YjP82x/download
+    https://polybox.ethz.ch/index.php/s/SDczx2T6sxnNL9x/download
 ```
 
 Then, run the following command to assess the quality of contigs assembled in the previous step:

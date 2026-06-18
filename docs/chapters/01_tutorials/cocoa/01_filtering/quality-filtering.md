@@ -24,7 +24,7 @@ To generate a visualization run:
 ```{code} bash
 mosh fastp visualize \
     --i-reports cache:fastp_reports_before \
-    --o-visualization fastp-before.qzv \
+    --o-visualization reports/fastp-before.qzv \
     --verbose
 ```
 
@@ -45,7 +45,7 @@ Finally, we generate the visualization:
 ```{code} bash
 mosh fastp visualize \
     --i-reports cache:fastp_reports \
-    --o-visualization fastp.qzv \
+    --o-visualization results/fastp.qzv \
     --verbose
 ```
-You should see something similar to [this result](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/fastp.qzv).
+You should see something similar to [this result](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/cocoa/fastp.qzv).
