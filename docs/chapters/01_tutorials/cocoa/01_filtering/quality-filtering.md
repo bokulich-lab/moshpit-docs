@@ -48,4 +48,4 @@ mosh fastp visualize \
     --o-visualization results/fastp.qzv \
     --verbose
 ```
-You should see something similar to [this result](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/fastp.qzv).
+You should see something similar to [this result](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/cocoa/fastp.qzv).

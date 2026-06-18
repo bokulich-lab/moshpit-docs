@@ -197,7 +197,7 @@ qiime emperor plot \
     --o-visualization results/caz-pcoa.qzv
 ```
 
-Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/moshpit_docs/data/bray-curtis-emperor.qzv).
+Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/cocoa/caz-pcoa.qzv).
 ```{tip}
 Once your visualization is ready, click on the `Color` tab at the top right and select `scatter:seed` on the first tab 
 to color your samples by seed type. Then click on the `Animations` tab and choose `timepoint` as gradient and `seed` 

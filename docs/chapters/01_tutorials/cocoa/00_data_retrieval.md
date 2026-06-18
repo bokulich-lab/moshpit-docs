@@ -25,11 +25,11 @@ the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configurat
 - download the files containing all the accession IDs and corresponding metadata:
     ```{code} bash
     wget -O ids.tsv \
-        https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/ids.tsv
+        https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/cocoa/ids.tsv
     ```
     ```{code} bash
     wget -O metadata.tsv \
-        https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/metadata.tsv
+        https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/cocoa/metadata.tsv
     ```
 - create QIIME 2 cache in the current working directory:
     ```{code} bash
