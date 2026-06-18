@@ -26,5 +26,6 @@ mosh annotate kraken2-to-mag-features \
     --i-reports cache:kraken_reports_mags_derep_50 \
     --i-outputs cache:kraken_hits_derep_50 \
     --p-coverage-threshold 0.1 \
-    --o-taxonomy cache:mags_derep_taxonomy_50
+    --o-taxonomy cache:mags_derep_taxonomy_50 \
+    --verbose
  ```

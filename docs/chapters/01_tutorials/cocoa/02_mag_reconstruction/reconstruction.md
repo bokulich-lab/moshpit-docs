@@ -100,7 +100,7 @@ mosh assembly evaluate-contigs \
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/contigs.qzv).
 
 ### QC using QUAST
-More a more comprehensive assesment you can use QUAST through the `evaluate-quast` action from q2-assembly.
+More a more comprehensive assessment you can use QUAST through the `evaluate-quast` action from q2-assembly.
 In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which 
 the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to 
 run the analysis against using `--i-references`.
@@ -109,7 +109,9 @@ mosh assembly evaluate-quast \
     --i-contigs cache:contigs  \
     --p-threads 7 \
     --p-memory-efficient \
-    --o-visualization results/contigs.qzv \ 
+    --o-results-table cache:quast_results \
+    --o-reference-genomes cache:quast_ref_genomes \
+    --o-visualization results/contigs-quast.qzv \
     --verbose
 ```
 Your visualization should look similar to [this one](https://view.qiime2.org/visualization/?src=https://raw.githubusercontent.com/bokulich-lab/moshpit-docs/main/docs/data/contigs-quast.qzv).

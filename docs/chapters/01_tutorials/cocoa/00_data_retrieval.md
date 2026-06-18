@@ -43,6 +43,10 @@ the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configurat
         --cache cache \
         --key ids
     ```
+- create the directory to store all the visualizations created during this tutorial:
+    ```{code} bash
+    mkdir results
+    ```
 - run the `get-all` action from the `fondue` plugin:
     :::{hint} With parsl parallelization
     :class: dropdown
