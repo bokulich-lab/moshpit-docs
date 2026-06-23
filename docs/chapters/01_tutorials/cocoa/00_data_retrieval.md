@@ -67,7 +67,7 @@ the [SRA Toolkit](https://github.com/bokulich-lab/q2-fondue#mandatory-configurat
     [parsl.executors.provider]
     class = "SlurmProvider"
     scheduler_options = "#SBATCH --mem-per-cpu=4G --tmp=5GB"
-    worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
+    worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.7"
     walltime = "6:00:00"
     nodes_per_block = 1
     cores_per_node = 1
