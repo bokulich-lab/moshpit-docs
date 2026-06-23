@@ -11,7 +11,7 @@ There are a couple of ways to estimate MAG abundance, such as RPKM (Reads Per Ki
 ## Get MAG lengths
 This step calculates the lengths of each dereplicated MAG, which will be used in the next step to estimate abundance.
 ```{code} bash
-mosh annotate get-feature-lengths \
+mosh mag get-feature-lengths \
     --i-features cache:mags_derep_50 \
     --o-lengths cache:mags_derep_length \
     --verbose
@@ -72,7 +72,7 @@ This step estimates the abundance of each MAG in the sample based on the read ma
 
 For more options, see `--help`.
 ```{code} bash
-mosh annotate estimate-abundance \
+mosh mag estimate-abundance \
     --i-feature-lengths cache:mags_derep_length \
     --i-alignment-maps cache:reads_to_derep_mags \
     --p-threads 10 \

@@ -229,7 +229,7 @@ mosh assembly map-reads \
 Binning contigs involves grouping assembled contigs into MAGs. This step uses MetaBAT to assign contigs based on 
 co-abundance and other features, producing MAG files that represent putative genomes.
 ```{code} bash
-mosh annotate bin-contigs-metabat \
+mosh mag bin-contigs-metabat \
     --i-contigs cache:contigs \
     --i-alignment-maps cache:reads_to_contigs \
     --p-num-threads 8 \
@@ -251,14 +251,14 @@ From now on, we will focus on the `mags`.
 This step evaluates the completeness and quality of MAGs using the BUSCO tool, which checks for the presence of 
 single-copy orthologs. The evaluation helps ensure the quality of the recovered MAGs.
 
-First we will use `mosh annotate fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
+First we will use `mosh mag fetch-busco-db` to download a specific lineage's BUSCO database. BUSCO databases are 
 precompiled collections of orthologous genes, tailored to specific lineages such as viruses, prokaryotes 
 (bacteria and archaea), eukaryotes or more specific ones like bacteria_odb12.
 
 - The `--p-lineages` parameter set to `bacteria_odb12` specifies that we want to download the bacterial dataset.
 
 ```{code} bash
-mosh annotate fetch-busco-db \
+mosh mag fetch-busco-db \
     --p-lineages bacteria_odb12 \
     --o-db cache:busco_db \
     --verbose
@@ -294,7 +294,7 @@ exclusive = false
 
 You can then run the action in the following way:
 ```{code} bash
-mosh annotate evaluate-busco \
+mosh mag evaluate-busco \
     --i-mags cache:mags \
     --i-unbinned-contigs cache:unbinned_contigs \
     --i-db cache:busco_db \
@@ -310,7 +310,7 @@ mosh annotate evaluate-busco \
 :::{note} Without parallelization
 :class: dropdown
 ```{code} bash
-mosh annotate evaluate-busco \
+mosh mag evaluate-busco \
     --i-mags cache:mags \
     --i-unbinned-contigs cache:unbinned_contigs \
     --i-db cache:busco_db \
@@ -334,12 +334,12 @@ The filtering process ensures only high-quality genomes are kept for downstream 
 ::::{aside}
 ```{tip}
 We recommed that this step is done before dereplication (as in this example). Alternatively, we can also use the 
-[dereplicated set](dereplication) and filter this one using `mosh annotate filter-derep-mags`.
+[dereplicated set](dereplication) and filter this one using `mosh mag filter-derep-mags`.
 ```
 ::::
 
 ```{code} bash
-mosh annotate filter-mags \
+mosh mag filter-mags \
     --i-mags cache:mags \
     --m-metadata-file cache:busco_results \
     --p-where 'complete>50' \
