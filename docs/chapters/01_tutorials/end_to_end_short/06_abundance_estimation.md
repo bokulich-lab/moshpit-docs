@@ -62,7 +62,7 @@ we can normalize counts of reads based on genome length. To achieve that, you ca
 the `get-feature-lengths` action:
 
 ```{code} bash
-mosh annotate get-feature-lengths \
+mosh mag get-feature-lengths \
     --i-features mags-derep.qza \
     --o-lengths mags-derep-lengths.qza \
     --verbose
@@ -78,7 +78,7 @@ learn more about those. We will also set minimal mapping quality to 42 to ensure
 taking into account only the reads which mapped to our MAGs perfectly.
 
 ```{code} bash
-mosh annotate estimate-abundance \
+mosh mag estimate-abundance \
     --i-alignment-maps reads-to-mags-aln.qza \
     --i-feature-lengths mags-derep-lengths.qza \
     --p-metric tpm \

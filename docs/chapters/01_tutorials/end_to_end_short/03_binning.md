@@ -76,7 +76,7 @@ based on their likely origin from different microbial species or strains within 
 contigs to individual bins.
 
 ```{code} bash
-mosh annotate bin-contigs-metabat \
+mosh mag bin-contigs-metabat \
     --i-contigs contigs.qza \
     --i-alignment-maps reads-to-contigs-aln.qza \
     --p-num-threads 4 \
@@ -97,7 +97,7 @@ We begin by fetching the required BUSCO database: we know that all species in ou
 can fetch only this lineage to save some space and resources:
 
 ```{code} bash
-mosh annotate fetch-busco-db \
+mosh mag fetch-busco-db \
     --p-lineages bacteria_odb12 \
     --o-db busco-db-bacteria.qza \
     --verbose
@@ -110,7 +110,7 @@ Next, we use the database we fetched to run BUSCO with our recovered MAGs as inp
 You can speed up this action by taking advantage of parsl parallelization support. We will use the same config as for genome assembly.
 
 ```{code} bash
-mosh annotate evaluate-busco \
+mosh mag evaluate-busco \
     --i-mags mags.qza \
     --i-db busco-db-bacteria.qza \
     --i-unbinned-contigs unbinned-contigs.qza \
@@ -125,7 +125,7 @@ mosh annotate evaluate-busco \
 
 ````{tab-item} Without parallelization
 ```{code} bash
-mosh annotate evaluate-busco \
+mosh mag evaluate-busco \
     --i-mags mags.qza \
     --i-db busco-db-bacteria.qza \
     --i-unbinned-contigs unbinned-contigs.qza \
@@ -149,7 +149,7 @@ in the downstream analyses. We want to keep the MAGs which are at least 50% comp
 We can easily achieve this with the following action:
 
 ```{code} bash
-mosh annotate filter-mags \
+mosh mag filter-mags \
     --i-mags mags.qza \
     --m-metadata-file busco-results.qza \
     --p-where "completeness>50 AND contamination<10" \
