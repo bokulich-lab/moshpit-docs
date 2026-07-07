@@ -3,6 +3,6 @@ docs/references/q2doc.bib
 docs/refs/artifacts
 docs/refs/plugins
 docs/_build/
-docs/data/
+docs/data/examples/
 .locks/
 .DS_Store

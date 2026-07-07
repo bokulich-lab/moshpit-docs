@@ -25,14 +25,19 @@ The following main plugins comprise the core of the MOSHPIT toolkit and are incl
 :::{card}
 :header: **q2-assembly**
 :link: https://github.com/bokulich-lab/q2-assembly
-This plugin contains actions for (meta)genome assembly and quality control, genome indexing and red mapping.
+This plugin contains actions for (meta)genome assembly and quality control, genome indexing and read mapping.
+:::
+
+:::{card}
+:header: **q2-mag**
+:link: https://github.com/bokulich-lab/q2-mag
+This plugin provides actions for contig binning, MAG quality control, dereplication, and abundance estimation.
 :::
 
 :::{card}
 :header: **q2-annotate**
 :link: https://github.com/bokulich-lab/q2-annotate
-This plugin provides actions for contig binning and quality control, taxonomic and functional annotations 
-of contigs and {term}`MAG`s, human host removal.
+This plugin provides actions for taxonomic and functional annotation of contigs and {term}`MAG`s, human host removal.
 :::
 
 :::{card}
@@ -56,7 +61,7 @@ This plugin provides actions for data retrieval from SRA.
 ::::
 
 ---
-You may also want to check out these other QIIME 2 plugins for antimicrobial resistance gene ({term}`ARG`) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-annotate:
+You may also want to check out these other QIIME 2 plugins for antimicrobial resistance gene ({term}`ARG`) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly, q2-mag, and q2-annotate:
 
 ::::{grid} 1 1 2 3
 

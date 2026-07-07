@@ -29,6 +29,7 @@ project:
             - file: chapters/01_tutorials/end_to_end_short/04_dereplication.md
             - file: chapters/01_tutorials/end_to_end_short/05_taxonomic_classification.md
             - file: chapters/01_tutorials/end_to_end_short/06_abundance_estimation.md
+            - file: chapters/01_tutorials/end_to_end_short/07_functional_profiling.md
         - file: chapters/01_tutorials/cocoa/cocoa.intro.md
           children:
             - file: chapters/01_tutorials/cocoa/00_data_retrieval.md

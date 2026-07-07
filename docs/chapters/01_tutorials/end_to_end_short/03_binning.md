@@ -71,9 +71,19 @@ mosh assembly map-reads \
 
 ## Contig binning
 Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups 
-based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the 
-[MetaBAT 2](https://doi.org/10.7717/peerj.7359) tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign 
-contigs to individual bins.
+based on their likely origin from different microbial species or strains within a mixed community. MOSHPIT supports 
+multiple binners through the [q2-mag](https://github.com/bokulich-lab/q2-mag) plugin—here we show two options: 
+[MetaBAT 2](https://doi.org/10.7717/peerj.7359), which uses tetranucleotide frequency together with abundance 
+(coverage) information, and [SemiBin2](https://doi.org/10.1093/bioinformatics/btad209), a deep-learning approach 
+that can leverage pre-trained models for common environments.
+
+Both actions take the contigs from assembly and the read-to-contig alignment maps generated above. Pick one binner 
+to continue; the downstream quality-control steps work with either set of outputs.
+
+`````{tab-set}
+````{tab-item} MetaBAT 2
+MetaBAT 2 is a fast binner that also reports contigs that could not be assigned to any bin. 
+Those unbinned contigs are used later in the BUSCO visualization.
 
 ```{code} bash
 mosh mag bin-contigs-metabat \
@@ -86,6 +96,33 @@ mosh mag bin-contigs-metabat \
     --o-unbinned-contigs unbinned-contigs.qza \
     --verbose
 ```
+````
+
+````{tab-item} SemiBin2
+SemiBin2 uses deep learning together with coverage information to group contigs into bins. For this mock-community 
+tutorial we use the `global` pre-trained model setting. Unlike MetaBAT 2, SemiBin2 does not return a 
+separate unbinned-contigs artifact.
+
+```{code} bash
+mosh mag bin-contigs-semibin2 \
+    --i-contigs contigs.qza \
+    --i-alignment-maps reads-to-contigs-aln.qza \
+    --p-environment global \
+    --p-training-type semi \
+    --p-threads 4 \
+    --p-random-seed 100 \
+    --o-mags mags.qza \
+    --o-contig-map contig-map.qza \
+    --verbose
+```
+````
+`````
+
+:::{note} SemiBin2 and BUSCO
+If you binned with SemiBin2, omit `--i-unbinned-contigs` from the `evaluate-busco` commands below. The BUSCO 
+quality metrics for your MAGs will still be computed; only the optional unbinned-contig summary in the visualization 
+will be omitted.
+:::
 
 ## MAG quality control
 Once we have our contigs binned into Metagenome-Assembled Genomes (MAGs), we need to check what the quality of those 

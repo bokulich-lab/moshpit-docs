@@ -12,7 +12,7 @@ to genome lengths and present the results using one of the available metrics
 
 ## MAG indexing
 Similarly to how it was done for MAG recovery, we first need to index our dereplicated 
-MAGs. We can do it using the `index-derep-mags` action from the `q2-annotate` plugin:
+MAGs. We can do it using the `index-derep-mags` action from the `q2-assembly` plugin:
 
 ```{code} bash
 mosh assembly index-derep-mags \
