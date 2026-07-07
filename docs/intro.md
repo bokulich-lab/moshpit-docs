@@ -120,4 +120,10 @@ Differential expression analysis using [_DESeq2_](https://bioconductor.org/packa
 Assessment of microbial genome quality with [_CheckM_ v1](https://github.com/ecogenomics/checkm).
 :::
 
+:::{card}
+:header: **q2-humann3**
+:link: https://github.com/bokulich-lab/q2-humann3
+Read-based functional profiling with [_HUMAnN 3_](https://doi.org/10.7554/eLife.65088).
+:::
+
 ::::
