@@ -41,12 +41,12 @@ mosh quality-control filter-reads \
 ## Human host reads
 Contaminating human reads can also be filtered out using the approach shown above by providing a human reference genome.
 Since a single human reference genome is not enough to cover all the human genetic diversity, it is recommended to use a
-collection of genomes represented by the human pangenome (https://doi.org/10.1038/s41467-025-56077-5). We have built a new QIIME 2 action `filter-reads-pangenome`
-which allows to first fetch the human pangenome sequence, combine it with the GRCh38 reference genome, build a combined 
+collection of genomes represented by the human pangenome (https://doi.org/10.1038/s41467-025-56077-5). We have built a QIIME 2 `quality-control`
+action, `filter-reads-pangenome`, which allows to first fetch the human pangenome sequence, combine it with the GRCh38 reference genome, build a combined 
 Bowtie 2 index and, finally, filter the reads against it. Next to the filtered reads, the action will also return the generated 
 index so that it can be used in any other experiments.
 ```{code} bash
-mosh annotate filter-reads-pangenome \
+mosh quality-control filter-reads-pangenome \
     --i-reads cache:reads_trimmed \
     --o-filtered-reads cache:reads_filtered \
     --o-reference-index cache:human_reference_index
