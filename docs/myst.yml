@@ -60,9 +60,20 @@ project:
               children:
                 - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/assembled-sequences.md
                 - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/amr-contig-abundance.md
-    - title: How-To Guides
+    - title: How-to Guides
       children:
-        - pattern: chapters/02_howtos/*.md
+        - title: Workflows
+          children:
+            - file: chapters/03_workflows/00_index.md
+            - file: chapters/03_workflows/01_assemble_contigs.md
+            - file: chapters/03_workflows/02_bin_mags.md
+            - file: chapters/03_workflows/03_quality_control.md
+            - file: chapters/03_workflows/04_early_taxonomic_composition.md
+            - file: chapters/03_workflows/05_dereplicate_and_abundance.md
+            - file: chapters/03_workflows/06_functional_profiling.md
+        - title: Operations
+          children:
+            - pattern: chapters/02_howtos/*.md
 #    - title: Explanations
 #      children:
     - title: References

@@ -2,7 +2,12 @@
 authors:
 - mz
 ---
+(e2e-functional-profiling)=
 # Functional profiling of reads
+
+:::{seealso} Workflow Guide
+For a side-by-side comparison of read-based (HUMAnN 3) and MAG-based (EggNOG) functional profiling, see [How to profile functional potential](functional-profiling).
+:::
 So far we have focused on recovering and characterizing genomes from our mock-community 
 reads. Another common question in shotgun metagenomics is what biochemical functions are 
 present in a sample. For read-based functional profiling we will use 

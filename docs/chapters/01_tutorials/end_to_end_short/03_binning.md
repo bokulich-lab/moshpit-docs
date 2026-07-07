@@ -4,6 +4,11 @@ authors:
 ---
 (binning)=
 # MAG binning
+
+:::{seealso} Workflow Guide
+Looking for a concise recipe you can adapt to your own data? See [How to bin MAGs](bin-mags).
+:::
+
 (read-mapping)=
 ## Read mapping
 Before we continue to assemble MAGs, we need to index the contigs obtained in the assembly step and map the original 

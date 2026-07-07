@@ -2,7 +2,13 @@
 authors:
 - mz
 ---
+(e2e-taxonomic-classification)=
 # Taxonomic classification
+
+:::{seealso} Workflow Guide
+For a decision-tree overview of all three taxonomic profiling approaches (read-based, contig-based, and MAG-based) and documentation of the contig-based path not covered in this tutorial, see [Early glimpse of taxonomic composition](early-taxonomy).
+:::
+
 Let's now find out what the taxonomic composition of our samples is. There are at least 
 two ways to do this. We can classify the reads directly to get an early glimpse into the 
 taxa within, or we can classify the MAGs we recovered to get a more accurate picture of

@@ -2,7 +2,12 @@
 authors:
 - mz
 ---
+(mag-abundance)=
 # MAG abundance estimation
+
+:::{seealso} Workflow Guide
+For a concise step-by-step recipe combining dereplication and abundance estimation, see [Dereplicate MAGs and estimate abundance](dereplicate-and-abundance).
+:::
 At this point we still have no information about how much of each MAG was present in 
 the original samples—this is something we will try to do in this section. To estimate 
 MAG abundance, we will take the original reads and map them back to the recovered MAGs. 

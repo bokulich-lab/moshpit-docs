@@ -2,6 +2,7 @@
 authors:
 - mz
 ---
+(host-filtering)=
 # Host read removal
 There are a few different options to perform host read removal in QIIME 2: a more generic one using the `filter-reads` action
 and a more specific one using the `filter-reads-pangenome` action. Below you can learn how to use both of them. In this tutorial we will 

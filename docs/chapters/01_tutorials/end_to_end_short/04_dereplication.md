@@ -2,6 +2,7 @@
 authors:
 - mz
 ---
+(e2e-dereplication)=
 # MAG dereplication
 Since our samples were generated from the same mock community (i.e., we know they most likely contain the same set of 
 genomes), we can simplify our MAG collection by performing __dereplication__, similarly to how you do it for 16S 
