@@ -23,10 +23,10 @@ Build a Bowtie2 index for each sample's contigs. This index enables read mapping
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-threads 8 \
     --p-seed 100 \
-    --o-index contigs-index.qza \
+    --o-index cache:contigs_index \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -34,10 +34,10 @@ mosh assembly index-contigs \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-threads 8 \
     --p-seed 100 \
-    --o-index contigs-index.qza \
+    --o-index cache:contigs_index \
     --verbose
 ```
 ````
@@ -53,11 +53,11 @@ Map the original reads back to the assembled contigs. Both binners use the resul
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh assembly map-reads \
-    --i-index contigs-index.qza \
-    --i-reads reads.qza \
+    --i-index cache:contigs_index \
+    --i-reads cache:reads \
     --p-threads 8 \
     --p-seed 100 \
-    --o-alignment-maps reads-to-contigs-aln.qza \
+    --o-alignment-maps cache:reads_to_contigs_aln \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -65,11 +65,11 @@ mosh assembly map-reads \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh assembly map-reads \
-    --i-index contigs-index.qza \
-    --i-reads reads.qza \
+    --i-index cache:contigs_index \
+    --i-reads cache:reads \
     --p-threads 8 \
     --p-seed 100 \
-    --o-alignment-maps reads-to-contigs-aln.qza \
+    --o-alignment-maps cache:reads_to_contigs_aln \
     --verbose
 ```
 ````
@@ -87,13 +87,13 @@ MetaBAT 2 uses tetranucleotide frequency together with coverage information to g
 
 ```{code} bash
 mosh mag bin-contigs-metabat \
-    --i-contigs contigs.qza \
-    --i-alignment-maps reads-to-contigs-aln.qza \
+    --i-contigs cache:contigs \
+    --i-alignment-maps cache:reads_to_contigs_aln \
     --p-num-threads 4 \
     --p-seed 100 \
-    --o-mags mags.qza \
-    --o-contig-map contig-map.qza \
-    --o-unbinned-contigs unbinned-contigs.qza \
+    --o-mags cache:mags \
+    --o-contig-map cache:contig_map \
+    --o-unbinned-contigs cache:unbinned_contigs \
     --verbose
 ```
 ````
@@ -102,14 +102,14 @@ SemiBin2 uses deep learning together with coverage information. Pre-trained envi
 
 ```{code} bash
 mosh mag bin-contigs-semibin2 \
-    --i-contigs contigs.qza \
-    --i-alignment-maps reads-to-contigs-aln.qza \
+    --i-contigs cache:contigs \
+    --i-alignment-maps cache:reads_to_contigs_aln \
     --p-environment global \
     --p-training-type semi \
     --p-threads 4 \
     --p-random-seed 100 \
-    --o-mags mags.qza \
-    --o-contig-map contig-map.qza \
+    --o-mags cache:mags \
+    --o-contig-map cache:contig_map \
     --verbose
 ```
 
@@ -136,7 +136,7 @@ BUSCO assesses completeness and contamination of each MAG by checking for the pr
 ```{code} bash
 mosh mag fetch-busco-db \
     --p-lineages bacteria_odb12 \
-    --o-db busco-db.qza \
+    --o-db cache:busco_db \
     --verbose
 ```
 
@@ -146,12 +146,12 @@ Common lineages: `bacteria_odb12`, `archaea_odb12`, `eukaryota_odb12`. Use `bact
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh mag evaluate-busco \
-    --i-mags mags.qza \
-    --i-db busco-db.qza \
-    --i-unbinned-contigs unbinned-contigs.qza \
+    --i-mags cache:mags \
+    --i-db cache:busco_db \
+    --i-unbinned-contigs cache:unbinned_contigs \
     --p-lineage-dataset bacteria_odb12 \
     --p-cpu 4 \
-    --o-results busco-results.qza \
+    --o-results cache:busco_results \
     --o-visualization mags.qzv \
     --parallel-config parallel.config.toml \
     --verbose
@@ -160,12 +160,12 @@ mosh mag evaluate-busco \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh mag evaluate-busco \
-    --i-mags mags.qza \
-    --i-db busco-db.qza \
-    --i-unbinned-contigs unbinned-contigs.qza \
+    --i-mags cache:mags \
+    --i-db cache:busco_db \
+    --i-unbinned-contigs cache:unbinned_contigs \
     --p-lineage-dataset bacteria_odb12 \
     --p-cpu 4 \
-    --o-results busco-results.qza \
+    --o-results cache:busco_results \
     --o-visualization mags.qzv \
     --verbose
 ```
@@ -181,7 +181,7 @@ If you binned with SemiBin2, omit `--i-unbinned-contigs` from the command above.
 [q2-checkm](https://github.com/bokulich-lab/q2-checkm) provides genome quality assessment using CheckM v1, an earlier but widely used marker-gene approach. It requires a separate installation:
 ```{code} bash
 qiime checkm evaluate-bins \
-    --i-bins mags.qza \
+    --i-bins cache:mags \
     --p-threads 4 \
     --o-visualization checkm-results.qzv \
     --verbose
@@ -197,11 +197,11 @@ Remove low-quality bins before dereplication or downstream analyses. The MIMAG s
 
 ```{code} bash
 mosh mag filter-mags \
-    --i-mags mags.qza \
-    --m-metadata-file busco-results.qza \
+    --i-mags cache:mags \
+    --m-metadata-file cache:busco_results \
     --p-where "completeness>50 AND contamination<10" \
     --p-on "mag" \
-    --o-filtered-mags mags-filtered.qza \
+    --o-filtered-mags cache:mags_filtered \
     --verbose
 ```
 

@@ -51,18 +51,18 @@ HUMAnN 3 is provided by the separate [q2-humann3](https://library.qiime2.org/plu
 
 ```{code} bash
 qiime humann3 download-chocophlan-database \
-    --o-database chocophlan-db.qza \
+    --o-database cache:chocophlan_db \
     --verbose
 
 qiime humann3 download-metaphlan-database \
     --p-index latest \
     --p-cpus 4 \
-    --o-database metaphlan-db.qza \
+    --o-database cache:metaphlan_db \
     --verbose
 
 qiime humann3 download-translated-search-database \
     --p-build uniref90_diamond \
-    --o-database uniref-db.qza \
+    --o-database cache:uniref_db \
     --verbose
 ```
 
@@ -72,16 +72,16 @@ qiime humann3 download-translated-search-database \
 ````{tab-item} With parsl parallelization
 ```{code} bash
 qiime humann3 run-humann \
-    --i-reads reads.qza \
-    --i-nucleotide-database chocophlan-db.qza \
-    --i-translated-search-database uniref-db.qza \
-    --i-metaphlan-database metaphlan-db.qza \
+    --i-reads cache:reads \
+    --i-nucleotide-database cache:chocophlan_db \
+    --i-translated-search-database cache:uniref_db \
+    --i-metaphlan-database cache:metaphlan_db \
     --p-threads 8 \
     --p-memory-use minimum \
-    --o-gene-families humann-gene-families.qza \
-    --o-path-abundance humann-path-abundance.qza \
-    --o-metaphlan-profile humann-metaphlan-profile.qza \
-    --o-reactions humann-reactions.qza \
+    --o-gene-families cache:humann_gene_families \
+    --o-path-abundance cache:humann_path_abundance \
+    --o-metaphlan-profile cache:humann_metaphlan_profile \
+    --o-reactions cache:humann_reactions \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -89,16 +89,16 @@ qiime humann3 run-humann \
 ````{tab-item} Without parallelization
 ```{code} bash
 qiime humann3 run-humann \
-    --i-reads reads.qza \
-    --i-nucleotide-database chocophlan-db.qza \
-    --i-translated-search-database uniref-db.qza \
-    --i-metaphlan-database metaphlan-db.qza \
+    --i-reads cache:reads \
+    --i-nucleotide-database cache:chocophlan_db \
+    --i-translated-search-database cache:uniref_db \
+    --i-metaphlan-database cache:metaphlan_db \
     --p-threads 8 \
     --p-memory-use minimum \
-    --o-gene-families humann-gene-families.qza \
-    --o-path-abundance humann-path-abundance.qza \
-    --o-metaphlan-profile humann-metaphlan-profile.qza \
-    --o-reactions humann-reactions.qza \
+    --o-gene-families cache:humann_gene_families \
+    --o-path-abundance cache:humann_path_abundance \
+    --o-metaphlan-profile cache:humann_metaphlan_profile \
+    --o-reactions cache:humann_reactions \
     --verbose
 ```
 ````
@@ -111,37 +111,37 @@ Convert the stratified HUMAnN tables into standard QIIME 2 feature tables using 
 ```{code} bash
 # Pathway abundances
 qiime sapienns humann-pathway \
-    --i-pathway-table humann-path-abundance.qza \
+    --i-pathway-table cache:humann_path_abundance \
     --p-destratify \
-    --o-table humann-pathways-table.qza \
-    --o-taxonomy humann-pathways-taxonomy.qza \
+    --o-table cache:humann_pathways_table \
+    --o-taxonomy cache:humann_pathways_taxonomy \
     --verbose
 
 qiime taxa barplot \
-    --i-table humann-pathways-table.qza \
-    --i-taxonomy humann-pathways-taxonomy.qza \
+    --i-table cache:humann_pathways_table \
+    --i-taxonomy cache:humann_pathways_taxonomy \
     --o-visualization humann-pathways-barplot.qzv \
     --verbose
 
 # Gene families
 qiime sapienns humann-genefamily \
-    --i-genefamily-table humann-gene-families.qza \
+    --i-genefamily-table cache:humann_gene_families \
     --p-destratify \
-    --o-table humann-genefamilies-table.qza \
-    --o-taxonomy humann-genefamilies-taxonomy.qza \
+    --o-table cache:humann_genefamilies_table \
+    --o-taxonomy cache:humann_genefamilies_taxonomy \
     --verbose
 
 # MetaPhlAn taxonomic profile (species level)
 qiime sapienns metaphlan-taxon \
-    --i-stratified-table humann-metaphlan-profile.qza \
+    --i-stratified-table cache:humann_metaphlan_profile \
     --p-level 7 \
-    --o-table metaphlan-table.qza \
-    --o-taxonomy metaphlan-taxonomy.qza \
+    --o-table cache:metaphlan_table \
+    --o-taxonomy cache:metaphlan_taxonomy \
     --verbose
 
 qiime taxa barplot2 \
-    --i-table metaphlan-table.qza \
-    --i-taxonomy metaphlan-taxonomy.qza \
+    --i-table cache:metaphlan_table \
+    --i-taxonomy cache:metaphlan_taxonomy \
     --o-visualization metaphlan-barplot.qzv \
     --verbose
 ```
@@ -160,11 +160,11 @@ EggNOG-mapper can annotate assembled contigs directly, without binning. This giv
 
 ```{code} bash
 mosh annotate fetch-diamond-db \
-    --o-db diamond-db.qza \
+    --o-db cache:diamond_db \
     --verbose
 
 mosh annotate fetch-eggnog-db \
-    --o-db eggnog-db.qza \
+    --o-db cache:eggnog_db \
     --verbose
 ```
 
@@ -172,9 +172,9 @@ Alternatively, build a taxon-specific DIAMOND database for faster searches:
 
 ```{code} bash
 mosh annotate build-eggnog-diamond-db \
-    --i-eggnog-db eggnog-db.qza \
+    --i-eggnog-db cache:eggnog_db \
     --p-taxon 2 \
-    --o-eggnog-diamond-db eggnog-diamond-db-bacteria.qza \
+    --o-eggnog-diamond-db cache:eggnog_diamond_db_bacteria \
     --verbose
 ```
 
@@ -186,13 +186,13 @@ Pass `--p-taxon 2` for Bacteria, `2157` for Archaea, or `1` for all. Taxon IDs f
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh annotate search-orthologs-diamond \
-    --i-seqs contigs.qza \
-    --i-db diamond-db.qza \
+    --i-seqs cache:contigs \
+    --i-db cache:diamond_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-eggnog-hits eggnog-hits.qza \
-    --o-table eggnog-ft.qza \
-    --o-loci eggnog-loci.qza \
+    --o-eggnog-hits cache:eggnog_hits \
+    --o-table cache:eggnog_ft \
+    --o-loci cache:eggnog_loci \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -200,13 +200,13 @@ mosh annotate search-orthologs-diamond \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh annotate search-orthologs-diamond \
-    --i-seqs contigs.qza \
-    --i-db diamond-db.qza \
+    --i-seqs cache:contigs \
+    --i-db cache:diamond_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-eggnog-hits eggnog-hits.qza \
-    --o-table eggnog-ft.qza \
-    --o-loci eggnog-loci.qza \
+    --o-eggnog-hits cache:eggnog_hits \
+    --o-table cache:eggnog_ft \
+    --o-loci cache:eggnog_loci \
     --verbose
 ```
 ````
@@ -218,11 +218,11 @@ mosh annotate search-orthologs-diamond \
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh annotate map-eggnog \
-    --i-eggnog-hits eggnog-hits.qza \
-    --i-db eggnog-db.qza \
+    --i-eggnog-hits cache:eggnog_hits \
+    --i-db cache:eggnog_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-ortholog-annotations eggnog-annotations.qza \
+    --o-ortholog-annotations cache:eggnog_annotations \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -230,11 +230,11 @@ mosh annotate map-eggnog \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh annotate map-eggnog \
-    --i-eggnog-hits eggnog-hits.qza \
-    --i-db eggnog-db.qza \
+    --i-eggnog-hits cache:eggnog_hits \
+    --i-db cache:eggnog_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-ortholog-annotations eggnog-annotations.qza \
+    --o-ortholog-annotations cache:eggnog_annotations \
     --verbose
 ```
 ````
@@ -246,12 +246,12 @@ mosh annotate map-eggnog \
 
 ```{code} bash
 mosh annotate extract-annotations \
-    --i-ortholog-annotations eggnog-annotations.qza \
+    --i-ortholog-annotations cache:eggnog_annotations \
     --p-annotation cog \
     --p-max-evalue 0.001 \
-    --o-annotation-counts-per-contig eggnog-cog-per-contig.qza \
-    --o-annotation-counts-per-genome eggnog-cog-per-genome.qza \
-    --o-annotation-map eggnog-cog-map.qza \
+    --o-annotation-counts-per-contig cache:eggnog_cog_per_contig \
+    --o-annotation-counts-per-genome cache:eggnog_cog_per_genome \
+    --o-annotation-map cache:eggnog_cog_map \
     --verbose
 ```
 
@@ -263,9 +263,9 @@ If you have a contig abundance table from a mapping step (see [How to bin MAGs](
 
 ```{code} bash
 mosh annotate multiply-tables \
-    --i-table1 contig-abundance.qza \
-    --i-table2 eggnog-cog-per-contig.qza \
-    --o-result-table eggnog-cog-abundance-weighted.qza \
+    --i-table1 cache:contig_abundance_table \
+    --i-table2 cache:eggnog_cog_per_contig \
+    --o-result-table cache:eggnog_cog_abundance_weighted \
     --verbose
 ```
 
@@ -285,13 +285,13 @@ Databases are the same as Path B. Skip this step if you already ran Path B.
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh annotate search-orthologs-diamond \
-    --i-seqs mags-derep.qza \
-    --i-db diamond-db.qza \
+    --i-seqs cache:mags_derep \
+    --i-db cache:diamond_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-eggnog-hits eggnog-hits.qza \
-    --o-table eggnog-ft.qza \
-    --o-loci eggnog-loci.qza \
+    --o-eggnog-hits cache:eggnog_hits \
+    --o-table cache:eggnog_ft \
+    --o-loci cache:eggnog_loci \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -299,13 +299,13 @@ mosh annotate search-orthologs-diamond \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh annotate search-orthologs-diamond \
-    --i-seqs mags-derep.qza \
-    --i-db diamond-db.qza \
+    --i-seqs cache:mags_derep \
+    --i-db cache:diamond_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-eggnog-hits eggnog-hits.qza \
-    --o-table eggnog-ft.qza \
-    --o-loci eggnog-loci.qza \
+    --o-eggnog-hits cache:eggnog_hits \
+    --o-table cache:eggnog_ft \
+    --o-loci cache:eggnog_loci \
     --verbose
 ```
 ````
@@ -317,11 +317,11 @@ mosh annotate search-orthologs-diamond \
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh annotate map-eggnog \
-    --i-eggnog-hits eggnog-hits.qza \
-    --i-db eggnog-db.qza \
+    --i-eggnog-hits cache:eggnog_hits \
+    --i-db cache:eggnog_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-ortholog-annotations eggnog-annotations.qza \
+    --o-ortholog-annotations cache:eggnog_annotations \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -329,11 +329,11 @@ mosh annotate map-eggnog \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh annotate map-eggnog \
-    --i-eggnog-hits eggnog-hits.qza \
-    --i-db eggnog-db.qza \
+    --i-eggnog-hits cache:eggnog_hits \
+    --i-db cache:eggnog_db \
     --p-num-cpus 8 \
     --p-db-in-memory \
-    --o-ortholog-annotations eggnog-annotations.qza \
+    --o-ortholog-annotations cache:eggnog_annotations \
     --verbose
 ```
 ````
@@ -345,12 +345,12 @@ mosh annotate map-eggnog \
 
 ```{code} bash
 mosh annotate extract-annotations \
-    --i-ortholog-annotations eggnog-annotations.qza \
+    --i-ortholog-annotations cache:eggnog_annotations \
     --p-annotation cog \
     --p-max-evalue 0.001 \
-    --o-annotation-counts-per-genome eggnog-cog-per-genome.qza \
-    --o-annotation-counts-per-contig eggnog-cog-per-contig.qza \
-    --o-annotation-map eggnog-cog-map.qza \
+    --o-annotation-counts-per-genome cache:eggnog_cog_per_genome \
+    --o-annotation-counts-per-contig cache:eggnog_cog_per_contig \
+    --o-annotation-map cache:eggnog_cog_map \
     --verbose
 ```
 
@@ -362,9 +362,9 @@ Combine the per-genome annotation counts with MAG abundance estimates to produce
 
 ```{code} bash
 mosh annotate multiply-tables \
-    --i-table1 mags-abundances.qza \
-    --i-table2 eggnog-cog-per-genome.qza \
-    --o-result-table eggnog-cog-abundance.qza \
+    --i-table1 cache:mags_abundances \
+    --i-table2 cache:eggnog_cog_per_genome \
+    --o-result-table cache:eggnog_cog_abundance \
     --verbose
 ```
 

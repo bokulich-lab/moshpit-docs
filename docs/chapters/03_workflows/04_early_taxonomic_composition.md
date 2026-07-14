@@ -48,8 +48,8 @@ You need a Kraken 2 database. The `standard8` collection is the smallest pre-bui
 ```{code} bash
 mosh annotate build-kraken-db \
     --p-collection standard8 \
-    --o-kraken2-db kraken2-db.qza \
-    --o-bracken-db bracken-db.qza \
+    --o-kraken2-db cache:kraken2_db \
+    --o-bracken-db cache:bracken_db \
     --verbose
 ```
 
@@ -67,12 +67,12 @@ This is the fastest route to a taxonomic overview. It works directly from qualit
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs reads.qza \
-    --i-db kraken2-db.qza \
+    --i-seqs cache:reads \
+    --i-db cache:kraken2_db \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports kraken2-reports-reads.qza \
-    --o-outputs kraken2-hits-reads.qza \
+    --o-reports cache:kraken2_reports_reads \
+    --o-outputs cache:kraken2_hits_reads \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -80,12 +80,12 @@ mosh annotate classify-kraken2 \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs reads.qza \
-    --i-db kraken2-db.qza \
+    --i-seqs cache:reads \
+    --i-db cache:kraken2_db \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports kraken2-reports-reads.qza \
-    --o-outputs kraken2-hits-reads.qza \
+    --o-reports cache:kraken2_reports_reads \
+    --o-outputs cache:kraken2_hits_reads \
     --verbose
 ```
 ````
@@ -97,12 +97,12 @@ Kraken 2 raw read counts are biased by differences in genome size and marker gen
 
 ```{code} bash
 mosh annotate estimate-bracken \
-    --i-kraken2-reports kraken2-reports-reads.qza \
-    --i-db bracken-db.qza \
+    --i-kraken2-reports cache:kraken2_reports_reads \
+    --i-db cache:bracken_db \
     --p-read-len 150 \
-    --o-reports bracken-reports.qza \
-    --o-taxonomy bracken-taxonomy.qza \
-    --o-table bracken-table.qza \
+    --o-reports cache:bracken_reports \
+    --o-taxonomy cache:bracken_taxonomy \
+    --o-table cache:bracken_table \
     --verbose
 ```
 
@@ -112,8 +112,8 @@ Set `--p-read-len` to the length of your trimmed reads (check your `fastp` visua
 
 ```{code} bash
 mosh taxa barplot \
-    --i-table bracken-table.qza \
-    --i-taxonomy bracken-taxonomy.qza \
+    --i-table cache:bracken_table \
+    --i-taxonomy cache:bracken_taxonomy \
     --o-visualization bracken-barplot.qzv \
     --verbose
 ```
@@ -124,15 +124,15 @@ Kaiju classifies reads at the protein level, which can improve classification of
 ```{code} bash
 mosh annotate fetch-kaiju-db \
     --p-database-type nr_euk \
-    --o-database kaiju-db.qza \
+    --o-database cache:kaiju_db \
     --verbose
 
 mosh annotate classify-kaiju \
-    --i-seqs reads.qza \
-    --i-db kaiju-db.qza \
+    --i-seqs cache:reads \
+    --i-db cache:kaiju_db \
     --p-threads 4 \
-    --o-taxonomy kaiju-taxonomy.qza \
-    --o-table kaiju-table.qza \
+    --o-taxonomy cache:kaiju_taxonomy \
+    --o-table cache:kaiju_table \
     --verbose
 ```
 The Cocoa tutorial demonstrates Kaiju alongside Kraken 2 in [Taxonomic classification of reads](taxonomic-classification).
@@ -162,12 +162,12 @@ The same `classify-kraken2` action accepts `SampleData[Contigs]` directly; the o
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs contigs.qza \
-    --i-db kraken2-db.qza \
+    --i-seqs cache:contigs \
+    --i-db cache:kraken2_db \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports kraken2-reports-contigs.qza \
-    --o-outputs kraken2-hits-contigs.qza \
+    --o-reports cache:kraken2_reports_contigs \
+    --o-outputs cache:kraken2_hits_contigs \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -175,12 +175,12 @@ mosh annotate classify-kraken2 \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs contigs.qza \
-    --i-db kraken2-db.qza \
+    --i-seqs cache:contigs \
+    --i-db cache:kraken2_db \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports kraken2-reports-contigs.qza \
-    --o-outputs kraken2-hits-contigs.qza \
+    --o-reports cache:kraken2_reports_contigs \
+    --o-outputs cache:kraken2_hits_contigs \
     --verbose
 ```
 ````
@@ -192,11 +192,11 @@ Convert the Kraken 2 contig reports into a per-contig taxonomy mapping:
 
 ```{code} bash
 mosh annotate map-taxonomy-to-contigs \
-    --i-reports kraken2-reports-contigs.qza \
-    --i-outputs kraken2-hits-contigs.qza \
+    --i-reports cache:kraken2_reports_contigs \
+    --i-outputs cache:kraken2_hits_contigs \
     --p-coverage-threshold 10 \
-    --o-feature-map contig-taxonomy-map.qza \
-    --o-taxonomy contig-taxonomy.qza \
+    --o-feature-map cache:contig_taxonomy_map \
+    --o-taxonomy cache:contig_taxonomy \
     --verbose
 ```
 
@@ -208,28 +208,28 @@ To weight the taxonomy by how much sequence is present, estimate how many reads 
 
 ```{code} bash
 mosh assembly index-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-threads 8 \
-    --o-index contigs-index.qza \
+    --o-index cache:contigs_index \
     --verbose
 
 mosh assembly map-reads \
-    --i-index contigs-index.qza \
-    --i-reads reads.qza \
+    --i-index cache:contigs_index \
+    --i-reads cache:reads \
     --p-threads 8 \
-    --o-alignment-maps reads-to-contigs-aln.qza \
+    --o-alignment-maps cache:reads_to_contigs_aln \
     --verbose
 
 mosh mag get-feature-lengths \
-    --i-features contigs.qza \
-    --o-lengths contig-lengths.qza \
+    --i-features cache:contigs \
+    --o-lengths cache:contig_lengths \
     --verbose
 
 mosh mag estimate-abundance \
-    --i-alignment-maps reads-to-contigs-aln.qza \
-    --i-feature-lengths contig-lengths.qza \
+    --i-alignment-maps cache:reads_to_contigs_aln \
+    --i-feature-lengths cache:contig_lengths \
     --p-metric tpm \
-    --o-abundances contig-abundance-table.qza \
+    --o-abundances cache:contig_abundance_table \
     --verbose
 ```
 
@@ -241,10 +241,10 @@ Group contigs by their taxonomy assignment and average their abundances within e
 
 ```{code} bash
 mosh annotate collapse-contigs \
-    --i-table contig-abundance-table.qza \
-    --i-contig-map contig-taxonomy-map.qza \
-    --i-taxonomy contig-taxonomy.qza \
-    --o-collapsed-table taxonomy-abundance-table.qza \
+    --i-table cache:contig_abundance_table \
+    --i-contig-map cache:contig_taxonomy_map \
+    --i-taxonomy cache:contig_taxonomy \
+    --o-collapsed-table cache:taxonomy_abundance_table \
     --o-visualization contig-taxonomy-barplot.qzv \
     --verbose
 ```
@@ -257,8 +257,8 @@ Use the collapsed table and taxonomy with the familiar barplot action for a per-
 
 ```{code} bash
 mosh taxa barplot \
-    --i-table taxonomy-abundance-table.qza \
-    --i-taxonomy contig-taxonomy.qza \
+    --i-table cache:taxonomy_abundance_table \
+    --i-taxonomy cache:contig_taxonomy \
     --o-visualization contig-taxa-barplot.qzv \
     --verbose
 ```
@@ -271,18 +271,18 @@ After completing the full assembly → binning → dereplication pipeline, class
 
 ```{code} bash
 mosh annotate classify-kraken2 \
-    --i-seqs mags-derep.qza \
-    --i-db kraken2-db.qza \
+    --i-seqs cache:mags_derep \
+    --i-db cache:kraken2_db \
     --p-threads 4 \
     --p-memory-mapping \
-    --o-reports kraken2-reports-mags.qza \
-    --o-outputs kraken2-hits-mags.qza \
+    --o-reports cache:kraken2_reports_mags \
+    --o-outputs cache:kraken2_hits_mags \
     --verbose
 
 mosh annotate kraken2-to-mag-features \
-    --i-reports kraken2-reports-mags.qza \
-    --i-outputs kraken2-hits-mags.qza \
-    --o-taxonomy mags-taxonomy.qza \
+    --i-reports cache:kraken2_reports_mags \
+    --i-outputs cache:kraken2_hits_mags \
+    --o-taxonomy cache:mags_taxonomy \
     --verbose
 ```
 

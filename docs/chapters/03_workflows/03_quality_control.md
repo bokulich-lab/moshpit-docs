@@ -27,17 +27,17 @@ Run `fastp` in report-only mode to understand the quality of your reads before m
 
 ```{code} bash
 mosh fastp process-seqs \
-    --i-sequences reads.qza \
+    --i-sequences cache:reads \
     --p-disable-quality-filtering \
     --p-dont-eval-duplication \
     --p-disable-adapter-trimming \
     --p-thread 4 \
-    --o-processed-sequences reads-passthrough.qza \
-    --o-reports fastp-reports-before.qza \
+    --o-processed-sequences cache:reads_passthrough \
+    --o-reports cache:fastp_reports_before \
     --verbose
 
 mosh fastp visualize \
-    --i-reports fastp-reports-before.qza \
+    --i-reports cache:fastp_reports_before \
     --o-visualization fastp-before.qzv \
     --verbose
 ```
@@ -46,17 +46,17 @@ mosh fastp visualize \
 
 ```{code} bash
 mosh fastp process-seqs \
-    --i-sequences reads.qza \
+    --i-sequences cache:reads \
     --p-length-required 90 \
     --p-cut-mean-quality 30 \
     --p-cut-tail \
     --p-thread 4 \
-    --o-processed-sequences reads-trimmed.qza \
-    --o-reports fastp-reports.qza \
+    --o-processed-sequences cache:reads_trimmed \
+    --o-reports cache:fastp_reports \
     --verbose
 
 mosh fastp visualize \
-    --i-reports fastp-reports.qza \
+    --i-reports cache:fastp_reports \
     --o-visualization fastp.qzv \
     --verbose
 ```
@@ -93,9 +93,9 @@ mosh quality-control bowtie2-build \
     --verbose
 
 mosh quality-control filter-reads \
-    --i-demultiplexed-sequences reads-trimmed.qza \
+    --i-demultiplexed-sequences cache:reads_trimmed \
     --i-database cache:reference_index \
-    --o-filtered-sequences reads-filtered.qza \
+    --o-filtered-sequences cache:reads_filtered \
     --verbose
 ```
 
@@ -112,9 +112,9 @@ mosh quality-control construct-human-pangenome-index \
     --verbose
 
 mosh quality-control filter-reads \
-    --i-demultiplexed-sequences reads-trimmed.qza \
+    --i-demultiplexed-sequences cache:reads_trimmed \
     --i-database cache:human_pangenome_index \
-    --o-filtered-sequences reads-filtered.qza \
+    --o-filtered-sequences cache:reads_filtered \
     --verbose
 ```
 
@@ -122,8 +122,8 @@ Alternatively, `filter-reads-pangenome` builds the index and filters in one step
 
 ```{code} bash
 mosh quality-control filter-reads-pangenome \
-    --i-reads reads-trimmed.qza \
-    --o-filtered-reads reads-filtered.qza \
+    --i-reads cache:reads_trimmed \
+    --o-filtered-reads cache:reads_filtered \
     --o-reference-index cache:human_pangenome_index \
     --verbose
 ```
@@ -144,9 +144,9 @@ See [Host read removal](host-filtering) for a detailed walkthrough.
 
 ```{code} bash
 mosh assembly evaluate-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-n-cpus 4 \
-    --o-results contig-qc-results.qza \
+    --o-results cache:contig_qc_results \
     --o-visualization contigs-qc.qzv \
     --verbose
 ```
@@ -157,10 +157,10 @@ Produces N(x) curves, length histograms, and GC content distributions. Fast enou
 
 ```{code} bash
 mosh assembly evaluate-quast \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-threads 4 \
-    --o-results-table quast-results.qza \
-    --o-reference-genomes quast-ref-genomes.qza \
+    --o-results-table cache:quast_results \
+    --o-reference-genomes cache:quast_ref_genomes \
     --o-visualization contigs-quast.qzv \
     --verbose
 ```
@@ -171,9 +171,9 @@ Provides misassembly detection and, with `--i-references`, comparison against kn
 
 ```{code} bash
 mosh assembly filter-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-length-threshold 1000 \
-    --o-filtered-contigs contigs-filtered.qza \
+    --o-filtered-contigs cache:contigs_filtered \
     --verbose
 ```
 
@@ -192,16 +192,16 @@ See [How to assemble contigs](assemble-contigs) for a full discussion of assembl
 ```{code} bash
 mosh mag fetch-busco-db \
     --p-lineages bacteria_odb12 \
-    --o-db busco-db.qza \
+    --o-db cache:busco_db \
     --verbose
 
 mosh mag evaluate-busco \
-    --i-mags mags.qza \
-    --i-db busco-db.qza \
-    --i-unbinned-contigs unbinned-contigs.qza \
+    --i-mags cache:mags \
+    --i-db cache:busco_db \
+    --i-unbinned-contigs cache:unbinned_contigs \
     --p-lineage-dataset bacteria_odb12 \
     --p-cpu 4 \
-    --o-results busco-results.qza \
+    --o-results cache:busco_results \
     --o-visualization mags.qzv \
     --verbose
 ```
@@ -210,11 +210,11 @@ mosh mag evaluate-busco \
 
 ```{code} bash
 mosh mag filter-mags \
-    --i-mags mags.qza \
-    --m-metadata-file busco-results.qza \
+    --i-mags cache:mags \
+    --m-metadata-file cache:busco_results \
     --p-where "completeness>50 AND contamination<10" \
     --p-on "mag" \
-    --o-filtered-mags mags-filtered.qza \
+    --o-filtered-mags cache:mags_filtered \
     --verbose
 ```
 
@@ -230,7 +230,7 @@ After dereplication, you can apply quality filtering again to the dereplicated s
 [q2-checkm](https://github.com/bokulich-lab/q2-checkm) uses the CheckM v1 marker gene approach and requires a separate installation:
 ```{code} bash
 qiime checkm evaluate-bins \
-    --i-bins mags.qza \
+    --i-bins cache:mags \
     --p-threads 4 \
     --o-visualization checkm-results.qzv \
     --verbose
@@ -256,11 +256,11 @@ After running `classify-kraken2`, use `filter-kraken2-results` to drop low-abund
 
 ```{code} bash
 mosh annotate filter-kraken2-results \
-    --i-reports kraken2-reports-reads.qza \
-    --i-outputs kraken2-hits-reads.qza \
+    --i-reports cache:kraken2_reports_reads \
+    --i-outputs cache:kraken2_hits_reads \
     --p-abundance-threshold 0.1 \
-    --o-filtered-reports kraken2-reports-filtered.qza \
-    --o-filtered-outputs kraken2-hits-filtered.qza \
+    --o-filtered-reports cache:kraken2_reports_filtered \
+    --o-filtered-outputs cache:kraken2_hits_filtered \
     --verbose
 ```
 
@@ -270,13 +270,13 @@ You can also restrict which samples are retained (or remove reports that contain
 
 ```{code} bash
 mosh annotate filter-kraken2-results \
-    --i-reports kraken2-reports-reads.qza \
-    --i-outputs kraken2-hits-reads.qza \
+    --i-reports cache:kraken2_reports_reads \
+    --i-outputs cache:kraken2_hits_reads \
     --m-metadata-file sample-metadata.tsv \
     --p-where "[sample-type]='fecal'" \
     --p-remove-empty \
-    --o-filtered-reports kraken2-reports-filtered.qza \
-    --o-filtered-outputs kraken2-hits-filtered.qza \
+    --o-filtered-reports cache:kraken2_reports_filtered \
+    --o-filtered-outputs cache:kraken2_hits_filtered \
     --verbose
 ```
 
@@ -290,22 +290,22 @@ mosh annotate filter-kraken2-results \
 
 ```{code} bash
 mosh viromics checkv-fetch-db \
-    --o-database checkv-db.qza \
+    --o-database cache:checkv_db \
     --verbose
 
 mosh viromics checkv-analysis \
-    --i-sequences contigs.qza \
-    --i-database checkv-db.qza \
+    --i-sequences cache:contigs \
+    --i-database cache:checkv_db \
     --p-num-threads 4 \
-    --o-viruses viral-contigs.qza \
-    --o-proviruses proviral-contigs.qza \
-    --o-quality-summary viral-quality.qza \
-    --o-contamination viral-contamination.qza \
-    --o-completeness viral-completeness.qza \
+    --o-viruses cache:viral_contigs \
+    --o-proviruses cache:proviral_contigs \
+    --o-quality-summary cache:viral_quality \
+    --o-contamination cache:viral_contamination \
+    --o-completeness cache:viral_completeness \
     --verbose
 ```
 
-The `viral-contigs.qza` output can be used as input to downstream annotation steps.
+The `cache:viral_contigs` output can be used as input to downstream annotation steps.
 
 ---
 

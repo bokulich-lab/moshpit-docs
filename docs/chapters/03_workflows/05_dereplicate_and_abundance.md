@@ -21,10 +21,10 @@ Compute a compact MinHash sketch for each MAG in every sample. These sketches ar
 
 ```{code} bash
 mosh sourmash compute \
-    --i-sequence-file mags-filtered.qza \
+    --i-sequence-file cache:mags_filtered \
     --p-ksizes 105 \
     --p-scaled 100 \
-    --o-min-hash-signature min-hash.qza \
+    --o-min-hash-signature cache:min_hash \
     --verbose
 ```
 
@@ -38,9 +38,9 @@ Compare all MinHash signatures to produce a pairwise distance matrix:
 
 ```{code} bash
 mosh sourmash compare \
-    --i-min-hash-signature min-hash.qza \
+    --i-min-hash-signature cache:min_hash \
     --p-ksize 105 \
-    --o-compare-output min-hash-compare.qza \
+    --o-compare-output cache:min_hash_compare \
     --verbose
 ```
 
@@ -52,14 +52,14 @@ Cluster MAGs by similarity and select the best representative from each cluster.
 
 ```{code} bash
 mosh mag dereplicate-mags \
-    --i-mags mags-filtered.qza \
-    --i-distance-matrix min-hash-compare.qza \
-    --m-metadata-file busco-results.qza \
+    --i-mags cache:mags_filtered \
+    --i-distance-matrix cache:min_hash_compare \
+    --m-metadata-file cache:busco_results \
     --p-metadata-column completeness \
     --p-threshold 0.9 \
     --p-find-max \
-    --o-dereplicated-mags mags-derep.qza \
-    --o-table mags-sample-table.qza \
+    --o-dereplicated-mags cache:mags_derep \
+    --o-table cache:mags_sample_table \
     --verbose
 ```
 
@@ -75,10 +75,10 @@ After dereplication you can apply a second round of quality filtering on the der
 
 ```{code} bash
 mosh mag filter-derep-mags \
-    --i-mags mags-derep.qza \
-    --m-metadata-file busco-results.qza \
+    --i-mags cache:mags_derep \
+    --m-metadata-file cache:busco_results \
     --p-where "completeness>50 AND contamination<10" \
-    --o-filtered-mags mags-derep-filtered.qza \
+    --o-filtered-mags cache:mags_derep_filtered \
     --verbose
 ```
 
@@ -90,10 +90,10 @@ Build a Bowtie2 index for the dereplicated MAG set. This is done once and reused
 
 ```{code} bash
 mosh assembly index-derep-mags \
-    --i-mags mags-derep.qza \
+    --i-mags cache:mags_derep \
     --p-threads 8 \
     --p-seed 100 \
-    --o-index mags-derep-index.qza \
+    --o-index cache:mags_derep_index \
     --verbose
 ```
 
@@ -107,11 +107,11 @@ Map the original reads to the indexed MAG set to count how many reads align to e
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh assembly map-reads \
-    --i-index mags-derep-index.qza \
-    --i-reads reads.qza \
+    --i-index cache:mags_derep_index \
+    --i-reads cache:reads \
     --p-threads 8 \
     --p-seed 100 \
-    --o-alignment-maps reads-to-mags-aln.qza \
+    --o-alignment-maps cache:reads_to_mags_aln \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -119,11 +119,11 @@ mosh assembly map-reads \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh assembly map-reads \
-    --i-index mags-derep-index.qza \
-    --i-reads reads.qza \
+    --i-index cache:mags_derep_index \
+    --i-reads cache:reads \
     --p-threads 8 \
     --p-seed 100 \
-    --o-alignment-maps reads-to-mags-aln.qza \
+    --o-alignment-maps cache:reads_to_mags_aln \
     --verbose
 ```
 ````
@@ -137,8 +137,8 @@ Retrieve the length of each dereplicated MAG, which is required for normalizing 
 
 ```{code} bash
 mosh mag get-feature-lengths \
-    --i-features mags-derep.qza \
-    --o-lengths mags-derep-lengths.qza \
+    --i-features cache:mags_derep \
+    --o-lengths cache:mags_derep_lengths \
     --verbose
 ```
 
@@ -150,12 +150,12 @@ Normalize read counts by MAG length and sequencing depth to produce either RPKM 
 
 ```{code} bash
 mosh mag estimate-abundance \
-    --i-alignment-maps reads-to-mags-aln.qza \
-    --i-feature-lengths mags-derep-lengths.qza \
+    --i-alignment-maps cache:reads_to_mags_aln \
+    --i-feature-lengths cache:mags_derep_lengths \
     --p-metric tpm \
     --p-min-mapq 42 \
     --p-threads 4 \
-    --o-abundances mags-abundances.qza \
+    --o-abundances cache:mags_abundances \
     --verbose
 ```
 
@@ -169,8 +169,8 @@ If you have classified your MAGs with Kraken 2 (see [Early taxonomic composition
 
 ```{code} bash
 mosh taxa barplot \
-    --i-table mags-abundances.qza \
-    --i-taxonomy mags-taxonomy.qza \
+    --i-table cache:mags_abundances \
+    --i-taxonomy cache:mags_taxonomy \
     --o-visualization mags-taxa-barplot.qzv \
     --verbose
 ```

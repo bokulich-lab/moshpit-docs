@@ -23,11 +23,11 @@ A `SampleData[PairedEndSequencesWithQuality]` (or `SampleData[SequencesWithQuali
 ````{tab-item} With parsl parallelization
 ```{code} bash
 mosh assembly assemble-megahit \
-    --i-reads reads.qza \
+    --i-reads cache:reads \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 8 \
     --p-min-contig-len 500 \
-    --o-contigs contigs.qza \
+    --o-contigs cache:contigs \
     --parallel-config parallel.config.toml \
     --verbose
 ```
@@ -35,11 +35,11 @@ mosh assembly assemble-megahit \
 ````{tab-item} Without parallelization
 ```{code} bash
 mosh assembly assemble-megahit \
-    --i-reads reads.qza \
+    --i-reads cache:reads \
     --p-presets meta-sensitive \
     --p-num-cpu-threads 8 \
     --p-min-contig-len 500 \
-    --o-contigs contigs.qza \
+    --o-contigs cache:contigs \
     --verbose
 ```
 ````
@@ -56,10 +56,10 @@ Key parameters to consider:
 For datasets where MEGAHIT produces fragmented assemblies, you can try [`assemble-spades`](#q2-action-assembly-assemble-spades) instead:
 ```{code} bash
 mosh assembly assemble-spades \
-    --i-reads reads.qza \
+    --i-reads cache:reads \
     --p-meta \
     --p-threads 8 \
-    --o-contigs contigs.qza \
+    --o-contigs cache:contigs \
     --verbose
 ```
 SPAdes is generally more accurate but substantially slower and more memory-intensive than MEGAHIT, particularly on large datasets. Most metagenomic workflows use MEGAHIT as their default.
@@ -77,9 +77,9 @@ mosh tools cache-import \
 When importing contigs from another tool, contig identifiers may not be unique across samples, which can cause downstream errors. Use [`rename-contigs`](#q2-action-assembly-rename-contigs) to ensure uniqueness:
 ```{code} bash
 mosh assembly rename-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-uuid-type shortuuid \
-    --o-renamed-contigs contigs-renamed.qza \
+    --o-renamed-contigs cache:contigs_renamed \
     --verbose
 ```
 See the [import how-to](data-import) for more details.
@@ -97,9 +97,9 @@ This pipeline is fast and produces N(x) curves, GC content distributions, and le
 
 ```{code} bash
 mosh assembly evaluate-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-n-cpus 4 \
-    --o-results contig-qc-results.qza \
+    --o-results cache:contig_qc_results \
     --o-visualization contigs-qc.qzv \
     --verbose
 ```
@@ -110,15 +110,15 @@ QUAST computes additional metrics including potential misassemblies and, if you 
 
 ```{code} bash
 mosh assembly evaluate-quast \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-threads 4 \
-    --o-results-table quast-results.qza \
-    --o-reference-genomes quast-ref-genomes.qza \
+    --o-results-table cache:quast_results \
+    --o-reference-genomes cache:quast_ref_genomes \
     --o-visualization contigs-qc-quast.qzv \
     --verbose
 ```
 
-Pass `--i-references reference-genomes.qza` if you have reference sequences (e.g., for a mock community). QUAST is significantly slower than [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs) and requires more memory; for large studies [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs) is usually sufficient.
+Pass `--i-references cache:reference_genomes` if you have reference sequences (e.g., for a mock community). QUAST is significantly slower than [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs) and requires more memory; for large studies [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs) is usually sufficient.
 
 ---
 
@@ -128,9 +128,9 @@ You can remove short contigs or entire samples using [`filter-contigs`](#q2-acti
 
 ```{code} bash
 mosh assembly filter-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --p-length-threshold 1000 \
-    --o-filtered-contigs contigs-filtered.qza \
+    --o-filtered-contigs cache:contigs_filtered \
     --verbose
 ```
 
@@ -138,12 +138,12 @@ To retain only specific samples (or drop empty samples after length filtering), 
 
 ```{code} bash
 mosh assembly filter-contigs \
-    --i-contigs contigs.qza \
+    --i-contigs cache:contigs \
     --m-metadata-file sample-metadata.tsv \
     --p-where "[sample-type]='fecal'" \
     --p-length-threshold 1000 \
     --p-remove-empty \
-    --o-filtered-contigs contigs-filtered.qza \
+    --o-filtered-contigs cache:contigs_filtered \
     --verbose
 ```
 
