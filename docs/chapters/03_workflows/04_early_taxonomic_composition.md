@@ -43,7 +43,7 @@ A Kraken 2 database (see [below](#prerequisites-for-all-paths)). Path A also nee
 
 ## Prerequisites for all paths
 
-You need a Kraken 2 database. Build one with [`build-kraken-db`](#q2-action-annotate-build-kraken-db) from the [annotate](#q2-plugin-annotate) plugin. The `standard8` collection is the smallest pre-built option and suitable for testing and laptop-scale analyses:
+You need a Kraken 2 database. Build one with [`build-kraken-db`](../../refs/plugins/annotate.md#q2-action-annotate-build-kraken-db) from the [annotate](../../refs/plugins/annotate.md#q2-plugin-annotate) plugin. The `standard8` collection is the smallest pre-built option and suitable for testing and laptop-scale analyses:
 
 ```{code} bash
 mosh annotate build-kraken-db \
@@ -61,7 +61,7 @@ For production analyses on real samples, use a larger collection (e.g., `standar
 
 This is the fastest route to a taxonomic overview. It works directly from quality-filtered reads, with no assembly required.
 
-### Step A1 — Classify reads with [`classify-kraken2`](#q2-action-annotate--classify-kraken2)
+### Step A1 — Classify reads with [`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2)
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -91,7 +91,7 @@ mosh annotate classify-kraken2 \
 ````
 `````
 
-### Step A2 — Re-estimate abundances with [`estimate-bracken`](#q2-action-annotate-estimate-bracken)
+### Step A2 — Re-estimate abundances with [`estimate-bracken`](../../refs/plugins/annotate.md#q2-action-annotate-estimate-bracken)
 
 Kraken 2 raw read counts are biased by differences in genome size and marker gene copy number. Bracken corrects for these using its own database:
 
@@ -120,7 +120,7 @@ mosh taxa barplot \
 
 :::{seealso} **Alternative: Kaiju protein-level classification**
 :class: dropdown
-Kaiju classifies reads at the protein level, which can improve classification of divergent sequences that Kraken 2 misses at the nucleotide level. Fetch a database with [`fetch-kaiju-db`](#q2-action-annotate-fetch-kaiju-db), then classify with [`classify-kaiju`](#q2-action-annotate--classify-kaiju):
+Kaiju classifies reads at the protein level, which can improve classification of divergent sequences that Kraken 2 misses at the nucleotide level. Fetch a database with [`fetch-kaiju-db`](../../refs/plugins/annotate.md#q2-action-annotate-fetch-kaiju-db), then classify with [`classify-kaiju`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kaiju):
 ```{code} bash
 mosh annotate fetch-kaiju-db \
     --p-database-type nr_euk \
@@ -152,11 +152,11 @@ Running Kraken 2 on assembled contigs instead of reads offers several advantages
 - **Pre-binning insight** — you can see the taxonomic composition of your assembly before committing to the compute-intensive binning step.
 - **Contig-resolved taxonomy** — each contig gets an explicit taxonomy assignment, which you can then link to abundance estimates.
 
-This path is not covered in the existing tutorials and uses three [annotate](#q2-plugin-annotate) actions ([`classify-kraken2`](#q2-action-annotate--classify-kraken2) on contigs, [`map-taxonomy-to-contigs`](#q2-action-annotate-map-taxonomy-to-contigs), and [`collapse-contigs`](#q2-action-annotate-collapse-contigs)) that are new here.
+This path is not covered in the existing tutorials and uses three [annotate](../../refs/plugins/annotate.md#q2-plugin-annotate) actions ([`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2) on contigs, [`map-taxonomy-to-contigs`](../../refs/plugins/annotate.md#q2-action-annotate-map-taxonomy-to-contigs), and [`collapse-contigs`](../../refs/plugins/annotate.md#q2-action-annotate-collapse-contigs)) that are new here.
 
-### Step B1 — Classify contigs with [`classify-kraken2`](#q2-action-annotate--classify-kraken2)
+### Step B1 — Classify contigs with [`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2)
 
-The same [`classify-kraken2`](#q2-action-annotate--classify-kraken2) action accepts `SampleData[Contigs]` directly; the output types are automatically tagged as `Properties("contigs")`:
+The same [`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2) action accepts `SampleData[Contigs]` directly; the output types are automatically tagged as `Properties("contigs")`:
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -186,7 +186,7 @@ mosh annotate classify-kraken2 \
 ````
 `````
 
-### Step B2 — Map taxonomy strings to contig IDs with [`map-taxonomy-to-contigs`](#q2-action-annotate-map-taxonomy-to-contigs)
+### Step B2 — Map taxonomy strings to contig IDs with [`map-taxonomy-to-contigs`](../../refs/plugins/annotate.md#q2-action-annotate-map-taxonomy-to-contigs)
 
 Convert the Kraken 2 contig reports into a per-contig taxonomy mapping:
 
@@ -235,7 +235,7 @@ mosh mag estimate-abundance \
 
 If you already ran these steps for binning, reuse the alignment maps and lengths you computed there rather than repeating them.
 
-### Step B4 — Collapse contig abundances by taxonomy with [`collapse-contigs`](#q2-action-annotate-collapse-contigs)
+### Step B4 — Collapse contig abundances by taxonomy with [`collapse-contigs`](../../refs/plugins/annotate.md#q2-action-annotate-collapse-contigs)
 
 Group contigs by their taxonomy assignment and average their abundances within each taxonomic group:
 
@@ -267,7 +267,7 @@ mosh taxa barplot \
 
 ## Path C — MAG-based classification
 
-After completing the full assembly → binning → dereplication pipeline, classify the dereplicated MAGs with [`classify-kraken2`](#q2-action-annotate--classify-kraken2) for the most accurate taxonomy, then convert reports to MAG features with [`kraken2-to-mag-features`](#q2-action-annotate-kraken2-to-mag-features):
+After completing the full assembly → binning → dereplication pipeline, classify the dereplicated MAGs with [`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2) for the most accurate taxonomy, then convert reports to MAG features with [`kraken2-to-mag-features`](../../refs/plugins/annotate.md#q2-action-annotate-kraken2-to-mag-features):
 
 ```{code} bash
 mosh annotate classify-kraken2 \
@@ -312,4 +312,4 @@ For most studies, running Path A early to guide decisions (e.g., check for host 
 
 - [End-to-end tutorial — Taxonomic classification](e2e-taxonomic-classification) — worked example for paths A and C with the mock-community dataset
 - [Cocoa tutorial — Taxonomic classification](taxonomic-classification) — Kaiju + Kraken 2 on reads and MAGs with real data
-- [How to use parsl parallelization](parsl) — configuring parallel execution for [`classify-kraken2`](#q2-action-annotate--classify-kraken2)
+- [How to use parsl parallelization](parsl) — configuring parallel execution for [`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2)

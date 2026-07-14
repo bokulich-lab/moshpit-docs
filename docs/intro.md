@@ -75,7 +75,7 @@ Not sure where to begin? The **How-to Guides** section is organized into two sub
 - [Dereplicate MAGs and estimate abundance](dereplicate-and-abundance) — cluster redundant MAGs across samples and compute RPKM/TPM
 - [Profile functional potential](functional-profiling) — read-based (HUMAnN 3) and MAG-based (EggNOG) functional annotation
 
-**Using MOSHPIT** — setting up and operating the toolkit: install MOSHPIT, configure parsl parallelization, fetch data from SRA, import and export artifacts.
+**Using MOSHPIT** — setting up and operating the toolkit: install MOSHPIT, configure parsl parallelization, use the [artifact cache](artifact-cache), fetch data from SRA, import and export artifacts.
 
 The full **Tutorials** walk through complete analyses on real and simulated datasets: the [End-to-end MAG reconstruction tutorial](assembly) is the best starting point if you are new to MOSHPIT.
 

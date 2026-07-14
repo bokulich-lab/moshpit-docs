@@ -103,7 +103,7 @@ mosh quality-control filter-reads \
 
 For human-associated samples, filter against a combined index of the GRCh38 reference genome and the draft human pangenome.
 
-Build the index once with [`construct-human-pangenome-index`](#q2-action-quality-control-construct-human-pangenome-index) (and reuse it across experiments), then filter:
+Build the index once with [`construct-human-pangenome-index`](../../refs/plugins/annotate.md#q2-action-annotate-construct-human-pangenome-index) (and reuse it across experiments), then filter:
 
 ```{code} bash
 mosh quality-control construct-human-pangenome-index \
@@ -118,7 +118,7 @@ mosh quality-control filter-reads \
     --verbose
 ```
 
-Alternatively, [`filter-reads-pangenome`](#q2-action-quality-control-filter-reads-pangenome) builds the index and filters in one step. Saving `--o-reference-index` lets you reuse that index later without re-downloading:
+Alternatively, `filter-reads-pangenome` builds the index and filters in one step. Saving `--o-reference-index` lets you reuse that index later without re-downloading:
 
 ```{code} bash
 mosh quality-control filter-reads-pangenome \
@@ -254,7 +254,7 @@ See [How to bin MAGs](bin-mags) for the complete binning workflow with BUSCO eva
 
 **Goal:** Filter Kraken 2 reports and outputs by sample metadata and/or by minimum relative abundance of classified taxa.
 
-After running [`classify-kraken2`](#q2-action-annotate--classify-kraken2), use [`filter-kraken2-results`](#q2-action-annotate-filter-kraken2-results) to drop low-abundance taxa from reports (and the corresponding hits from the outputs) before downstream steps such as Bracken or barplots:
+After running [`classify-kraken2`](../../refs/plugins/annotate.md#q2-action-annotate-classify-kraken2), use [`filter-kraken2-results`](../../refs/plugins/annotate.md#q2-action-annotate-filter-kraken2-results) to drop low-abundance taxa from reports (and the corresponding hits from the outputs) before downstream steps such as Bracken or barplots:
 
 ```{code} bash
 mosh annotate filter-kraken2-results \
@@ -316,8 +316,8 @@ The `cache:viral_contigs` output can be used as input to downstream annotation s
 | Stage | Key actions | Plugin | Guide / Tutorial |
 |-------|-------------|--------|------------------|
 | Raw reads | [`process-seqs`](#q2-action-fastp-process-seqs), [`visualize`](#q2-action-fastp-visualize) | [fastp](#q2-plugin-fastp) | [Cocoa — Quality filtering](quality-control) |
-| Host removal | [`bowtie2-build`](#q2-action-quality-control-bowtie2-build), [`filter-reads`](#q2-action-quality-control-filter-reads), [`construct-human-pangenome-index`](#q2-action-quality-control-construct-human-pangenome-index), [`filter-reads-pangenome`](#q2-action-quality-control-filter-reads-pangenome) | [quality-control](#q2-plugin-quality-control) | [Cocoa — Host filtering](host-filtering) |
+| Host removal | [`bowtie2-build`](#q2-action-quality-control-bowtie2-build), [`filter-reads`](#q2-action-quality-control-filter-reads), [`construct-human-pangenome-index`](../../refs/plugins/annotate.md#q2-action-annotate-construct-human-pangenome-index), `filter-reads-pangenome` | [quality-control](#q2-plugin-quality-control), [annotate](../../refs/plugins/annotate.md#q2-plugin-annotate) | [Cocoa — Host filtering](host-filtering) |
 | Assembly | [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs), [`evaluate-quast`](#q2-action-assembly-evaluate-quast), [`filter-contigs`](#q2-action-assembly-filter-contigs) | [assembly](#q2-plugin-assembly) | [Assemble contigs](assemble-contigs) |
 | MAG quality | [`evaluate-busco`](#q2-action-mag--evaluate-busco), [`filter-mags`](#q2-action-mag-filter-mags), [`filter-derep-mags`](#q2-action-mag-filter-derep-mags) | [mag](#q2-plugin-mag) | [Bin MAGs](bin-mags) |
-| Taxonomy | [`filter-kraken2-results`](#q2-action-annotate-filter-kraken2-results) | [annotate](#q2-plugin-annotate) | This guide |
+| Taxonomy | [`filter-kraken2-results`](../../refs/plugins/annotate.md#q2-action-annotate-filter-kraken2-results) | [annotate](../../refs/plugins/annotate.md#q2-plugin-annotate) | This guide |
 | Viral QC | `checkv-fetch-db`, `checkv-analysis` | q2-viromics | This guide |

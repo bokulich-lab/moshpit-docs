@@ -49,7 +49,7 @@ HUMAnN 3 is provided by the separate [q2-humann3](https://library.qiime2.org/plu
 
 ### Step A1 — Download databases
 
-Fetch the ChocoPhlAn, MetaPhlAn, and UniRef databases with [`download-chocophlan-database`](#q2-action-humann3-download-chocophlan-database), [`download-metaphlan-database`](#q2-action-humann3-download-metaphlan-database), and [`download-translated-search-database`](#q2-action-humann3-download-translated-search-database):
+Fetch the ChocoPhlAn, MetaPhlAn, and UniRef databases with `download-chocophlan-database`, `download-metaphlan-database`, and `download-translated-search-database`:
 
 ```{code} bash
 qiime humann3 download-chocophlan-database \
@@ -68,7 +68,7 @@ qiime humann3 download-translated-search-database \
     --verbose
 ```
 
-### Step A2 — Run HUMAnN 3 with [`run-humann`](#q2-action-humann3-run-humann)
+### Step A2 — Run HUMAnN 3 with `run-humann`
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -160,7 +160,7 @@ EggNOG-mapper can annotate assembled contigs directly, without binning. This giv
 
 ### Step B1 — Download databases
 
-Fetch the DIAMOND and EggNOG databases with [`fetch-diamond-db`](#q2-action-annotate-fetch-diamond-db) and [`fetch-eggnog-db`](#q2-action-annotate-fetch-eggnog-db) from the [annotate](#q2-plugin-annotate) plugin:
+Fetch the DIAMOND and EggNOG databases with [`fetch-diamond-db`](../../refs/plugins/annotate.md#q2-action-annotate-fetch-diamond-db) and [`fetch-eggnog-db`](../../refs/plugins/annotate.md#q2-action-annotate-fetch-eggnog-db) from the [annotate](../../refs/plugins/annotate.md#q2-plugin-annotate) plugin:
 
 ```{code} bash
 mosh annotate fetch-diamond-db \
@@ -172,7 +172,7 @@ mosh annotate fetch-eggnog-db \
     --verbose
 ```
 
-Alternatively, build a taxon-specific DIAMOND database for faster searches with [`build-eggnog-diamond-db`](#q2-action-annotate-build-eggnog-diamond-db):
+Alternatively, build a taxon-specific DIAMOND database for faster searches with [`build-eggnog-diamond-db`](../../refs/plugins/annotate.md#q2-action-annotate-build-eggnog-diamond-db):
 
 ```{code} bash
 mosh annotate build-eggnog-diamond-db \
@@ -184,7 +184,7 @@ mosh annotate build-eggnog-diamond-db \
 
 Pass `--p-taxon 2` for Bacteria, `2157` for Archaea, or `1` for all. Taxon IDs follow the NCBI taxonomy.
 
-### Step B2 — Search contigs against the EggNOG database with [`search-orthologs-diamond`](#q2-action-annotate-search-orthologs-diamond)
+### Step B2 — Search contigs against the EggNOG database with [`search-orthologs-diamond`](../../refs/plugins/annotate.md#q2-action-annotate-search-orthologs-diamond)
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -216,7 +216,7 @@ mosh annotate search-orthologs-diamond \
 ````
 `````
 
-### Step B3 — Map orthologs to functional categories with [`map-eggnog`](#q2-action-annotate-map-eggnog)
+### Step B3 — Map orthologs to functional categories with [`map-eggnog`](../../refs/plugins/annotate.md#q2-action-annotate-map-eggnog)
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -244,9 +244,9 @@ mosh annotate map-eggnog \
 ````
 `````
 
-### Step B4 — Extract specific annotation categories with [`extract-annotations`](#q2-action-annotate-extract-annotations)
+### Step B4 — Extract specific annotation categories with [`extract-annotations`](../../refs/plugins/annotate.md#q2-action-annotate-extract-annotations)
 
-[`extract-annotations`](#q2-action-annotate-extract-annotations) produces three outputs: a per-contig frequency table, a per-genome frequency table, and a function-to-contigs map. For contig-based profiling the per-contig table is the most directly useful.
+[`extract-annotations`](../../refs/plugins/annotate.md#q2-action-annotate-extract-annotations) produces three outputs: a per-contig frequency table, a per-genome frequency table, and a function-to-contigs map. For contig-based profiling the per-contig table is the most directly useful.
 
 ```{code} bash
 mosh annotate extract-annotations \
@@ -263,7 +263,7 @@ Available annotation types: `cog`, `caz`, `kegg_ko`, `kegg_pathway`, `kegg_react
 
 ### Step B5 — Weight by contig abundance (optional)
 
-If you have a contig abundance table from a mapping step (see [How to bin MAGs](bin-mags)), multiply the per-contig annotation counts by the per-contig abundances with [`multiply-tables`](#q2-action-annotate-multiply-tables) to produce abundance-weighted functional profiles:
+If you have a contig abundance table from a mapping step (see [How to bin MAGs](bin-mags)), multiply the per-contig annotation counts by the per-contig abundances with `multiply-tables` to produce abundance-weighted functional profiles:
 
 ```{code} bash
 mosh annotate multiply-tables \
@@ -283,7 +283,7 @@ MAG-based annotation uses the same EggNOG pipeline as Path B but takes dereplica
 
 Databases are the same as Path B. Skip this step if you already ran Path B.
 
-### Step C2 — Annotate MAGs with [`search-orthologs-diamond`](#q2-action-annotate-search-orthologs-diamond)
+### Step C2 — Annotate MAGs with [`search-orthologs-diamond`](../../refs/plugins/annotate.md#q2-action-annotate-search-orthologs-diamond)
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -315,7 +315,7 @@ mosh annotate search-orthologs-diamond \
 ````
 `````
 
-### Step C3 — Map orthologs to functional categories with [`map-eggnog`](#q2-action-annotate-map-eggnog)
+### Step C3 — Map orthologs to functional categories with [`map-eggnog`](../../refs/plugins/annotate.md#q2-action-annotate-map-eggnog)
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -343,9 +343,9 @@ mosh annotate map-eggnog \
 ````
 `````
 
-### Step C4 — Extract specific annotation categories with [`extract-annotations`](#q2-action-annotate-extract-annotations)
+### Step C4 — Extract specific annotation categories with [`extract-annotations`](../../refs/plugins/annotate.md#q2-action-annotate-extract-annotations)
 
-[`extract-annotations`](#q2-action-annotate-extract-annotations) produces three outputs: a per-genome frequency table (one row per MAG), a per-contig frequency table, and a function-to-contigs map. For MAG-based abundance weighting the per-genome table is the relevant one.
+[`extract-annotations`](../../refs/plugins/annotate.md#q2-action-annotate-extract-annotations) produces three outputs: a per-genome frequency table (one row per MAG), a per-contig frequency table, and a function-to-contigs map. For MAG-based abundance weighting the per-genome table is the relevant one.
 
 ```{code} bash
 mosh annotate extract-annotations \
@@ -362,7 +362,7 @@ Available annotation types: `cog`, `caz`, `kegg_ko`, `kegg_pathway`, `kegg_react
 
 ### Step C5 — Link annotations to MAG abundance (optional)
 
-Combine the per-genome annotation counts with MAG abundance estimates using [`multiply-tables`](#q2-action-annotate-multiply-tables) to produce abundance-weighted functional profiles:
+Combine the per-genome annotation counts with MAG abundance estimates using `multiply-tables` to produce abundance-weighted functional profiles:
 
 ```{code} bash
 mosh annotate multiply-tables \
@@ -384,4 +384,4 @@ mosh annotate multiply-tables \
 - [Cocoa tutorial — Functional annotation](functional-annotation) — EggNOG MAG annotation with real data, including CAZyme extraction and beta-diversity analysis
 - [How to assemble contigs](assemble-contigs) — prerequisite for Path B
 - [How to bin MAGs](bin-mags) and [Dereplicate MAGs and estimate abundance](dereplicate-and-abundance) — prerequisites for Path C
-- [How to use parsl parallelization](parsl) — parallel execution for [`run-humann`](#q2-action-humann3-run-humann) and [`search-orthologs-diamond`](#q2-action-annotate-search-orthologs-diamond)
+- [How to use parsl parallelization](parsl) — parallel execution for `run-humann` and [`search-orthologs-diamond`](../../refs/plugins/annotate.md#q2-action-annotate-search-orthologs-diamond)
