@@ -57,13 +57,13 @@ mosh mag dereplicate-mags \
     --m-metadata-file busco-results.qza \
     --p-metadata-column completeness \
     --p-threshold 0.9 \
-    --p-find-max true \
+    --p-find-max \
     --o-dereplicated-mags mags-derep.qza \
     --o-table mags-sample-table.qza \
     --verbose
 ```
 
-`--p-threshold 0.9` means MAGs within 90% Jaccard similarity (i.e., a Jaccard distance below 0.1) are considered identical. Adjust this based on the desired taxonomic resolution—0.95–0.99 gives strain-level resolution; 0.8–0.9 gives species-level resolution.
+`--p-threshold 0.9` means MAGs within 90% similarity (i.e., a distance below 0.1) are considered identical. Adjust this based on the desired taxonomic resolution—0.95–0.99 gives strain-level resolution; 0.8–0.9 gives species-level resolution.
 
 The `--o-table` output is a `FeatureTable[PresenceAbsence]` mapping each representative MAG to the samples it was found in.
 
