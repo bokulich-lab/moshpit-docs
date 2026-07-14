@@ -101,7 +101,24 @@ mosh quality-control filter-reads \
 
 ### Remove human reads using the pangenome
 
-For human-associated samples, use the dedicated pangenome action, which downloads and combines the GRCh38 reference genome with the human pangenome before filtering:
+For human-associated samples, filter against a combined index of the GRCh38 reference genome and the draft human pangenome.
+
+Build the index once (and reuse it across experiments), then filter:
+
+```{code} bash
+mosh quality-control construct-human-pangenome-index \
+    --p-threads 4 \
+    --o-index cache:human_pangenome_index \
+    --verbose
+
+mosh quality-control filter-reads \
+    --i-demultiplexed-sequences reads-trimmed.qza \
+    --i-database cache:human_pangenome_index \
+    --o-filtered-sequences reads-filtered.qza \
+    --verbose
+```
+
+Alternatively, `filter-reads-pangenome` builds the index and filters in one step. Saving `--o-reference-index` lets you reuse that index later without re-downloading:
 
 ```{code} bash
 mosh quality-control filter-reads-pangenome \
@@ -111,12 +128,10 @@ mosh quality-control filter-reads-pangenome \
     --verbose
 ```
 
-Saving `--o-reference-index` allows you to reuse the index across multiple experiments without re-downloading.
-
 Steps can be "daisy-chained" to remove reads from multiple hosts: pass the output of one `filter-reads` step as input to the next.
 
 :::{seealso} Cocoa tutorial — host filtering
-See [Host read removal](host-filtering) for a detailed walkthrough including multi-host removal.
+See [Host read removal](host-filtering) for a detailed walkthrough.
 :::
 
 ---
@@ -157,8 +172,7 @@ Provides misassembly detection and, with `--i-references`, comparison against kn
 ```{code} bash
 mosh assembly filter-contigs \
     --i-contigs contigs.qza \
-    --m-metadata-file contig-qc-results.qza \
-    --p-where "length >= 1000" \
+    --p-length-threshold 1000 \
     --o-filtered-contigs contigs-filtered.qza \
     --verbose
 ```
@@ -236,26 +250,33 @@ See [How to bin MAGs](bin-mags) for the complete binning workflow with BUSCO eva
 
 ## Stage 5 — Taxonomy-based filtering (optional)
 
-**Goal:** Remove Kraken 2 classifications with insufficient read support or exclude specific taxa from downstream analyses.
+**Goal:** Filter Kraken 2 reports and outputs by sample metadata and/or by minimum relative abundance of classified taxa.
 
-After running `classify-kraken2`, you can filter Kraken 2 reports by relative abundance to suppress low-confidence classifications before generating barplots:
+After running `classify-kraken2`, use `filter-kraken2-results` to drop low-abundance taxa from reports (and the corresponding hits from the outputs) before downstream steps such as Bracken or barplots:
 
 ```{code} bash
-mosh annotate filter-kraken2-reports-by-abundance \
-    --i-reports kraken2-reports.qza \
-    --p-min-confidence 0.1 \
+mosh annotate filter-kraken2-results \
+    --i-reports kraken2-reports-reads.qza \
+    --i-outputs kraken2-hits-reads.qza \
+    --p-abundance-threshold 0.1 \
     --o-filtered-reports kraken2-reports-filtered.qza \
+    --o-filtered-outputs kraken2-hits-filtered.qza \
     --verbose
 ```
 
-To filter out reads assigned to specific taxa (for example, removing host-derived classifications that survived earlier filtering):
+`--p-abundance-threshold` is a proportion between 0 and 1: taxa below that relative abundance (by *classified* read count) are removed, and their counts are subtracted from parent taxonomic groupings.
+
+You can also restrict which samples are retained (or remove reports that contain only unclassified / root-only classifications):
 
 ```{code} bash
-mosh annotate filter-kraken2-reads-by-taxonomy \
-    --i-reads reads.qza \
-    --i-reports kraken2-reports.qza \
-    --p-taxa-to-exclude "Homo sapiens" \
-    --o-filtered-reads reads-taxon-filtered.qza \
+mosh annotate filter-kraken2-results \
+    --i-reports kraken2-reports-reads.qza \
+    --i-outputs kraken2-hits-reads.qza \
+    --m-metadata-file sample-metadata.tsv \
+    --p-where "[sample-type]='fecal'" \
+    --p-remove-empty \
+    --o-filtered-reports kraken2-reports-filtered.qza \
+    --o-filtered-outputs kraken2-hits-filtered.qza \
     --verbose
 ```
 
@@ -293,8 +314,8 @@ The `viral-contigs.qza` output can be used as input to downstream annotation ste
 | Stage | Key actions | Plugin | Guide / Tutorial |
 |-------|-------------|--------|------------------|
 | Raw reads | `fastp process-seqs`, `fastp visualize` | q2-fastp | [Cocoa — Quality filtering](quality-control) |
-| Host removal | `quality-control bowtie2-build`, `filter-reads`, `filter-reads-pangenome` | quality-control | [Cocoa — Host filtering](host-filtering) |
+| Host removal | `bowtie2-build`, `filter-reads`, `construct-human-pangenome-index`, `filter-reads-pangenome` | quality-control | [Cocoa — Host filtering](host-filtering) |
 | Assembly | `evaluate-contigs`, `evaluate-quast`, `filter-contigs` | q2-assembly | [Assemble contigs](assemble-contigs) |
 | MAG quality | `evaluate-busco`, `filter-mags`, `filter-derep-mags` | q2-mag | [Bin MAGs](bin-mags) |
-| Taxonomy | `filter-kraken2-reports-by-abundance`, `filter-kraken2-reads-by-taxonomy` | q2-annotate | This guide |
+| Taxonomy | `filter-kraken2-results` | q2-annotate | This guide |
 | Viral QC | `checkv-fetch-db`, `checkv-analysis` | q2-viromics | This guide |

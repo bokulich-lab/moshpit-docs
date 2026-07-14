@@ -17,7 +17,7 @@ A `SampleData[PairedEndSequencesWithQuality]` (or `SampleData[SequencesWithQuali
 
 ## Step 1 — Assemble reads with MEGAHIT
 
-MEGAHIT builds a simplified De Bruijn graph from your reads and outputs assembled contigs. It is the recommended assembler for most metagenomic datasets.
+[MEGAHIT](#q2-action-assembly--assemble-megahit) builds a simplified De Bruijn graph from your reads and outputs assembled contigs. It is the recommended assembler in the [assembly](#q2-plugin-assembly) plugin for most metagenomic datasets.
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -53,7 +53,7 @@ Key parameters to consider:
 
 :::{seealso} **Alternative assembler: SPAdes**
 :class: dropdown
-For datasets where MEGAHIT produces fragmented assemblies, you can try SPAdes instead:
+For datasets where MEGAHIT produces fragmented assemblies, you can try [`assemble-spades`](#q2-action-assembly-assemble-spades) instead:
 ```{code} bash
 mosh assembly assemble-spades \
     --i-reads reads.qza \
@@ -74,7 +74,7 @@ mosh tools cache-import \
     --input-path /path/to/contigs/ \
     --output-path cache:contigs
 ```
-When importing contigs from another tool, contig identifiers may not be unique across samples, which can cause downstream errors. Use `rename-contigs` to ensure uniqueness:
+When importing contigs from another tool, contig identifiers may not be unique across samples, which can cause downstream errors. Use [`rename-contigs`](#q2-action-assembly-rename-contigs) to ensure uniqueness:
 ```{code} bash
 mosh assembly rename-contigs \
     --i-contigs contigs.qza \
@@ -91,9 +91,9 @@ See the [import how-to](data-import) for more details.
 
 After assembly, assess contig quality before spending resources on indexing and binning. Two complementary actions are available.
 
-### Quick evaluation with `evaluate-contigs`
+### Quick evaluation with [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs)
 
-This action is fast and produces N(x) curves, GC content distributions, and length histograms for each sample:
+This pipeline is fast and produces N(x) curves, GC content distributions, and length histograms for each sample:
 
 ```{code} bash
 mosh assembly evaluate-contigs \
@@ -104,7 +104,7 @@ mosh assembly evaluate-contigs \
     --verbose
 ```
 
-### Comprehensive evaluation with `evaluate-quast` (optional)
+### Comprehensive evaluation with [`evaluate-quast`](#q2-action-assembly-evaluate-quast) (optional)
 
 QUAST computes additional metrics including potential misassemblies and, if you provide reference genomes, estimates what fraction of each reference is covered by your assembly:
 
@@ -118,19 +118,31 @@ mosh assembly evaluate-quast \
     --verbose
 ```
 
-Pass `--i-references reference-genomes.qza` if you have reference sequences (e.g., for a mock community). QUAST is significantly slower than `evaluate-contigs` and requires more memory; for large studies `evaluate-contigs` is usually sufficient.
+Pass `--i-references reference-genomes.qza` if you have reference sequences (e.g., for a mock community). QUAST is significantly slower than [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs) and requires more memory; for large studies [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs) is usually sufficient.
 
 ---
 
 ## Step 3 — Filter contigs (optional)
 
-You can remove contigs that do not meet quality criteria using `filter-contigs`. This is useful for excluding very short or otherwise problematic contigs that survived assembly but should not be carried into downstream analysis:
+You can remove short contigs or entire samples using [`filter-contigs`](#q2-action-assembly-filter-contigs). Contig length is controlled with `--p-length-threshold` (keep contigs of that length and longer):
 
 ```{code} bash
 mosh assembly filter-contigs \
     --i-contigs contigs.qza \
-    --m-metadata-file contig-qc-results.qza \
-    --p-where "length >= 1000" \
+    --p-length-threshold 1000 \
+    --o-filtered-contigs contigs-filtered.qza \
+    --verbose
+```
+
+To retain only specific samples (or drop empty samples after length filtering), pass sample metadata and an optional `--p-where` clause:
+
+```{code} bash
+mosh assembly filter-contigs \
+    --i-contigs contigs.qza \
+    --m-metadata-file sample-metadata.tsv \
+    --p-where "[sample-type]='fecal'" \
+    --p-length-threshold 1000 \
+    --p-remove-empty \
     --o-filtered-contigs contigs-filtered.qza \
     --verbose
 ```
@@ -155,5 +167,5 @@ Contig binning requires that reads can be mapped back to the assembled contigs. 
 
 - [End-to-end tutorial — Assembly chapter](assembly) — worked example with mock-community data including reference-based QUAST
 - [Cocoa tutorial — MAG recovery](mag-recovery) — assembly in a real-world context, including parsl HPC configuration
-- [How to use parsl parallelization](parsl) — configuring parallel execution for `assemble-megahit`
+- [How to use parsl parallelization](parsl) — configuring parallel execution for [`assemble-megahit`](#q2-action-assembly--assemble-megahit)
 - [How to import data from other tools](data-import) — importing externally assembled contigs
