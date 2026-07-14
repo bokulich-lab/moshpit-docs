@@ -66,7 +66,7 @@ This plugin provides actions for data retrieval from SRA.
 
 Not sure where to begin? The **How-to Guides** section is organized into two sub-groups:
 
-**Workflows** — goal-oriented recipes for each analytical step:
+**Analysis recipes** — goal-oriented recipes for each analytical step:
 
 - [How to assemble contigs](assemble-contigs) — assemble reads with MEGAHIT or SPAdes and evaluate assembly quality
 - [How to bin MAGs](bin-mags) — index, map, bin, and quality-filter metagenome-assembled genomes
@@ -75,7 +75,7 @@ Not sure where to begin? The **How-to Guides** section is organized into two sub
 - [Dereplicate MAGs and estimate abundance](dereplicate-and-abundance) — cluster redundant MAGs across samples and compute RPKM/TPM
 - [Profile functional potential](functional-profiling) — read-based (HUMAnN 3) and MAG-based (EggNOG) functional annotation
 
-**Operations** — setting up and operating the toolkit: install MOSHPIT, configure parsl parallelization, fetch data from SRA, import and export artifacts.
+**Using MOSHPIT** — setting up and operating the toolkit: install MOSHPIT, configure parsl parallelization, fetch data from SRA, import and export artifacts.
 
 The full **Tutorials** walk through complete analyses on real and simulated datasets: the [End-to-end MAG reconstruction tutorial](assembly) is the best starting point if you are new to MOSHPIT.
 

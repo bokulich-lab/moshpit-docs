@@ -23,7 +23,7 @@ The [end-to-end tutorial](assembly) intentionally skips read-level QC to keep th
 
 ### Inspect read quality (no trimming)
 
-Run `fastp` in report-only mode to understand the quality of your reads before modifying them:
+Run [`process-seqs`](#q2-action-fastp-process-seqs) from the [fastp](#q2-plugin-fastp) plugin in report-only mode to understand the quality of your reads before modifying them:
 
 ```{code} bash
 mosh fastp process-seqs \
@@ -79,7 +79,7 @@ See [Quality filtering](quality-control) for worked example output and interpret
 
 ### Remove reads from a specific reference
 
-Build a Bowtie2 index from any reference FASTA, then filter the reads against it:
+Build a Bowtie2 index from any reference FASTA with [`bowtie2-build`](#q2-action-quality-control-bowtie2-build), then filter the reads against it with [`filter-reads`](#q2-action-quality-control-filter-reads) from the [quality-control](#q2-plugin-quality-control) plugin:
 
 ```{code} bash
 mosh tools cache-import \
@@ -103,7 +103,7 @@ mosh quality-control filter-reads \
 
 For human-associated samples, filter against a combined index of the GRCh38 reference genome and the draft human pangenome.
 
-Build the index once (and reuse it across experiments), then filter:
+Build the index once with [`construct-human-pangenome-index`](#q2-action-quality-control-construct-human-pangenome-index) (and reuse it across experiments), then filter:
 
 ```{code} bash
 mosh quality-control construct-human-pangenome-index \
@@ -118,7 +118,7 @@ mosh quality-control filter-reads \
     --verbose
 ```
 
-Alternatively, `filter-reads-pangenome` builds the index and filters in one step. Saving `--o-reference-index` lets you reuse that index later without re-downloading:
+Alternatively, [`filter-reads-pangenome`](#q2-action-quality-control-filter-reads-pangenome) builds the index and filters in one step. Saving `--o-reference-index` lets you reuse that index later without re-downloading:
 
 ```{code} bash
 mosh quality-control filter-reads-pangenome \
@@ -128,7 +128,7 @@ mosh quality-control filter-reads-pangenome \
     --verbose
 ```
 
-Steps can be "daisy-chained" to remove reads from multiple hosts: pass the output of one `filter-reads` step as input to the next.
+Steps can be "daisy-chained" to remove reads from multiple hosts: pass the output of one [`filter-reads`](#q2-action-quality-control-filter-reads) step as input to the next.
 
 :::{seealso} Cocoa tutorial — host filtering
 See [Host read removal](host-filtering) for a detailed walkthrough.
@@ -140,7 +140,7 @@ See [Host read removal](host-filtering) for a detailed walkthrough.
 
 **Goal:** Verify that contigs are long enough and well-assembled before investing resources in binning.
 
-### Quick metrics
+### Quick metrics with [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs)
 
 ```{code} bash
 mosh assembly evaluate-contigs \
@@ -153,7 +153,7 @@ mosh assembly evaluate-contigs \
 
 Produces N(x) curves, length histograms, and GC content distributions. Fast enough to run on every dataset.
 
-### Comprehensive QUAST assessment (optional)
+### Comprehensive QUAST assessment with [`evaluate-quast`](#q2-action-assembly-evaluate-quast) (optional)
 
 ```{code} bash
 mosh assembly evaluate-quast \
@@ -165,9 +165,9 @@ mosh assembly evaluate-quast \
     --verbose
 ```
 
-Provides misassembly detection and, with `--i-references`, comparison against known reference genomes. Significantly slower than `evaluate-contigs`.
+Provides misassembly detection and, with `--i-references`, comparison against known reference genomes. Significantly slower than [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs).
 
-### Filter short or problematic contigs
+### Filter short or problematic contigs with [`filter-contigs`](#q2-action-assembly-filter-contigs)
 
 ```{code} bash
 mosh assembly filter-contigs \
@@ -187,7 +187,9 @@ See [How to assemble contigs](assemble-contigs) for a full discussion of assembl
 
 **Goal:** Assess completeness and contamination of bins and remove low-quality MAGs before dereplication.
 
-### Evaluate MAG quality with BUSCO
+### Evaluate MAG quality with [`evaluate-busco`](#q2-action-mag--evaluate-busco)
+
+Download the BUSCO database first with [`fetch-busco-db`](#q2-action-mag-fetch-busco-db), then run the evaluation:
 
 ```{code} bash
 mosh mag fetch-busco-db \
@@ -206,7 +208,7 @@ mosh mag evaluate-busco \
     --verbose
 ```
 
-### Filter MAGs by completeness and contamination
+### Filter MAGs by completeness and contamination with [`filter-mags`](#q2-action-mag-filter-mags)
 
 ```{code} bash
 mosh mag filter-mags \
@@ -223,7 +225,7 @@ MIMAG quality tiers:
 - **Medium quality:** ≥50% completeness, <10% contamination
 - **Low quality:** <50% completeness
 
-After dereplication, you can apply quality filtering again to the dereplicated set using `filter-derep-mags` (accepts `FeatureData[MAG]`).
+After dereplication, you can apply quality filtering again to the dereplicated set using [`filter-derep-mags`](#q2-action-mag-filter-derep-mags) (accepts `FeatureData[MAG]`).
 
 :::{seealso} **Alternative: CheckM**
 :class: dropdown
@@ -252,7 +254,7 @@ See [How to bin MAGs](bin-mags) for the complete binning workflow with BUSCO eva
 
 **Goal:** Filter Kraken 2 reports and outputs by sample metadata and/or by minimum relative abundance of classified taxa.
 
-After running `classify-kraken2`, use `filter-kraken2-results` to drop low-abundance taxa from reports (and the corresponding hits from the outputs) before downstream steps such as Bracken or barplots:
+After running [`classify-kraken2`](#q2-action-annotate--classify-kraken2), use [`filter-kraken2-results`](#q2-action-annotate-filter-kraken2-results) to drop low-abundance taxa from reports (and the corresponding hits from the outputs) before downstream steps such as Bracken or barplots:
 
 ```{code} bash
 mosh annotate filter-kraken2-results \
@@ -313,9 +315,9 @@ The `cache:viral_contigs` output can be used as input to downstream annotation s
 
 | Stage | Key actions | Plugin | Guide / Tutorial |
 |-------|-------------|--------|------------------|
-| Raw reads | `fastp process-seqs`, `fastp visualize` | q2-fastp | [Cocoa — Quality filtering](quality-control) |
-| Host removal | `bowtie2-build`, `filter-reads`, `construct-human-pangenome-index`, `filter-reads-pangenome` | quality-control | [Cocoa — Host filtering](host-filtering) |
-| Assembly | `evaluate-contigs`, `evaluate-quast`, `filter-contigs` | q2-assembly | [Assemble contigs](assemble-contigs) |
-| MAG quality | `evaluate-busco`, `filter-mags`, `filter-derep-mags` | q2-mag | [Bin MAGs](bin-mags) |
-| Taxonomy | `filter-kraken2-results` | q2-annotate | This guide |
+| Raw reads | [`process-seqs`](#q2-action-fastp-process-seqs), [`visualize`](#q2-action-fastp-visualize) | [fastp](#q2-plugin-fastp) | [Cocoa — Quality filtering](quality-control) |
+| Host removal | [`bowtie2-build`](#q2-action-quality-control-bowtie2-build), [`filter-reads`](#q2-action-quality-control-filter-reads), [`construct-human-pangenome-index`](#q2-action-quality-control-construct-human-pangenome-index), [`filter-reads-pangenome`](#q2-action-quality-control-filter-reads-pangenome) | [quality-control](#q2-plugin-quality-control) | [Cocoa — Host filtering](host-filtering) |
+| Assembly | [`evaluate-contigs`](#q2-action-assembly--evaluate-contigs), [`evaluate-quast`](#q2-action-assembly-evaluate-quast), [`filter-contigs`](#q2-action-assembly-filter-contigs) | [assembly](#q2-plugin-assembly) | [Assemble contigs](assemble-contigs) |
+| MAG quality | [`evaluate-busco`](#q2-action-mag--evaluate-busco), [`filter-mags`](#q2-action-mag-filter-mags), [`filter-derep-mags`](#q2-action-mag-filter-derep-mags) | [mag](#q2-plugin-mag) | [Bin MAGs](bin-mags) |
+| Taxonomy | [`filter-kraken2-results`](#q2-action-annotate-filter-kraken2-results) | [annotate](#q2-plugin-annotate) | This guide |
 | Viral QC | `checkv-fetch-db`, `checkv-analysis` | q2-viromics | This guide |

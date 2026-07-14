@@ -15,9 +15,9 @@ A quality-filtered `SampleData[MAGs]` artifact from [binning](bin-mags) and the 
 
 ---
 
-## Step 1 — Compute MinHash signatures
+## Step 1 — Compute MinHash signatures with [`compute`](#q2-action-sourmash-compute)
 
-Compute a compact MinHash sketch for each MAG in every sample. These sketches are used to estimate pairwise genome similarity without a full alignment:
+Compute a compact MinHash sketch for each MAG in every sample using the [sourmash](#q2-plugin-sourmash) plugin. These sketches are used to estimate pairwise genome similarity without a full alignment:
 
 ```{code} bash
 mosh sourmash compute \
@@ -32,7 +32,7 @@ The `--p-ksizes` parameter sets the k-mer size used for hashing. Larger values i
 
 ---
 
-## Step 2 — Compute pairwise distances
+## Step 2 — Compute pairwise distances with [`compare`](#q2-action-sourmash-compare)
 
 Compare all MinHash signatures to produce a pairwise distance matrix:
 
@@ -46,7 +46,7 @@ mosh sourmash compare \
 
 ---
 
-## Step 3 — Dereplicate MAGs
+## Step 3 — Dereplicate MAGs with [`dereplicate-mags`](#q2-action-mag-dereplicate-mags)
 
 Cluster MAGs by similarity and select the best representative from each cluster. Here we use the BUSCO completeness scores to choose the most complete genome in each cluster:
 
@@ -68,10 +68,10 @@ mosh mag dereplicate-mags \
 The `--o-table` output is a `FeatureTable[PresenceAbsence]` mapping each representative MAG to the samples it was found in.
 
 :::{note}
-If you did not run BUSCO, omit `--m-metadata-file` and `--p-metadata-column`. In that case, `dereplicate-mags` selects the longest MAG as the representative from each cluster.
+If you did not run BUSCO, omit `--m-metadata-file` and `--p-metadata-column`. In that case, [`dereplicate-mags`](#q2-action-mag-dereplicate-mags) selects the longest MAG as the representative from each cluster.
 :::
 
-After dereplication you can apply a second round of quality filtering on the dereplicated set:
+After dereplication you can apply a second round of quality filtering on the dereplicated set with [`filter-derep-mags`](#q2-action-mag-filter-derep-mags):
 
 ```{code} bash
 mosh mag filter-derep-mags \
@@ -84,7 +84,7 @@ mosh mag filter-derep-mags \
 
 ---
 
-## Step 4 — Index dereplicated MAGs
+## Step 4 — Index dereplicated MAGs with [`index-derep-mags`](#q2-action-assembly-index-derep-mags)
 
 Build a Bowtie2 index for the dereplicated MAG set. This is done once and reused for read mapping across all samples:
 
@@ -99,7 +99,7 @@ mosh assembly index-derep-mags \
 
 ---
 
-## Step 5 — Map reads to dereplicated MAGs
+## Step 5 — Map reads to dereplicated MAGs with [`map-reads`](#q2-action-assembly-map-reads)
 
 Map the original reads to the indexed MAG set to count how many reads align to each genome in each sample:
 
@@ -131,7 +131,7 @@ mosh assembly map-reads \
 
 ---
 
-## Step 6 — Estimate MAG lengths
+## Step 6 — Estimate MAG lengths with [`get-feature-lengths`](#q2-action-mag-get-feature-lengths)
 
 Retrieve the length of each dereplicated MAG, which is required for normalizing read counts:
 
@@ -144,7 +144,7 @@ mosh mag get-feature-lengths \
 
 ---
 
-## Step 7 — Estimate abundance
+## Step 7 — Estimate abundance with [`estimate-abundance`](#q2-action-mag-estimate-abundance)
 
 Normalize read counts by MAG length and sequencing depth to produce either RPKM or TPM abundance estimates:
 
@@ -163,7 +163,7 @@ mosh mag estimate-abundance \
 
 ---
 
-## Step 8 — Visualize taxonomic composition
+## Step 8 — Visualize taxonomic composition with [`barplot`](#q2-action-taxa-barplot)
 
 If you have classified your MAGs with Kraken 2 (see [Early taxonomic composition](early-taxonomy)), combine the abundance table with taxonomy to visualize community composition:
 
@@ -182,4 +182,4 @@ mosh taxa barplot \
 - [End-to-end tutorial — Dereplication](e2e-dereplication) — worked dereplication example with mock-community data
 - [End-to-end tutorial — Abundance estimation](mag-abundance) — complete abundance and barplot workflow
 - [Cocoa tutorial — MAG recovery](mag-recovery) — dereplication and abundance in a real-world context
-- [How to use parsl parallelization](parsl) — configuring parallel read mapping
+- [How to use parsl parallelization](parsl) — configuring parallel [`map-reads`](#q2-action-assembly-map-reads)

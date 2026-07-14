@@ -15,9 +15,9 @@ A `SampleData[Contigs]` artifact from [assembly](assemble-contigs) and the origi
 
 ---
 
-## Step 1 — Index contigs
+## Step 1 — Index contigs with [`index-contigs`](#q2-action-assembly--index-contigs)
 
-Build a Bowtie2 index for each sample's contigs. This index enables read mapping in the next step and is required by both binners.
+Build a Bowtie2 index for each sample's contigs using the [assembly](#q2-plugin-assembly) plugin. This index enables read mapping in the next step and is required by both binners.
 
 `````{tab-set}
 ````{tab-item} With parsl parallelization
@@ -45,7 +45,7 @@ mosh assembly index-contigs \
 
 ---
 
-## Step 2 — Map reads to contigs
+## Step 2 — Map reads to contigs with [`map-reads`](#q2-action-assembly-map-reads)
 
 Map the original reads back to the assembled contigs. Both binners use the resulting alignment maps to estimate contig coverage across samples, which is a key signal for grouping contigs into bins.
 
@@ -79,11 +79,11 @@ mosh assembly map-reads \
 
 ## Step 3 — Bin contigs into MAGs
 
-Two binners are available. Both take the same contigs and alignment maps as input; choose one based on your environment and expected sample type.
+Two binners are available in the [mag](#q2-plugin-mag) plugin. Both take the same contigs and alignment maps as input; choose one based on your environment and expected sample type.
 
 `````{tab-set}
 ````{tab-item} MetaBAT 2
-MetaBAT 2 uses tetranucleotide frequency together with coverage information to group contigs. It is fast, well-established, and explicitly outputs the contigs that could not be assigned to any bin (`unbinned-contigs`), which is used later in the BUSCO visualization.
+[`bin-contigs-metabat`](#q2-action-mag-bin-contigs-metabat) uses tetranucleotide frequency together with coverage information to group contigs. It is fast, well-established, and explicitly outputs the contigs that could not be assigned to any bin (`unbinned-contigs`), which is used later in the BUSCO visualization.
 
 ```{code} bash
 mosh mag bin-contigs-metabat \
@@ -98,7 +98,7 @@ mosh mag bin-contigs-metabat \
 ```
 ````
 ````{tab-item} SemiBin2
-SemiBin2 uses deep learning together with coverage information. Pre-trained environment models are available for common sample types (`human_gut`, `ocean`, `soil`, `wastewater`, and more). For samples from an environment not covered by a pre-trained model, use `global`. Unlike MetaBAT 2, SemiBin2 does not produce an `unbinned-contigs` artifact.
+[`bin-contigs-semibin2`](#q2-action-mag-bin-contigs-semibin2) uses deep learning together with coverage information. Pre-trained environment models are available for common sample types (`human_gut`, `ocean`, `soil`, `wastewater`, and more). For samples from an environment not covered by a pre-trained model, use `global`. Unlike MetaBAT 2, SemiBin2 does not produce an `unbinned-contigs` artifact.
 
 ```{code} bash
 mosh mag bin-contigs-semibin2 \
@@ -129,9 +129,9 @@ Replace `global` with the environment that best matches your samples (e.g., `hum
 
 ---
 
-## Step 4 — Evaluate MAG quality with BUSCO
+## Step 4 — Evaluate MAG quality with [`evaluate-busco`](#q2-action-mag--evaluate-busco)
 
-BUSCO assesses completeness and contamination of each MAG by checking for the presence of lineage-specific single-copy marker genes. First download the relevant BUSCO database:
+BUSCO assesses completeness and contamination of each MAG by checking for the presence of lineage-specific single-copy marker genes. First download the relevant BUSCO database with [`fetch-busco-db`](#q2-action-mag-fetch-busco-db):
 
 ```{code} bash
 mosh mag fetch-busco-db \
@@ -191,7 +191,7 @@ CheckM and BUSCO use different marker gene sets. BUSCO's ODB12 databases are mor
 
 ---
 
-## Step 5 — Filter MAGs by quality
+## Step 5 — Filter MAGs by quality with [`filter-mags`](#q2-action-mag-filter-mags)
 
 Remove low-quality bins before dereplication or downstream analyses. The MIMAG standard defines "medium quality" as ≥50% completeness and <10% contamination:
 
@@ -207,7 +207,7 @@ mosh mag filter-mags \
 
 Adjust thresholds based on your downstream goals. For high-confidence phylogenomic analyses you may require ≥90% completeness and <5% contamination ("high quality" by MIMAG). For broad community profiling, more permissive thresholds may be appropriate.
 
-After dereplication, you can apply a second round of filtering on the dereplicated set with `filter-derep-mags`, which accepts a `FeatureData[MAG]` artifact instead of `SampleData[MAGs]`.
+After dereplication, you can apply a second round of filtering on the dereplicated set with [`filter-derep-mags`](#q2-action-mag-filter-derep-mags), which accepts a `FeatureData[MAG]` artifact instead of `SampleData[MAGs]`.
 
 ---
 
@@ -224,5 +224,5 @@ In the BUSCO visualization (`mags.qzv`), inspect:
 ## Further reading
 
 - [End-to-end tutorial — Binning chapter](binning) — worked example with mock-community data
-- [Cocoa tutorial — MAG recovery](mag-recovery) — real-world example with HPC parsl configuration and `filter-derep-mags`
-- [How to use parsl parallelization](parsl) — configuring parallel resources for indexing and BUSCO
+- [Cocoa tutorial — MAG recovery](mag-recovery) — real-world example with HPC parsl configuration and [`filter-derep-mags`](#q2-action-mag-filter-derep-mags)
+- [How to use parsl parallelization](parsl) — configuring parallel resources for [`index-contigs`](#q2-action-assembly--index-contigs) and [`evaluate-busco`](#q2-action-mag--evaluate-busco)
