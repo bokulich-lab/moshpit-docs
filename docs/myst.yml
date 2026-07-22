@@ -29,6 +29,7 @@ project:
             - file: chapters/01_tutorials/end_to_end_short/04_dereplication.md
             - file: chapters/01_tutorials/end_to_end_short/05_taxonomic_classification.md
             - file: chapters/01_tutorials/end_to_end_short/06_abundance_estimation.md
+            - file: chapters/01_tutorials/end_to_end_short/07_functional_profiling.md
         - file: chapters/01_tutorials/cocoa/cocoa.intro.md
           children:
             - file: chapters/01_tutorials/cocoa/00_data_retrieval.md
@@ -59,9 +60,14 @@ project:
               children:
                 - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/assembled-sequences.md
                 - file: chapters/01_tutorials/amr_gene_annotation/q2-amrfinderplus/amr-contig-abundance.md
-    - title: How-To Guides
+    - title: How-to Guides
       children:
-        - pattern: chapters/02_howtos/*.md
+        - title: Analysis recipes
+          children:
+            - pattern: chapters/03_workflows/*.md
+        - title: Using MOSHPIT
+          children:
+            - pattern: chapters/02_howtos/*.md
 #    - title: Explanations
 #      children:
     - title: References

@@ -36,7 +36,7 @@ mosh sourmash compare \
 This step dereplicates the filtered MAGs, ensuring that only unique MAGs are retained. Dereplication reduces redundancy 
 by merging similar genomes based on a similarity threshold.
 ```{code} bash
-mosh annotate dereplicate-mags \
+mosh mag dereplicate-mags \
     --i-mags cache:mags_filtered_50 \
     --i-distance-matrix cache:mags_dist_matrix_50 \
     --p-threshold 0.99 \

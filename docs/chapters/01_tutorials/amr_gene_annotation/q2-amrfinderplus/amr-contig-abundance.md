@@ -38,7 +38,7 @@ this normalisation longer contigs would appear more abundant simply because they
 cover more reads.
 
 ```{code} bash
-mosh annotate get-feature-lengths \
+mosh mag get-feature-lengths \
     --i-features contigs.qza \
     --o-lengths contigs_lengths.qza \
     --verbose
@@ -51,7 +51,7 @@ back to the contigs and normalize the counts by contig length.
 This produces a per-sample abundance table with samples as rows and contigs as columns.
 
 ```{code} bash
-mosh annotate estimate-abundance \
+mosh mag estimate-abundance \
     --i-alignment-maps reads-to-contigs-aln.qza \
     --i-feature-lengths contigs_lengths.qza \
     --o-abundances contig_abundances.qza \

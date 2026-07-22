@@ -4,6 +4,11 @@ authors:
 ---
 (assembly)=
 # Genome assembly
+
+:::{seealso} Workflow Guide
+Looking for a concise recipe you can adapt to your own data? See [How to assemble contigs](assemble-contigs).
+:::
+
 The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome 
 assemblers available, two of which you can use through our MOSHPIT plugin - here, we will use [MEGAHIT](https://doi.org/10.1093/bioinformatics/btv033). 
 MEGAHIT takes short DNA sequencing reads, constructs a simplified [De Bruijn graph](https://en.wikipedia.org/wiki/De_Bruijn_graph), and generates longer contiguous 

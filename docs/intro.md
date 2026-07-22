@@ -25,14 +25,19 @@ The following main plugins comprise the core of the MOSHPIT toolkit and are incl
 :::{card}
 :header: **q2-assembly**
 :link: https://github.com/bokulich-lab/q2-assembly
-This plugin contains actions for (meta)genome assembly and quality control, genome indexing and red mapping.
+This plugin contains actions for (meta)genome assembly and quality control, genome indexing and read mapping.
+:::
+
+:::{card}
+:header: **q2-mag**
+:link: https://github.com/bokulich-lab/q2-mag
+This plugin provides actions for contig binning, MAG quality control, dereplication, and abundance estimation.
 :::
 
 :::{card}
 :header: **q2-annotate**
 :link: https://github.com/bokulich-lab/q2-annotate
-This plugin provides actions for contig binning and quality control, taxonomic and functional annotations 
-of contigs and {term}`MAG`s, human host removal.
+This plugin provides actions for taxonomic and functional annotation of contigs and {term}`MAG`s, human host removal.
 :::
 
 :::{card}
@@ -56,7 +61,26 @@ This plugin provides actions for data retrieval from SRA.
 ::::
 
 ---
-You may also want to check out these other QIIME 2 plugins for antimicrobial resistance gene ({term}`ARG`) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly and q2-annotate:
+
+## Getting started
+
+Not sure where to begin? The **How-to Guides** section is organized into two sub-groups:
+
+**Analysis recipes** — goal-oriented recipes for each analytical step:
+
+- [How to assemble contigs](assemble-contigs) — assemble reads with MEGAHIT or SPAdes and evaluate assembly quality
+- [How to bin MAGs](bin-mags) — index, map, bin, and quality-filter metagenome-assembled genomes
+- [Quality control at every step](qc-every-step) — read filtering, host removal, assembly QC, and MAG quality
+- [Early taxonomic composition](early-taxonomy) — get a community overview from reads, contigs, or MAGs
+- [Dereplicate MAGs and estimate abundance](dereplicate-and-abundance) — cluster redundant MAGs across samples and compute RPKM/TPM
+- [Profile functional potential](functional-profiling) — read-based (HUMAnN 3) and MAG-based (EggNOG) functional annotation
+
+**Using MOSHPIT** — setting up and operating the toolkit: install MOSHPIT, configure parsl parallelization, use the [artifact cache](artifact-cache), fetch data from SRA, import and export artifacts.
+
+The full **Tutorials** walk through complete analyses on real and simulated datasets: the [End-to-end MAG reconstruction tutorial](assembly) is the best starting point if you are new to MOSHPIT.
+
+---
+You may also want to check out these other QIIME 2 plugins for antimicrobial resistance gene ({term}`ARG`) detection and viromics applications. These plugins are not covered in this tutorial. They have their own installation instructions and tutorials (see the wiki page on the respective GitHub repositories). You can use these plugins with some of the artifacts produced by q2-assembly, q2-mag, and q2-annotate:
 
 ::::{grid} 1 1 2 3
 
@@ -113,6 +137,12 @@ Differential expression analysis using [_DESeq2_](https://bioconductor.org/packa
 :header: **q2-checkm**
 :link: https://github.com/bokulich-lab/q2-checkm
 Assessment of microbial genome quality with [_CheckM_ v1](https://github.com/ecogenomics/checkm).
+:::
+
+:::{card}
+:header: **q2-humann3**
+:link: https://github.com/bokulich-lab/q2-humann3
+Read-based functional profiling with [_HUMAnN 3_](https://doi.org/10.7554/eLife.65088).
 :::
 
 ::::

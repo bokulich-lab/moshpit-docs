@@ -11,7 +11,7 @@ export data from QIIME 2 and connect it with other tools.
 QIIME 2 does not yet support exporting data from the cache (see below). This means that you will need to manually copy the data from the 
 cache directory to a location where you can access it with other tools. In our examples, the cache directory is located directly 
 in the working directory and that is where we will copy the data from. Keep in mind that you should never tamper with the files 
-in the cache directory directly, as this may lead to broken artifacts and failed analyses. 
+in the cache directory directly, as this may lead to broken artifacts and failed analyses. For an overview of creating and using caches, see [How to use the QIIME 2 artifact cache](artifact-cache).
 ```
 
 ## Visualizing Kraken 2 reports with Pavian

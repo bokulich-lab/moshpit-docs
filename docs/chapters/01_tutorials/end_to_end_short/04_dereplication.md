@@ -2,6 +2,7 @@
 authors:
 - mz
 ---
+(e2e-dereplication)=
 # MAG dereplication
 Since our samples were generated from the same mock community (i.e., we know they most likely contain the same set of 
 genomes), we can simplify our MAG collection by performing __dereplication__, similarly to how you do it for 16S 
@@ -34,7 +35,7 @@ Finally, we dereplicate the genomes using the distance matrix and a fixed simila
 simply choose the most complete genome from all the genomes belonging to the same cluster, given a similarity threshold:
 
 ```{code} bash
-qiime annotate dereplicate-mags \
+mosh mag dereplicate-mags \
     --i-mags mags-filtered.qza \
     --i-distance-matrix min-hash-compare.qza \
     --m-metadata-file busco-results.qza \

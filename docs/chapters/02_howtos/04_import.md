@@ -5,7 +5,7 @@ like contig assembly, binning, and annotation. However, if you have already perf
 you can import the results into an appropriate QIIME 2 artifact and continue from there. Below you can see some examples and 
 use cases where this may be relevant.
 
-## Working with exisiting contigs
+## Working with existing contigs
 In case you already have contigs assembled from your metagenomic data, you can import them into a `SampleData[Contigs]` 
 artifact. This should not differ much from the typical import process (see [here](https://docs.qiime2.org/2024.10/tutorials/importing/) 
 for more details on importing data), but the command may look like:

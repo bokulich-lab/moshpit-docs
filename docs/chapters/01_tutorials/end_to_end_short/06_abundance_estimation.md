@@ -2,7 +2,12 @@
 authors:
 - mz
 ---
+(mag-abundance)=
 # MAG abundance estimation
+
+:::{seealso} Workflow Guide
+For a concise step-by-step recipe combining dereplication and abundance estimation, see [Dereplicate MAGs and estimate abundance](dereplicate-and-abundance).
+:::
 At this point we still have no information about how much of each MAG was present in 
 the original samples—this is something we will try to do in this section. To estimate 
 MAG abundance, we will take the original reads and map them back to the recovered MAGs. 
@@ -12,7 +17,7 @@ to genome lengths and present the results using one of the available metrics
 
 ## MAG indexing
 Similarly to how it was done for MAG recovery, we first need to index our dereplicated 
-MAGs. We can do it using the `index-derep-mags` action from the `q2-annotate` plugin:
+MAGs. We can do it using the `index-derep-mags` action from the `q2-assembly` plugin:
 
 ```{code} bash
 mosh assembly index-derep-mags \
@@ -62,7 +67,7 @@ we can normalize counts of reads based on genome length. To achieve that, you ca
 the `get-feature-lengths` action:
 
 ```{code} bash
-mosh annotate get-feature-lengths \
+mosh mag get-feature-lengths \
     --i-features mags-derep.qza \
     --o-lengths mags-derep-lengths.qza \
     --verbose
@@ -78,7 +83,7 @@ learn more about those. We will also set minimal mapping quality to 42 to ensure
 taking into account only the reads which mapped to our MAGs perfectly.
 
 ```{code} bash
-mosh annotate estimate-abundance \
+mosh mag estimate-abundance \
     --i-alignment-maps reads-to-mags-aln.qza \
     --i-feature-lengths mags-derep-lengths.qza \
     --p-metric tpm \

@@ -40,7 +40,7 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=14G"
-worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.7"
 walltime = "12:00:00"
 nodes_per_block = 1
 cores_per_node = 8
@@ -139,7 +139,7 @@ label = "default"
 [parsl.executors.provider]
 class = "SlurmProvider"
 scheduler_options = "#SBATCH --mem-per-cpu=8G"
-worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.4"
+worker_init = "source ~/.bashrc && conda activate rachis-moshpit-2026.7"
 walltime = "2:00:00"
 nodes_per_block = 1
 cores_per_node = 8

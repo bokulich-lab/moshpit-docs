@@ -16,8 +16,8 @@ Below you will find a quick installation guide for different operating systems:
 These instructions are for users running on Linux or the Windows Subsystem for Linux (WSL v2).
 ```bash
 conda env create \
-  --name rachis-moshpit-2026.4 \
-  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2026.4/moshpit/released/rachis-moshpit-linux-64-conda.yml
+  --name rachis-moshpit-2026.7 \
+  --file https://raw.githubusercontent.com/qiime2/distributions/refs/heads/dev/2026.7/moshpit/released/rachis-moshpit-linux-64-conda.yml
 ```
 ````
 
@@ -25,13 +25,13 @@ conda env create \
 These instructions are for users with Apple Silicon chips (M1, M2, etc) using Docker.
 Run the following command to pull the selected image:
 ```bash
-docker pull quay.io/qiime2/moshpit:2026.4
+docker pull quay.io/qiime2/moshpit:2026.7
 ```
 Verify things are working by running:
 ```bash
 docker run \
   -v $(pwd):/data \
-  -it quay.io/qiime2/moshpit:2026.4 \
+  -it quay.io/qiime2/moshpit:2026.7 \
   qiime info
 ```
 ````
