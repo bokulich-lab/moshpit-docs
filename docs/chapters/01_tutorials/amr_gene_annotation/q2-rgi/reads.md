@@ -125,15 +125,32 @@ To look at the distribution of ARGs across samples we can use the feature tables
 created by the `annotate-reads-card` action. They contain the counts 
 of reads mapped to a specific allele or gene in each sample. These are the 
 raw counts and have to be normalized before further analysis. Here, we will use the 
-normalize function of the `q2-feature-table` plugin with the method counts per 
-million. This removes library size biases and makes cross sample comparisons 
-possible. It is not possible to compare the abundance of different genes within a 
-sample because of different gene lengths. The normalisation for gene length is not 
-yet implemented.
+normalize function of the `q2-feature-table` plugin with the TPM method . This 
+removes library size and gene length biases and makes inter and intra sample 
+comparisons possible. To do this we first have to extract the gene lengths of the ARGs:
+
+```{code} bash
+qiime rgi get-gene-lengths \
+    --i-annotations rgi_gene_annotations_reads.qza \
+    --o-gene-lengths rgi_gene_annotations_reads_gene_lengths.qza
+```
+
+Now we can normalize the gene feature table with the TPM method:
 
 ```{code} bash
 qiime feature-table normalize \
-    --p-method cpm \
+    --i-gene-length rgi_gene_annotations_reads_gene_lengths.qza \
     --i-table rgi_gene_feature_table_reads.qza \
-    --o-normalized-table rgi_gene_feature_table_readscpm.qza
+    --p-method tpm \
+    --o-normalized-table rgi_gene_feature_table_reads_tpm.qza
+```
+
+## Create Heatmap
+To visualize these results, we can generate a heatmap that displays AMR gene abundances 
+across samples. For better visualization, the abundances are log transformed.
+
+```{code} bash
+qiime feature-table heatmap \
+    --i-table rgi_gene_feature_table_reads_tpm.qza \
+    --o-visualization rgi_heatmap.qzv
 ```
