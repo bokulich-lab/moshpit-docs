@@ -64,6 +64,8 @@ This plugin provides actions for data retrieval from SRA.
 
 ## Getting started
 
+**Automate an analysis with Nextflow:** [nf-moshpit](#nf-moshpit) connects read processing, profiling, assembly, and MAG analysis into one configurable workflow. Start with the [quick start](#nf-moshpit-quick-start), then choose your [inputs](#nf-moshpit-inputs) and [analysis steps](#nf-moshpit-configuration). The **Nextflow workflow** section also covers databases, cluster execution, results, and resuming a run.
+
 Not sure where to begin? The **How-to Guides** section is organized into two sub-groups:
 
 **Analysis recipes** — goal-oriented recipes for each analytical step:
