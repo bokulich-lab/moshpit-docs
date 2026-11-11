@@ -1,0 +1,49 @@
+runId: FirstRun
+outputDir: /absolute/path/FirstRun
+condaEnv: /absolute/path/to/moshpit-environment
+container: null
+inputReadsManifest: /absolute/path/manifest.csv
+inputReads: null
+inputReadsCache: null
+metadata: null
+fondueAccessionIds: null
+read_simulation:
+  samples: null
+
+archive: false
+read_subsampling:
+  enabled: false
+read_qc:
+  fastp:
+    disableQualityFiltering: false
+    deduplicate: false
+    disableAdapterTrimming: true
+    enableBaseCorrection: true
+    additionalFlags: ""
+host_removal:
+  enabled: false
+sample_filtering:
+  enabled: false
+genome_assembly:
+  enabled: false
+assembly_qc:
+  enabled: false
+  quast:
+    enabled: false
+    useMappedReads: false
+binning:
+  enabled: false
+dereplication:
+  enabled: false
+abundance_estimation:
+  enabledFor: ""
+taxonomic_classification:
+  enabledFor: ""
+  bracken:
+    enabled: false
+  kaiju:
+    enabledFor: ""
+functional_annotation:
+  enabledFor: ""
+humann3:
+  enabled: false

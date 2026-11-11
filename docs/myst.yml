@@ -70,6 +70,21 @@ project:
             - pattern: chapters/02_howtos/*.md
 #    - title: Explanations
 #      children:
+    - title: Nextflow workflow
+      children:
+        - file: chapters/04_nextflow/00_overview.md
+        - file: chapters/04_nextflow/01_quick_start.md
+        - file: chapters/04_nextflow/02_inputs.md
+        - title: Configure the analysis
+          children:
+            - file: chapters/04_nextflow/03_configuration.md
+            - file: chapters/04_nextflow/04_read_processing.md
+            - file: chapters/04_nextflow/05_assembly_and_mags.md
+            - file: chapters/04_nextflow/06_profiling.md
+            - file: chapters/04_nextflow/07_databases.md
+        - file: chapters/04_nextflow/08_execution.md
+        - file: chapters/04_nextflow/09_results.md
+        - file: chapters/04_nextflow/10_troubleshooting.md
     - title: References
       children:
         - file: refs/plugins.md
