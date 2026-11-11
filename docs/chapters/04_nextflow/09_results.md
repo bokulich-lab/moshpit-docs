@@ -82,14 +82,14 @@ After fixing an error, use the same launch directory, parameter file, profiles, 
 
 ```bash
 nextflow run bokulich-lab/nf-moshpit \
-  -r 2026.7.0 \
+  -r 2026.10.0 \
   -params-file params.yml \
   -profile slurm,singularity \
   -work-dir /scratch/Study1-work \
   -resume
 ```
 
-Use the profiles from your original run. Preserve `.nextflow/`, the work directory, stored markers, and the actual QIIME 2 caches. Nextflow can reuse completed tasks only when the required cached state and outputs remain available.
+Keep the workflow revision (`-r`) and profiles from your original run; the example assumes that run used `2026.10.0`. Preserve `.nextflow/`, the work directory, stored markers, and the actual QIIME 2 caches. Nextflow can reuse completed tasks only when the required cached state and outputs remain available.
 
 Several tasks use `storeDir` completion markers and cache-key existence checks. When you change analysis parameters or input data, use a **new `runId`, output directory, and work directory** for the new analysis; do not assume that changing a parameter and adding `-resume` will recompute results represented by existing markers.
 
