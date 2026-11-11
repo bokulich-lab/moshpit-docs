@@ -19,7 +19,7 @@
 | Learn about runtimes and resource allocation | [Execution](#nf-moshpit-execution) |
 | Find artifacts, reports, and caches; resume or archive a run | [Results and resuming](#nf-moshpit-results) |
 | Resolve an error | [Troubleshooting](#nf-moshpit-troubleshooting) |
-| Check parameter names, defaults, and implementation limits | [Reference](#nf-moshpit-reference) |
+| Check parameter names and defaults | [Configuration](#nf-moshpit-configuration) |
 
 ## What the workflow can do
 

@@ -128,4 +128,4 @@ All `retain` flags default to `true`. Setting them to `false` removes selected i
 
 Cleanup requires the relevant downstream stage to run; disabling a stage can leave its upstream data retained. Removing intermediates limits later inspection and can affect the tasks available for resumption. Keep retention on until the analysis is stable and you have saved what you need.
 
-**Next:** [Troubleshooting](#nf-moshpit-troubleshooting) or the [parameter and source reference](#nf-moshpit-reference).
+**Next:** [Troubleshooting](#nf-moshpit-troubleshooting) or [Configuration](#nf-moshpit-configuration).
