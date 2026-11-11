@@ -32,7 +32,7 @@ assembly_qc:
 
 Contig filtering is separate from the assembler's minimum output length. In this example the assembler produces contigs of at least 200 bases and the downstream filter retains contigs according to a 500-base threshold. Adjust both deliberately.
 
-`assembly_qc.enabled` enables contig evaluation; `assembly_qc.quast.enabled` adds QUAST. Read mapping also runs when required for binning or contig abundance. Define the `quast` block explicitly: it is present in the YAML template but absent from the current code defaults.
+`assembly_qc.enabled` enables contig evaluation; `assembly_qc.quast.enabled` adds QUAST. Read mapping also runs when required for binning or contig abundance.
 
 ## Reconstruct MAGs
 

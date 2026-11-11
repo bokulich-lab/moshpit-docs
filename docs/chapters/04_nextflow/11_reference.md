@@ -32,7 +32,6 @@ These are source observations to help reconcile the README, template, and runnin
 | MASON delimiter | `main.nf` uses `sep: ','`; supply CSV, despite the TSV wording in the README/template. |
 | Sample cutoff | The code reads `sample_filtering.minReads`, default `1000`, and uses strict `>`. The template's `min_reads: 4200000` does not set it. |
 | Inherited analysis defaults | Code defaults include assembly, dereplication, abundance targets `contigs,derep`, and Kaiju `reads`, but binning is disabled. Explicitly configure related stages; the untouched defaults are not a valid minimal run. |
-| QUAST defaults | The subworkflow reads `assembly_qc.quast.*`, which the template defines but `conf/defaults.config` does not. Supply this block explicitly when enabling assembly. |
 | Skani | Settings and a module exist, but the [dereplication subworkflow](https://github.com/bokulich-lab/nf-moshpit/blob/2026.7.0/subworkflows/dereplication.nf) always uses sourmash. |
 | Conda and optional steps | Validation requires a fallback/specific container for sourmash or Skani dereplication, CheckM, and HUMAnN 3, even with `condaEnv`. Supplying an image parameter does not enable container execution under the conda profile. |
 | Kraken 2/eggNOG fetching | `main.nf` reads Kraken 2 cache size before fetch completion; eggNOG does likewise for in-memory loading. Prepopulate these entries, or disable eggNOG in-memory loading as appropriate. |
