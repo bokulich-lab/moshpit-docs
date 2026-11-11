@@ -97,10 +97,17 @@ Several tasks use `storeDir` completion markers and cache-key existence checks. 
 
 With `archive: true`, completed per-sample caches are ZIP-compressed into `archiveDir`. The archive is checked before the original sample-cache directory is removed. The main cache remains separate. Archiving can reduce inode use, but needs space while both the archive and original exist.
 
-Restore archives before resuming or inspecting per-sample results:
+Restore archives before resuming or inspecting per-sample results. Locate the script in Nextflow's cached workflow checkout, using the same revision as the original run (`2026.10.0` in this example). Nextflow uses `NXF_ASSETS` when set, otherwise `$NXF_HOME/assets` (with `NXF_HOME` defaulting to `$HOME/.nextflow`). The commands support both the traditional cache layout and the newer `.repos` layout, and extract the script from the pinned revision:
 
 ```bash
-bash bin/restore_cache.sh \
+nextflow pull bokulich-lab/nf-moshpit -r 2026.10.0
+nf_moshpit_assets="${NXF_ASSETS:-${NXF_HOME:-$HOME/.nextflow}/assets}"
+nf_moshpit_repo="$nf_moshpit_assets/bokulich-lab/nf-moshpit"
+if [ ! -d "$nf_moshpit_repo" ]; then
+  nf_moshpit_repo="$nf_moshpit_assets/.repos/bokulich-lab/nf-moshpit/bare"
+fi
+git -C "$nf_moshpit_repo" show 2026.10.0:bin/restore_cache.sh > restore_cache.sh &&
+bash restore_cache.sh \
   /scratch/Study1/archives \
   /scratch/Study1/caches
 ```
