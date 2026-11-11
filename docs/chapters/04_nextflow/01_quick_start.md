@@ -12,7 +12,7 @@ nextflow -version
 nextflow pull bokulich-lab/nf-moshpit -r 2026.10.0
 ```
 
-Nextflow stores the workflow in its cache; you do not need to clone the repository. The commands below run this same pinned revision. Record it with your analysis configuration; the [reference](#nf-moshpit-source) explains how it was selected.
+Nextflow stores the workflow in its cache; you do not need to clone the repository. The commands below run this same pinned revision.
 
 ## 2. List your reads
 
