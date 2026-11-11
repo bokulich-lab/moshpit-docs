@@ -93,6 +93,28 @@ binning:
 
 VAMB runs per sample, using the assembled contigs and read mappings; this does not enable coassembly across samples.
 
+### Refine bins with DAS Tool
+
+Consensus refinement is optional. Enable DAS Tool with at least two of MetaBAT 2, SemiBin 2, and VAMB enabled. For example, merge the following settings to refine MetaBAT 2 and SemiBin 2 bins and select the refined collection downstream:
+
+```yaml
+binning:
+  enabled: true
+  primary: "das_tool"
+  metabat2:
+    enabled: true
+    min_contig: 1500
+  semibin2:
+    enabled: true
+  das_tool:
+    enabled: true
+    search_engine: "diamond"
+    score_threshold: 0.5
+    additionalFlags: ""
+```
+
+`search_engine` accepts `diamond` or `blastp`. Refinement uses the raw bins from each enabled binner for each sample, then applies the configured MAG quality checks to the refined bins. Samples missing bins from any enabled binner are skipped by DAS Tool. With `das_tool.enabled: false` (the default), the workflow uses the selected primary binner without consensus refinement.
+
 ## Assess and filter MAG quality
 
 BUSCO and CheckM are optional and have separate database requirements. To enable BUSCO and use its results for filtering, merge these settings into `binning.qc`:
