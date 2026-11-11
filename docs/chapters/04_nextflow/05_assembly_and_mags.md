@@ -69,7 +69,29 @@ binning:
     random_seed: 100
 ```
 
-`training_type` accepts `semi` or `self`. You can enable both binners to compare outputs, but `primary` must name an enabled binner and selects the MAG collection used for subsequent dereplication and profiling. There is no automatic consensus-binning step.
+`training_type` accepts `semi` or `self`. You can enable multiple binners to compare outputs. `primary` must name an enabled binner and selects the MAG collection used for subsequent dereplication and profiling.
+
+### Use VAMB
+
+VAMB is also available in `2026.10.0`. To use it instead of MetaBAT 2, merge these settings into your configuration:
+
+```yaml
+binning:
+  enabled: true
+  primary: "vamb"
+  metabat2:
+    enabled: false
+  semibin2:
+    enabled: false
+  vamb:
+    enabled: true
+    min_contig_len: 2000
+    minfasta: 2000
+    seed: 42
+    additionalFlags: ""
+```
+
+VAMB runs per sample, using the assembled contigs and read mappings; this does not enable coassembly across samples.
 
 ## Assess and filter MAG quality
 
