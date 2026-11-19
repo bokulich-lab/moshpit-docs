@@ -5,7 +5,7 @@ Configure **one input method per run**. The workflow chooses the first configure
 
 | Priority | Input | Required settings | File format |
 | --- | --- | --- | --- |
-| 1 | FASTQ files | `inputReadsManifest` | CSV: `id,forward,reverse` for paired-end reads |
+| 1 | FASTQ files | `inputReadsManifest` | CSV with `id,forward` for single-end reads or `id,forward,reverse` for paired-end reads |
 | 2 | QIIME 2 cached reads | `inputReads`, `inputReadsCache`, `metadata` | Cache key and directory; metadata TSV with an `id` column |
 | 3 | SRA data | `fondueAccessionIds`, `email` | TSV with an `id` column |
 | 4 | MASON simulation | `read_simulation.samples` | **CSV** with the five columns below |
@@ -20,6 +20,14 @@ The paired-end route used in the [quick start](#nf-moshpit-quick-start) is the m
 id,forward,reverse
 Sample1,/data/Sample1_R1.fastq.gz,/data/Sample1_R2.fastq.gz
 Sample2,/data/Sample2_R1.fastq.gz,/data/Sample2_R2.fastq.gz
+```
+
+For single-end reads, supply one FASTQ per sample and omit the reverse column.
+
+```csv
+id,forward
+Sample1,/data/Sample1.fastq.gz
+Sample2,/data/Sample2.fastq.gz
 ```
 
 ```yaml

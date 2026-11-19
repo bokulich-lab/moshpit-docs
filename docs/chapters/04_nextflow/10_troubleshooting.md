@@ -27,16 +27,12 @@ After correcting an execution issue, follow [the resumption instructions](#nf-mo
 
 ## Input format problems
 
-FASTQ manifests use CSV with `id`, `forward`, and `reverse`. Cache metadata and SRA accessions use TSV with `id`. MASON simulation currently uses CSV with `id,profile,readCount,readLength,genomesPath`, despite being called TSV in the README. Check delimiters and exact column names before debugging later tasks.
-
-For single-end FASTQ manifest import, a missing reverse value may fail at Nextflow's `path` input before the import script runs. Verify support in your revision. Do not invent a reverse file to bypass this issue.
+Use the [input examples](#nf-moshpit-inputs) to check the delimiter and column names. FASTQ manifests and MASON sample sheets use CSV. Cached-read metadata and SRA accession lists use TSV with an `id` column.
 
 (nf-moshpit-cache-input-issue)=
 ## Existing-cache input creates no partitions
 
-The current workflow documents `inputReads` as a cache key but calls `Channel.fromPath(params.inputReads)` on it. A key name such as `study_reads` is not normally a file in the launch directory, so the channel can be empty even though the cache entry exists.
-
-Confirm the entry with `qiime tools cache-status`, check the metadata `id` values, and inspect the input channel behavior in your revision. Use the FASTQ manifest route if you have the original reads, or report the issue with the workflow revision and logs. Creating dummy files inside a QIIME 2 cache is not a supported correction.
+Run `qiime tools cache-status --cache /path/to/reads-cache` on the directory configured as `inputReadsCache`. Set `inputReads` to the key listed for the demultiplexed reads and check that the metadata IDs match the artifact's sample IDs.
 
 ## Report a reproducible issue
 
