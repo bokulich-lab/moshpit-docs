@@ -108,7 +108,9 @@ Use the names in your task log; account for subworkflow-qualified names if neede
 
 ## Plugin-specific containers
 
-With Docker or Singularity, `container` is the general fallback. You can override selected groups with `containerAnnotate`, `containerAssembly`, `containerMag`, `containerFastp`, `containerSourmash`, `containerCheckM`, or `containerHumann3`. MAG processes can also fall back to `containerAnnotate`. Inspect `conf/containers.config` for the exact process selectors.
+With Docker or Singularity, `container` is the general fallback. You can override selected groups with `containerAnnotate`, `containerAssembly`, `containerMag`, `containerFastp`, `containerSourmash`, `containerSkani`, `containerCheckM`, or `containerHumann3`. MAG processes can also fall back to `containerAnnotate`. Inspect `conf/containers.config` for the exact process selectors.
+
+For Skani, the selected image must provide q2-skani and its Skani executable. With Conda, install them in `condaEnv`. Startup validation probes the selected Conda environment with `qiime skani --help`.
 
 Prefer a complete base image and add overrides where required. Overrides must be compatible with the QIIME 2 artifacts passed between steps.
 

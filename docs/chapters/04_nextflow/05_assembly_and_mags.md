@@ -154,7 +154,7 @@ dereplication:
     trackAbundance: true
 ```
 
-The current subworkflow computes and compares sourmash MinHash signatures, then runs `mag dereplicate-mags`. `threshold` is the threshold passed to that action for the sourmash comparison; do not interpret it automatically as a Skani ANI cutoff. Check the action documentation for its meaning in your installed version.
+Sourmash computes and compares MinHash signatures. To compare MAGs directly with Skani, set `dereplication.method` to `skani` and place method options such as `preset` under `dereplication.skani`. Both routes pass their distance matrix and `dereplication.threshold` to `mag dereplicate-mags`. The threshold controls clustering, so tune it for the selected matrix. A value of `0.99` does not specify 99% pairwise ANI.
 
 ## Estimate abundance
 
