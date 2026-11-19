@@ -3,6 +3,8 @@
 
 Keep the settings for your analysis in a YAML parameter file and pass it with `-params-file`. Use the [read-QC starter](#nf-moshpit-quick-start) for a first run. For a larger analysis, consult `params.template.yml` in [the workflow repository](https://github.com/bokulich-lab/nf-moshpit/blob/main/params.template.yml) and edit the sections you need.
 
+Use an analysis preset alongside your executor and runtime, for example `-profile standard,conda,reads_only`. With the release defaults, `reads_only` disables assembly and assembly QC. The `mags` preset enables binning, dereplication, and abundance estimation for contigs and dereplicated MAGs. If your parameter file overrides a preset, check that all requested stages have their required inputs.
+
 ## Separate analysis settings from execution settings
 
 | Setting | Where to put it | Example |

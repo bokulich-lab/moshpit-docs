@@ -1,7 +1,7 @@
 (nf-moshpit-execution)=
 # Execution: local runs and Slurm
 
-Choose **one executor** and **one runtime**, then optionally add resource profiles. The parameter file determines the analysis; profiles determine where and how its jobs run.
+Choose **one executor** and **one runtime**, then optionally add resource profiles. You can also select an [analysis preset](#nf-moshpit-configuration).
 
 ## Choose a runtime
 
@@ -86,11 +86,11 @@ The workflow defines process resources in `conf/resources.config`. Profiles appl
 | `medium` | 2 | 2 | 2 |
 | `high` | 4 | 4 | 2 |
 | `quick_test` | 0.25 | 0.25 | 0.5 |
-| `long_jobs` | 1 | 1 | 3 |
+| `long_jobs` | unchanged | unchanged | 3 |
 
 `cpu_intensive` and `mem_intensive` request a 2 multiplier where resource expressions use the corresponding parameter. Not all processes use these expressions; some set resources explicitly, including database-dependent memory.
 
-Choose at most one general scaling profile. `quick_test` is a resource reduction, not a bundled test dataset. `long_jobs` and the emphasis profiles also assign other scaling values, so combining them can reset earlier settings. Check the resolved configuration for your installed Nextflow version rather than assuming multipliers accumulate.
+Choose at most one of `low`, `medium`, `high`, and `quick_test`. Add `cpu_intensive` or `mem_intensive` to scale tasks that use those multipliers. For example, `-profile slurm,singularity,medium,mem_intensive` doubles the general scales and applies a further memory multiplier to eligible tasks. `long_jobs` sets the overall time scale to 3 while preserving CPU and memory settings.
 
 For precise overrides, add a selector to `site.config`:
 
