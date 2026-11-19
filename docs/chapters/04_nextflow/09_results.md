@@ -36,7 +36,7 @@ These derived locations are configured in `nextflow.config`. Confirm the resolve
 
 | Report | What to check |
 | --- | --- |
-| `results/<runId>-report.qzv` | Combined visualizations from the enabled branches, including read QC |
+| `results/<runId>-report.qzv` | Visualizations grouped by stage: Read quality, Read profiling, Assembly and contig analysis, and MAG analysis. Only sections with results appear. |
 | `results/multiqc/multiqc_report.html` | Sample and read retention across processing steps |
 | `pipeline_info/*_report.html` | Nextflow execution and resource use |
 | `pipeline_info/*_timeline.html` | Task durations and parallel execution |
@@ -72,6 +72,8 @@ qiime tools cache-fetch \
   --output-path /scratch/Study1/contigs.qza
 ```
 
+With DAS Tool enabled, `binning.fetchArtifact: true` also exports the refined MAGs, unbinned contigs, and contig map.
+
 Alternatively set the relevant `fetchArtifact: true` before running. Assembly, binning, dereplication, abundance, taxonomy, eggNOG, and HUMAnN have separate export switches; there is no single global flag that exports everything. Inspect the [profiling guide](#nf-moshpit-profiling) for the distinction between raw classifier reports and final tables.
 
 ## Resume a run
@@ -92,6 +94,8 @@ Keep the workflow revision (`-r`) and profiles from your original run; the examp
 When you change analysis parameters or input data, use a **new `runId`, output directory, and work directory** for the new analysis; do not assume that changing a parameter and adding `-resume` will recompute results represented by existing markers.
 
 ## Archive and restore sample caches
+
+Archiving runs directly on the host even with a container or Conda profile. Make `zip`, `unzip`, and `zipinfo` available on `PATH` on the launch host and on nodes that execute archive tasks.
 
 With `archive: true`, completed per-sample caches are ZIP-compressed into `archiveDir`. The archive is checked before the original sample-cache directory is removed. The main cache remains separate. Archiving can reduce inode use, but needs space while both the archive and original exist.
 
