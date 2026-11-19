@@ -9,7 +9,7 @@ Install Nextflow in a fresh conda environment (for example, `conda create -n nf 
 
 ```bash
 nextflow -version
-nextflow pull bokulich-lab/nf-moshpit -r 2026.10.0
+nextflow pull bokulich-lab/nf-moshpit -r 2026.10.1
 ```
 
 Nextflow stores the workflow in its cache; you do not need to clone the repository. The commands below run this same pinned revision.
@@ -91,7 +91,7 @@ Choose a writable work directory on storage with sufficient space. Keep this dir
 
 ```bash
 nextflow run bokulich-lab/nf-moshpit \
-  -r 2026.10.0 \
+  -r 2026.10.1 \
   -params-file params.yml \
   -profile standard,conda \
   -work-dir /absolute/path/FirstRun-work

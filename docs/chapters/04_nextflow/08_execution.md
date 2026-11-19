@@ -17,7 +17,7 @@ The workflow invokes `qiime` and `multiqc`, so ensure both commands and every se
 
 ```bash
 nextflow run bokulich-lab/nf-moshpit \
-  -r 2026.10.0 \
+  -r 2026.10.1 \
   -params-file params.yml \
   -profile standard,conda \
   -work-dir /scratch/study-work
@@ -31,7 +31,7 @@ Set `container` to your actual MOSHPIT image reference, clear `condaEnv`, then r
 
 ```bash
 nextflow run bokulich-lab/nf-moshpit \
-  -r 2026.10.0 \
+  -r 2026.10.1 \
   -params-file params.yml \
   -profile standard,docker \
   -work-dir /scratch/study-work
@@ -46,7 +46,7 @@ export NXF_SINGULARITY_HOME_MOUNT=true
 mkdir -p "$HOME/q2_home"
 
 nextflow run bokulich-lab/nf-moshpit \
-  -r 2026.10.0 \
+  -r 2026.10.1 \
   -params-file params.yml \
   -profile slurm,singularity \
   -work-dir /scratch/study-work

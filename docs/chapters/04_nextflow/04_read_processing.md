@@ -76,8 +76,6 @@ sample_filtering:
   minReads: 1000
 ```
 
-The query uses a strict **greater-than** comparison: a sample with exactly `1000` counted reads is excluded in this example. Choose the threshold for your intended analysis.
-
 ## Keep or remove intermediates
 
 Keep the default retention flags during a pilot run:

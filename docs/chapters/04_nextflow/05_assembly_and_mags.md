@@ -73,7 +73,7 @@ binning:
 
 ### Use VAMB
 
-VAMB is also available in `2026.10.0`. To use it instead of MetaBAT 2, merge these settings into your configuration:
+VAMB is also available in `2026.10`. To use it instead of MetaBAT 2, merge these settings into your configuration:
 
 ```yaml
 binning:
@@ -100,7 +100,6 @@ Consensus refinement is optional. Enable DAS Tool with at least two of MetaBAT 2
 ```yaml
 binning:
   enabled: true
-  primary: "das_tool"
   metabat2:
     enabled: true
     min_contig: 1500

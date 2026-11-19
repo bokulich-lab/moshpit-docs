@@ -31,8 +31,6 @@ taxonomic_classification:
 
 Bracken runs on the **read** classification branch. Select `readLength` and a compatible Bracken database for your reads; `level: "S"` estimates species-level abundance. The code default for `readLength` is `100`, so change it deliberately rather than treating the example's `150` as universal.
 
-Keep Kraken 2 and Bracken database cache/key settings populated even when disabling Bracken: the current database-fetch process declares both output keys. For this revision, prepare the Kraken 2 cache entry before launching classification, because the main workflow reads its size for memory allocation before the fetch task completes. See [Databases](#nf-moshpit-databases).
-
 `taxonomic_classification.fetchArtifact` exports final taxonomy/table outputs where produced. The nested Kraken 2 and Bracken flags export their raw reports/hits. These are separate choices.
 
 ## Kaiju
