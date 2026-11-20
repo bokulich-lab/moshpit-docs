@@ -16,7 +16,7 @@ Nextflow stores the workflow in its cache; you do not need to clone the reposito
 
 ## 2. List your reads
 
-Create `manifest.csv` with one row per sample. Replace these example paths with **absolute paths to your own files**; both uncompressed and gzip-compressed FASTQ are possible. Reads must use Phred+33 quality scores.
+Create `manifest.csv` with one row per sample:
 
 ```csv
 id,forward,reverse
