@@ -14,6 +14,8 @@ Use these guides when you want to:
 
 For help setting up the MOSHPIT suite, configuring parallelization, fetching data from SRA, or importing and exporting artifacts, see the [Using MOSHPIT](setup) guides.
 
+To run several steps together across a dataset, use the [nf-moshpit Nextflow workflow](#nf-moshpit). Its [quick start](#nf-moshpit-quick-start) and configuration guides explain how to automate the analysis recipes below.
+
 ---
 
 ## "I want to…" quick reference

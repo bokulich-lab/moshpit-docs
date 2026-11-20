@@ -1,0 +1,2 @@
+id,forward,reverse
+Sample1,/absolute/path/Sample1_R1.fastq.gz,/absolute/path/Sample1_R2.fastq.gz
